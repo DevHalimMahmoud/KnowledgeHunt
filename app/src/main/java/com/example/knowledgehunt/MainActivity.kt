@@ -6,20 +6,22 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.composable
 
-import com.example.knowledgehunt.ui.components.Drawer
 import kotlinx.coroutines.launch
 import androidx.navigation.compose.rememberNavController
 import com.example.knowledgehunt.ui.components.Screens
 import com.example.knowledgehunt.ui.theme.KnowledgeHuntTheme
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.knowledgehunt.ui.Articles
 import com.example.knowledgehunt.ui.About
 import com.example.knowledgehunt.ui.HomeScreen
 import com.example.knowledgehunt.ui.Screen
+import com.example.knowledgehunt.ui.components.AppDrawer
 
 
 class MainActivity : ComponentActivity() {
@@ -36,6 +38,9 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppMainScreen() {
     val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute =
+        navBackStackEntry?.destination?.route
     Surface(color = MaterialTheme.colors.background) {
         val drawerState = rememberDrawerState(DrawerValue.Closed)
         val scope = rememberCoroutineScope()
@@ -49,17 +54,20 @@ fun AppMainScreen() {
             drawerState = drawerState,
             gesturesEnabled = drawerState.isClosed,
             drawerContent = {
-                Drawer(
-                    onDestinationClicked = { route ->
-                        scope.launch {
-                            drawerState.close()
+
+                    AppDrawer(
+                        currentRoute = currentRoute.orEmpty(),
+                        onDestinationClicked = { route ->
+                            scope.launch {
+                                drawerState.close()
+                            }
+                            navController.navigate(route) {
+                                popUpTo(navController.graph.startDestinationId)
+                                launchSingleTop = true
+                            }
                         }
-                        navController.navigate(route) {
-                            popUpTo(navController.graph.startDestinationId)
-                            launchSingleTop = true
-                        }
-                    }
-                )
+                    )
+
             }
         ) {
             NavHost(
