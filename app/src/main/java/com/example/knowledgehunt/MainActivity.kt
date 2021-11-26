@@ -1,5 +1,6 @@
 package com.example.knowledgehunt
 
+import SplashScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,12 +13,14 @@ import androidx.navigation.compose.composable
 import com.example.knowledgehunt.ui.components.Drawer
 import kotlinx.coroutines.launch
 import androidx.navigation.compose.rememberNavController
-import com.example.knowledgehunt.ui.components.DrawerScreens
+import com.example.knowledgehunt.ui.components.Screens
 import com.example.knowledgehunt.ui.theme.KnowledgeHuntTheme
 import androidx.navigation.compose.NavHost
-import com.example.knowledgehunt.ui.Screens.Articles
-import com.example.knowledgehunt.ui.Screens.Help
-import com.example.knowledgehunt.ui.Screens.Home
+import com.example.knowledgehunt.ui.Articles
+import com.example.knowledgehunt.ui.About
+import com.example.knowledgehunt.ui.HomeScreen
+import com.example.knowledgehunt.ui.Screen
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,8 +45,9 @@ fun AppMainScreen() {
             }
         }
         ModalDrawer(
+
             drawerState = drawerState,
-            gesturesEnabled = drawerState.isOpen,
+            gesturesEnabled = drawerState.isClosed,
             drawerContent = {
                 Drawer(
                     onDestinationClicked = { route ->
@@ -60,24 +64,38 @@ fun AppMainScreen() {
         ) {
             NavHost(
                 navController = navController,
-                startDestination = DrawerScreens.Home.route
-            ) {
-                composable(DrawerScreens.Home.route) {
-                    Home(
+                startDestination = "splash",
+
+
+                ) {
+                composable(Screens.Home.route) {
+                    HomeScreen(
                         openDrawer = {
                             openDrawer()
-                        }
+                        }, navController
                     )
                 }
-                composable(DrawerScreens.Articles.route) {
+                composable(Screens.Articles.route) {
                     Articles(
                         openDrawer = {
                             openDrawer()
-                        }
+                        }, navController
                     )
                 }
-                composable(DrawerScreens.Help.route) {
-                    Help(
+                composable(Screens.Help.route) {
+                    About(
+                        openDrawer = {
+                            openDrawer()
+                        }, navController
+                    )
+                }
+                composable(Screens.Splash.route) {
+                    SplashScreen(
+                        navController = navController
+                    )
+                }
+                composable(Screens.Test.route) {
+                    Screen(
                         navController = navController
                     )
                 }
@@ -90,6 +108,6 @@ fun AppMainScreen() {
 @Composable
 fun DefaultPreview() {
 
-        AppMainScreen()
+    AppMainScreen()
 
 }

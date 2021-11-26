@@ -1,4 +1,4 @@
-package com.example.knowledgehunt.ui.Screens
+package com.example.knowledgehunt.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,8 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.knowledgehunt.ui.components.TopBar
 
+
+
+
+
+
 @Composable
-fun Help(navController: NavController) {
+fun Screen(navController: NavController) {
     Column(modifier = Modifier.fillMaxSize()) {
         TopBar(
             title = "Help",

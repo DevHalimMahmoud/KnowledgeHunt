@@ -1,4 +1,4 @@
-package com.example.knowledgehunt.ui.Screens
+package com.example.knowledgehunt.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,22 +10,26 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import com.example.knowledgehunt.ui.components.TopBar
 
 @Composable
-fun Articles(openDrawer: () -> Unit) {
+fun About(openDrawer: () -> Unit, navController: NavHostController) {
     Column(modifier = Modifier.fillMaxSize()) {
         TopBar(
-            title = "Articles",
+            title = "About",
             buttonIcon = Icons.Filled.Menu,
-            onButtonClicked = { openDrawer() }
+            onButtonClicked = {
+                openDrawer()
+                navController.popBackStack()
+            }
         )
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Account.", style = MaterialTheme.typography.h4)
+            Text(text = "Help.", style = MaterialTheme.typography.h4)
         }
     }
 }

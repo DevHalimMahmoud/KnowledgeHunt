@@ -12,16 +12,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.knowledgehunt.R
 
-sealed class DrawerScreens(val title: String, val route: String) {
-    object Home : DrawerScreens("Home", "home")
-    object Articles : DrawerScreens("Articles", "articles")
-    object Help : DrawerScreens("Help", "help")
+sealed class Screens(val title: String, val route: String) {
+    object Home : Screens("Home", "home")
+    object Articles : Screens("Articles", "articles")
+    object Help : Screens("Help", "help")
+    object Splash : Screens("Splash", "splash")
+    object Test : Screens("Test", "test")
 }
 
 private val screens = listOf(
-    DrawerScreens.Home,
-    DrawerScreens.Articles,
-    DrawerScreens.Help
+    Screens.Home,
+    Screens.Articles,
+    Screens.Help
 )
 
 @Composable
@@ -36,7 +38,8 @@ fun Drawer(
     ) {
         Image(
             painter = painterResource(R.drawable.ic_launcher_background),
-            contentDescription = "App icon"
+            contentDescription = "App icon",
+
         )
         screens.forEach { screen ->
             Spacer(Modifier.height(24.dp))
