@@ -2,6 +2,7 @@ package com.example.knowledgehunt.ui.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -27,11 +28,11 @@ sealed class Screens(val title: String, val route: String) {
     object Help : Screens("Help", "help")
     object Splash : Screens("Splash", "splash")
     object Test : Screens("Test", "test")
+
 }
 
 private val screens = listOf(
     Screens.Home,
-
     Screens.Articles,
     Screens.Help
 )
@@ -51,10 +52,11 @@ fun AppDrawer(
         JetNewsLogo(Modifier.padding(16.dp))
         Divider(color = MaterialTheme.colors.onSurface.copy(alpha = .2f))
         Spacer(Modifier.height(24.dp))
-        screens.forEachIndexed() { index, screen ->
-
+        screens.forEachIndexed { index, screen ->
 
             DrawerButton(
+
+
                 icon = icon[index],
                 label = screen.title,
                 isSelected = currentRoute == screen.route,
@@ -62,11 +64,7 @@ fun AppDrawer(
                     onDestinationClicked(screen.route)
                 }
             )
-
         }
-
-
-
     }
 }
 
@@ -76,9 +74,9 @@ private fun JetNewsLogo(modifier: Modifier = Modifier) {
         JetnewsIcon()
         Spacer(Modifier.width(8.dp))
         Image(
-            painter = painterResource(R.drawable.ic_splash_icon),
+
+            painter = painterResource(R.drawable.logo),
             contentDescription = stringResource(R.string.app_name),
-            colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface)
         )
     }
 }
@@ -86,9 +84,8 @@ private fun JetNewsLogo(modifier: Modifier = Modifier) {
 @Composable
 fun JetnewsIcon(modifier: Modifier = Modifier) {
     Image(
-        painter = painterResource(R.drawable.ic_splash_icon),
+        painter = painterResource(R.drawable.logo),
         contentDescription = null, // decorative
-        colorFilter = ColorFilter.tint(MaterialTheme.colors.primary),
         modifier = modifier
     )
 }

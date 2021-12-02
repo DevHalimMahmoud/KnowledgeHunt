@@ -48,12 +48,7 @@ fun SplashScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        Color(0xFFB24592),
-                        Color(0xFFF15F79),
-                    )
-                )
+                Color.Black
             ),
 
         contentAlignment = Alignment.Center,
@@ -62,7 +57,7 @@ fun SplashScreen(navController: NavController) {
 
 
         Image(
-            painter = painterResource(id = R.drawable.ic_splash_icon),
+            painter = painterResource(id = R.drawable.logo),
             contentDescription = null, // decorative element
             Modifier
                 .scale(scale = scale.value)

@@ -2,8 +2,10 @@ package com.example.knowledgehunt
 
 import SplashScreen
 import android.os.Bundle
+import android.widget.Toolbar
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.ActionBar
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,13 +27,20 @@ import com.example.knowledgehunt.ui.components.AppDrawer
 
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+
         setContent {
             KnowledgeHuntTheme {
+                actionBar?.show()
                 AppMainScreen()
             }
+
         }
+
     }
 }
 
@@ -72,7 +81,7 @@ fun AppMainScreen() {
         ) {
             NavHost(
                 navController = navController,
-                startDestination = "splash",
+                startDestination = Screens.Splash.route,
 
 
                 ) {
@@ -98,6 +107,7 @@ fun AppMainScreen() {
                     )
                 }
                 composable(Screens.Splash.route) {
+
                     SplashScreen(
                         navController = navController
                     )
