@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.WindowCompat
 import androidx.navigation.compose.composable
 
 import kotlinx.coroutines.launch
@@ -35,7 +36,6 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             KnowledgeHuntTheme {
-                actionBar?.show()
                 AppMainScreen()
             }
 
@@ -71,8 +71,13 @@ fun AppMainScreen() {
                                 drawerState.close()
                             }
                             navController.navigate(route) {
-                                popUpTo(navController.graph.startDestinationId)
+                                popUpTo(navController.graph.startDestinationId){
+
+                                    inclusive = true
+
+                                }
                                 launchSingleTop = true
+
                             }
                         }
                     )
