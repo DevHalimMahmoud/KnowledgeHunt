@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "659642129859",
+    "project_id": "knowledge-hunt-4c809",
+    "storage_bucket": "knowledge-hunt-4c809.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:659642129859:android:6ef879cfba4638c878b176",
+        "android_client_info": {
+          "package_name": "com.example.knowledgehunt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "659642129859-151rn4322b6ruecgong9brifevoccldc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAws8086u9vlx_SG2Ux0h_sLOFP3I0mHgk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "659642129859-151rn4322b6ruecgong9brifevoccldc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

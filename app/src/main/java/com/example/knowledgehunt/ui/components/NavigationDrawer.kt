@@ -27,6 +27,7 @@ sealed class Screens(val title: String, val route: String) {
     object Articles : Screens("Articles", "articles")
     object Help : Screens("Help", "help")
     object Splash : Screens("Splash", "splash")
+    object Login : Screens("Login", "login")
     object Test : Screens("Test", "test")
 
 }
