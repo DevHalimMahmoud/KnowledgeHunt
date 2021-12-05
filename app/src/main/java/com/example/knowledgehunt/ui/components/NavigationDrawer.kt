@@ -75,20 +75,18 @@ private fun JetNewsLogo(modifier: Modifier = Modifier) {
         JetnewsIcon()
         Spacer(Modifier.width(8.dp))
         Image(
-
-            painter = painterResource(R.drawable.logo),
-            contentDescription = stringResource(R.string.app_name),
-        )
+            painter = painterResource(id = R.drawable.logo_with_title),
+            contentDescription = null, // decorative element
+            )
     }
 }
 
 @Composable
 fun JetnewsIcon(modifier: Modifier = Modifier) {
     Image(
-        painter = painterResource(R.drawable.logo),
-        contentDescription = null, // decorative
-        modifier = modifier
-    )
+        painter = painterResource(id = R.drawable.logo_with_title),
+        contentDescription = null, // decorative element
+        )
 }
 
 @Composable

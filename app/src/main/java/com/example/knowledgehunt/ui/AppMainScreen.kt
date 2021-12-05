@@ -32,7 +32,7 @@ fun AppMainScreen() {
         ModalDrawer(
 
             drawerState = drawerState,
-            gesturesEnabled = drawerState.isClosed,
+            gesturesEnabled = false,
             drawerContent = {
 
                 AppDrawer(

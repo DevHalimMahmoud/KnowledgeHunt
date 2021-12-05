@@ -53,6 +53,7 @@ android {
 }
 
 dependencies {
+    implementation "androidx.compose.material:material-icons-extended:$compose_version"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.0'
@@ -76,8 +77,9 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 
-    implementation("com.google.dagger:hilt-android:2.38.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.38.1")
+    implementation('com.google.dagger:hilt-android:2.40.4')
+    kapt('com.google.dagger:hilt-android-compiler:2.40.4')
+
 }
 // Allow references to generated code
 kapt {
