@@ -1,45 +1,59 @@
 package com.example.knowledgehunt.services
 
 import androidx.lifecycle.MutableLiveData
+import com.example.knowledgehunt.services.FirebaseAuthServices.getCurrentUserId
+import com.google.android.datatransport.runtime.dagger.Module
+import com.google.android.datatransport.runtime.dagger.Provides
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import dagger.hilt.android.scopes.ViewModelScoped
 import java.util.*
 
-fun addDonationData(data: HashMap<String, Any?>): Task<DocumentReference> {
+@Module
+@ViewModelScoped
+object FirebaseFirestoreServices {
+    @Provides
+    @ViewModelScoped
+    fun addDonationData(data: HashMap<String, Any?>): Task<DocumentReference> {
 
-    return FirebaseFirestore.getInstance().collection("requests")
-        .add(data).addOnSuccessListener {
-            return@addOnSuccessListener
-        }.addOnFailureListener {
-            return@addOnFailureListener
-        }
-}
+        return FirebaseFirestore.getInstance().collection("requests")
+            .add(data).addOnSuccessListener {
+                return@addOnSuccessListener
+            }.addOnFailureListener {
+                return@addOnFailureListener
+            }
+    }
 
-fun getUserName(): MutableLiveData<String> {
+    @Provides
+    @ViewModelScoped
+    fun getUserName(): MutableLiveData<String> {
 
-    return MutableLiveData<String>().apply {
+        return MutableLiveData<String>().apply {
 
-        val db = FirebaseFirestore.getInstance()
-        getCurrentUserId().let {
-            db.collection("users").document(
-                it!!
-            )
-        }.addSnapshotListener { value, e ->
+            val db = FirebaseFirestore.getInstance()
+            getCurrentUserId().let {
+                db.collection("users").document(
+                    it!!
+                )
+            }.addSnapshotListener { value, e ->
 
-            setValue(value?.get("name").toString())
+                setValue(value?.get("name").toString())
 
+            }
         }
     }
-}
 
-fun addUserDataToFirestore(data: HashMap<String, Any?>): Task<Void> {
+    @Provides
+    @ViewModelScoped
+    fun addUserDataToFirestore(data: HashMap<String, Any?>): Task<Void> {
 
-    return FirebaseFirestore.getInstance().collection("users")
-        .document(getCurrentUserId().toString())
-        .set(data).addOnSuccessListener {
-            return@addOnSuccessListener
-        }.addOnFailureListener {
-            return@addOnFailureListener
-        }
+        return FirebaseFirestore.getInstance().collection("users")
+            .document(getCurrentUserId().toString())
+            .set(data).addOnSuccessListener {
+                return@addOnSuccessListener
+            }.addOnFailureListener {
+                return@addOnFailureListener
+            }
+    }
 }

@@ -24,7 +24,8 @@ fun TextFieldUnit(
     textState: MutableState<TextFieldValue>,
     imeAction: ImeAction,
     onImeAction: () -> Unit = {},
-    text: String,
+    hint: String,
+    errorText: String,
     errorState: MutableState<Boolean>,
     modifier: Modifier
 ) {
@@ -46,11 +47,12 @@ fun TextFieldUnit(
             label = {
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                     Text(
-                        text = text,
+                        text = hint,
                         style = MaterialTheme.typography.body1
                     )
                 }
             },
+            isError = errorState.value,
             modifier = modifier
                 .fillMaxWidth(),
             shape = RoundedCornerShape(12.dp),
@@ -58,7 +60,6 @@ fun TextFieldUnit(
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = imeAction),
             keyboardActions = KeyboardActions(
                 onAny = {
-                    errorState.value = true
                     onImeAction()
                 }
 
@@ -67,7 +68,7 @@ fun TextFieldUnit(
         )
         if (errorState.value) {
             Text(
-                text = "Error message",
+                text = errorText,
                 color = MaterialTheme.colors.error,
                 style = MaterialTheme.typography.caption,
                 modifier = Modifier.padding(start = 16.dp),
@@ -82,7 +83,8 @@ fun Password(
     passwordState: MutableState<TextFieldValue>,
     imeAction: ImeAction,
     onImeAction: () -> Unit = {},
-    text: String,
+    hint: String,
+    errorText: String,
     errorState: MutableState<Boolean>,
     modifier: Modifier
 ) {
@@ -105,7 +107,7 @@ fun Password(
             label = {
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                     Text(
-                        text = text,
+                        text = hint,
                         style = MaterialTheme.typography.body1
                     )
                 }
@@ -132,19 +134,18 @@ fun Password(
             } else {
                 PasswordVisualTransformation()
             },
-
+            isError = errorState.value,
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = imeAction),
             keyboardActions = KeyboardActions(
                 onAny = {
-                    errorState.value = true
-
                     onImeAction()
                 }
             )
+
         )
         if (errorState.value) {
             Text(
-                text = "Error message",
+                text = errorText,
                 color = MaterialTheme.colors.error,
                 style = MaterialTheme.typography.caption,
                 modifier = Modifier.padding(start = 16.dp),

@@ -25,6 +25,7 @@ import kotlinx.coroutines.delay
 fun SplashScreen(
     navController: NavController,
     viewModel: SplashScreenViewModel = viewModel()
+
 ) {
     val scale = remember {
         Animatable(0f)
@@ -43,9 +44,8 @@ fun SplashScreen(
         if (viewModel.currentUser == null) {
 
             navController.navigate(Screens.Login.route) {
-                popUpTo(Screens.Login.route) {
+                popUpTo(Screens.Splash.route) {
                     inclusive = true
-
 
                 }
             }
@@ -57,27 +57,21 @@ fun SplashScreen(
             }
         }
     }
-    Scaffold() {
+    Scaffold {
 
         Box(
             modifier = Modifier
                 .fillMaxSize(),
-
             contentAlignment = Alignment.Center,
-
-            ) {
-
+        ) {
 
             Image(
-                painter = painterResource(id = R.drawable.logo_with_title),
+                painter = painterResource(id = R.drawable.logo_no_text),
                 contentDescription = null, // decorative element
                 Modifier
                     .scale(scale = scale.value)
                     .align(Alignment.Center),
-
-                )
-
-
+            )
         }
     }
 }
