@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -29,14 +28,14 @@ fun AppMainScreen() {
     val navController: NavHostController = rememberNavController()
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    var state:Boolean =false
+    var drawerGesturesEnabled = false
     val currentRoute = navBackStackEntry?.destination?.route
     val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
     val scope = rememberCoroutineScope()
     // If you want the drawer from the right side, uncomment the following
     // CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
     Scaffold(
-        drawerGesturesEnabled = state,
+        drawerGesturesEnabled = drawerGesturesEnabled,
 
         scaffoldState = scaffoldState,
         topBar = {
@@ -48,7 +47,7 @@ fun AppMainScreen() {
                     buttonIcon = Icons.Filled.Menu,
                     modifier = Modifier.size(0.dp)
                 )
-                state =true
+                drawerGesturesEnabled = true
             }
         },
 //        drawerScrimColor = Color.Red,  // Color for the fade background when you open/close the drawer
