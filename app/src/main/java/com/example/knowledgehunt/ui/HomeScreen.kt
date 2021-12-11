@@ -13,14 +13,7 @@ fun HomeScreen(openDrawer: () -> Unit, navController: NavHostController) {
 
     Scaffold(
         topBar = {
-            TopBar(
-                title = "Home",
-                buttonIcon = Icons.Filled.Menu,
-                onButtonClicked = {
-                    openDrawer()
-                    navController.popBackStack()
-                }
-            )
+
         },
 
     ) {

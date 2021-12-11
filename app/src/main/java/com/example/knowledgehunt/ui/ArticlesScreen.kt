@@ -20,14 +20,7 @@ import com.example.knowledgehunt.ui.components.TopBar
 fun Articles(openDrawer: () -> Unit, navController: NavHostController) {
     Scaffold(
         topBar = {
-            TopBar(
-                title = "Articles",
-                buttonIcon = Icons.Filled.Menu,
-                onButtonClicked = {
-                    openDrawer()
-                    navController.popBackStack()
-                }
-            )
+
         }
     ) {
         Column(modifier = Modifier.fillMaxSize()) {

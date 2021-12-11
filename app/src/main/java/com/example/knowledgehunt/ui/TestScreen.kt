@@ -21,11 +21,7 @@ import com.example.knowledgehunt.ui.components.TopBar
 @Composable
 fun Screen(navController: NavController) {
     Column(modifier = Modifier.fillMaxSize()) {
-        TopBar(
-            title = "Help",
-            buttonIcon = Icons.Filled.ArrowBack,
-            onButtonClicked = { navController.popBackStack() }
-        )
+
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,

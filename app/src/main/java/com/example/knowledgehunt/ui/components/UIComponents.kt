@@ -3,15 +3,26 @@ package com.example.knowledgehunt.ui.components
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
-fun TopBar(title: String = "", buttonIcon: ImageVector, onButtonClicked: () -> Unit) {
+fun TopBar(
+    title: String = "",
+    scope: CoroutineScope,
+    scaffoldState: ScaffoldState,
+    buttonIcon: ImageVector,
+    modifier:Modifier
+) {
     TopAppBar(
+
         title = {
 
             Text(
@@ -19,8 +30,12 @@ fun TopBar(title: String = "", buttonIcon: ImageVector, onButtonClicked: () -> U
             )
         },
         navigationIcon = {
-            IconButton(onClick = { onButtonClicked() } ) {
-                Icon(buttonIcon, contentDescription = "")
+            IconButton(onClick = {
+                scope.launch {
+                    scaffoldState.drawerState.open()
+                }
+            }) {
+                Icon(Icons.Filled.Menu, "")
             }
         },
         actions = {
@@ -46,3 +61,6 @@ fun TopBar(title: String = "", buttonIcon: ImageVector, onButtonClicked: () -> U
         backgroundColor = MaterialTheme.colors.primaryVariant
     )
 }
+
+
+

@@ -16,14 +16,7 @@ import com.example.knowledgehunt.ui.components.TopBar
 @Composable
 fun About(openDrawer: () -> Unit, navController: NavHostController) {
     Column(modifier = Modifier.fillMaxSize()) {
-        TopBar(
-            title = "About",
-            buttonIcon = Icons.Filled.Menu,
-            onButtonClicked = {
-                openDrawer()
-                navController.popBackStack()
-            }
-        )
+
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,

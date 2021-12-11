@@ -2,11 +2,12 @@ package com.example.knowledgehunt.ui.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,12 +16,15 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.knowledgehunt.R
+import com.example.knowledgehunt.ui.Navigation
 import com.example.knowledgehunt.ui.theme.KnowledgeHuntTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 sealed class Screens(val title: String, val route: String) {
     object Home : Screens("Home", "home")
@@ -46,47 +50,65 @@ private val icon = listOf(
 @Composable
 fun AppDrawer(
     currentRoute: String,
-    onDestinationClicked: (route: String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    scope: CoroutineScope,
+    scaffoldState: ScaffoldState,
 ) {
     Column(modifier = modifier.fillMaxSize()) {
-        JetNewsLogo(Modifier.padding(16.dp))
+        HuntLogo(Modifier.padding(16.dp))
         Divider(color = MaterialTheme.colors.onSurface.copy(alpha = .2f))
         Spacer(Modifier.height(24.dp))
         screens.forEachIndexed { index, screen ->
 
             DrawerButton(
-
-
                 icon = icon[index],
                 label = screen.title,
                 isSelected = currentRoute == screen.route,
                 action = {
-                    onDestinationClicked(screen.route)
-                }
-            )
+                    navController.navigate(screen.route) {
+                        // Pop up to the start destination of the graph to
+                        // avoid building up a large stack of destinations
+                        // on the back stack as users select items
+                        navController.graph.startDestinationRoute?.let { route ->
+                            popUpTo(route) {
+                                saveState = true
+                            }
+                        }
+                        // Avoid multiple copies of the same destination when
+                        // reselecting the same item
+                        launchSingleTop = true
+                        // Restore state when reselecting a previously selected item
+                        restoreState = true
+                    }
+                    // Close drawer
+                    scope.launch {
+                        scaffoldState.drawerState.close()
+                    }
+                })
         }
     }
 }
 
+
 @Composable
-private fun JetNewsLogo(modifier: Modifier = Modifier) {
+private fun HuntLogo(modifier: Modifier = Modifier) {
     Row(modifier = modifier) {
-        JetnewsIcon()
+        HuntIcon()
         Spacer(Modifier.width(8.dp))
         Image(
             painter = painterResource(id = R.drawable.logo_with_title),
             contentDescription = null, // decorative element
-            )
+        )
     }
 }
 
 @Composable
-fun JetnewsIcon(modifier: Modifier = Modifier) {
+fun HuntIcon(modifier: Modifier = Modifier) {
     Image(
         painter = painterResource(id = R.drawable.logo_with_title),
         contentDescription = null, // decorative element
-        )
+    )
 }
 
 @Composable
@@ -173,16 +195,19 @@ fun NavigationIcon(
     )
 }
 
-@Preview("Drawer contents")
-@Preview("Drawer contents (dark)", uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun PreviewAppDrawer() {
-    KnowledgeHuntTheme {
-        Surface {
-            AppDrawer(
-                currentRoute = screens[0].route,
-                onDestinationClicked = {}
-            )
-        }
-    }
-}
+//@Preview("Drawer contents")
+//@Preview("Drawer contents (dark)", uiMode = Configuration.UI_MODE_NIGHT_YES)
+//@Composable
+//fun PreviewAppDrawer() {
+//    KnowledgeHuntTheme {
+//        Surface {
+//            AppDrawer(
+//                currentRoute = screens[0].route,
+//                modifier = Modifier,
+//                navController =,
+//                CoroutineScope()
+//
+//            )
+//        }
+//    }
+//}
