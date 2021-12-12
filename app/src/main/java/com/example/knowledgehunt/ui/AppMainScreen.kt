@@ -8,9 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,26 +26,30 @@ fun AppMainScreen() {
     val navController: NavHostController = rememberNavController()
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    var drawerGesturesEnabled = false
+    val drawerGesturesEnabled: MutableState<Boolean> = remember {
+        mutableStateOf(
+            false
+        )
+    }
     val currentRoute = navBackStackEntry?.destination?.route
     val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
     val scope = rememberCoroutineScope()
     // If you want the drawer from the right side, uncomment the following
     // CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
     Scaffold(
-        drawerGesturesEnabled = drawerGesturesEnabled,
+        drawerGesturesEnabled = drawerGesturesEnabled.value,
 
         scaffoldState = scaffoldState,
         topBar = {
             if (currentRoute == Screens.Articles.route || currentRoute == Screens.Home.route || currentRoute == Screens.Help.route) {
                 TopBar(
-                    title = "aa",
+                    title = currentRoute.toString(),
                     scope = scope,
                     scaffoldState = scaffoldState,
                     buttonIcon = Icons.Filled.Menu,
                     modifier = Modifier.size(0.dp)
                 )
-                drawerGesturesEnabled = true
+                drawerGesturesEnabled.value = true
             }
         },
 //        drawerScrimColor = Color.Red,  // Color for the fade background when you open/close the drawer
