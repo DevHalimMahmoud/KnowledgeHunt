@@ -107,15 +107,19 @@ fun LoginScreen(navController: NavHostController) {
             )
             Spacer(modifier = Modifier.size(16.dp))
             OutlinedButtonItem(
+
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(8.dp)
                     .align(CenterHorizontally),
                 enableState = viewModel.loginButtonState,
-                text = "Create Account"
+                text = "Create Account",
+                onClick = {
+                    navController.navigate(Screens.Register.route)
+                }
             )
             if (viewModel.openDialog.value) {
-                ForgetDialog(viewModel = viewModel, coroutineScope, navController, context)
+                ForgetDialog(viewModel = viewModel, coroutineScope, context)
 
             }
         }
@@ -126,7 +130,6 @@ fun LoginScreen(navController: NavHostController) {
 @Composable
 fun ForgetDialog(
     viewModel: LoginScreenViewModel, coroutineScope: CoroutineScope,
-    navController: NavHostController,
     context: Context
 ) {
 
@@ -147,7 +150,6 @@ fun ForgetDialog(
                 onImeAction = {
                     viewModel.dialogEmailErrorState.value =
                         viewModel.dialogEmailState.value.text.isEmpty()
-                    viewModel.focusRequester.requestFocus()
                 },
                 modifier = Modifier,
                 imeAction = ImeAction.Done,
@@ -185,7 +187,6 @@ fun onResetClick(
         coroutineScope.launch(Dispatchers.IO, CoroutineStart.UNDISPATCHED) {
             viewModel.resetPasswordResults().addOnCompleteListener { task ->
                 task.addOnSuccessListener {
-
                     Toast.makeText(
                         context,
                         "Reset Mail Sent Please Check Your Email",

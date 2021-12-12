@@ -99,8 +99,14 @@ fun Navigation(navController: NavHostController) {
                 navController = navController
             )
         }
+        composable(Screens.Register.route) {
+            RegisterScreen(
+                navController = navController
+            )
+        }
     }
 }
+
 
 @Preview
 @Composable
