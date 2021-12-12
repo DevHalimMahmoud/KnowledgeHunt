@@ -6,6 +6,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -35,7 +36,6 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(navController: NavHostController) {
-
     val viewModel: LoginScreenViewModel = viewModel()
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -92,6 +92,7 @@ fun LoginScreen(navController: NavHostController) {
             )
             TextButton(
                 onClick = {
+                    viewModel.openDialog.value = true
 
                 },
                 modifier = Modifier.fillMaxWidth()
@@ -113,8 +114,102 @@ fun LoginScreen(navController: NavHostController) {
                 enableState = viewModel.loginButtonState,
                 text = "Create Account"
             )
+            if (viewModel.openDialog.value) {
+                ForgetDialog(viewModel = viewModel, coroutineScope, navController, context)
+
+            }
         }
     }
+
+}
+
+@Composable
+fun ForgetDialog(
+    viewModel: LoginScreenViewModel, coroutineScope: CoroutineScope,
+    navController: NavHostController,
+    context: Context
+) {
+
+    AlertDialog(
+        onDismissRequest = {
+            // Dismiss the dialog when the user clicks outside the dialog or on the back
+            // button. If you want to disable that functionality, simply use an empty
+            // onCloseRequest.
+            viewModel.openDialog.value = false
+        },
+        title = {
+            Text(text = "Reset Password")
+        },
+        dismissButton = {
+
+            TextFieldUnit(
+                hint = "Email",
+                onImeAction = {
+                    viewModel.dialogEmailErrorState.value =
+                        viewModel.dialogEmailState.value.text.isEmpty()
+                    viewModel.focusRequester.requestFocus()
+                },
+                modifier = Modifier,
+                imeAction = ImeAction.Done,
+                errorState = viewModel.dialogEmailErrorState,
+                textState = viewModel.dialogEmailState,
+                errorText = "please enter a valid email"
+            )
+        },
+        confirmButton = {
+
+            OutlinedButtonItem(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(8.dp),
+                enableState = viewModel.loginButtonState,
+                text = "Reset Password",
+                onClick = {
+                    onResetClick(viewModel = viewModel, coroutineScope, context)
+                    viewModel.openDialog.value = false
+                }
+            )
+        },
+    )
+}
+
+@Provides
+fun onResetClick(
+
+    viewModel: LoginScreenViewModel,
+    coroutineScope: CoroutineScope,
+    context: Context
+) {
+    viewModel.openDialog.value = false
+    if (viewModel.dialogEmailState.value.text.isNotEmpty()) {
+        coroutineScope.launch(Dispatchers.IO, CoroutineStart.UNDISPATCHED) {
+            viewModel.resetPasswordResults().addOnCompleteListener { task ->
+                task.addOnSuccessListener {
+
+                    Toast.makeText(
+                        context,
+                        "Reset Mail Sent Please Check Your Email",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                task.addOnFailureListener { e ->
+                    Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
+                }
+            }
+
+        }
+
+
+    } else {
+        viewModel.loginButtonState.value = true
+
+        Toast.makeText(
+            context,
+            "Please Enter a Valid Email and Password",
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
 
 }
 

@@ -23,14 +23,10 @@ import com.example.knowledgehunt.ui.components.TopBar
 
 @Composable
 fun AppMainScreen() {
-    val navController: NavHostController = rememberNavController()
 
+    val navController: NavHostController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val drawerGesturesEnabled: MutableState<Boolean> = remember {
-        mutableStateOf(
-            false
-        )
-    }
+    val drawerGesturesEnabled: MutableState<Boolean> = remember { mutableStateOf(false) }
     val currentRoute = navBackStackEntry?.destination?.route
     val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
     val scope = rememberCoroutineScope()
@@ -43,7 +39,7 @@ fun AppMainScreen() {
         topBar = {
             if (currentRoute == Screens.Articles.route || currentRoute == Screens.Home.route || currentRoute == Screens.Help.route) {
                 TopBar(
-                    title = currentRoute.toString(),
+                    title = currentRoute.toString().uppercase(),
                     scope = scope,
                     scaffoldState = scaffoldState,
                     buttonIcon = Icons.Filled.Menu,

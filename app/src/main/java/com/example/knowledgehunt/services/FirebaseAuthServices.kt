@@ -60,7 +60,11 @@ object FirebaseAuthServices {
             email,
             password
         )
+    }
 
-
+    @Provides
+    @ViewModelScoped
+    suspend fun resetPassword(email: String): Task<Void> {
+        return getAuthInstance().sendPasswordResetEmail(email)
     }
 }
