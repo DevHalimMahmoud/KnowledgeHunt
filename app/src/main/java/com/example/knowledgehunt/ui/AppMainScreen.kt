@@ -1,22 +1,20 @@
 package com.example.knowledgehunt.ui
 
 import SplashScreen
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.DrawerValue
 import androidx.compose.material.Scaffold
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.knowledgehunt.R
 import com.example.knowledgehunt.ui.components.AppDrawer
 import com.example.knowledgehunt.ui.components.Screens
 import com.example.knowledgehunt.ui.components.TopBar
@@ -42,8 +40,8 @@ fun AppMainScreen() {
                     title = currentRoute.toString().uppercase(),
                     scope = scope,
                     scaffoldState = scaffoldState,
-                    buttonIcon = Icons.Filled.Menu,
-                    modifier = Modifier.size(0.dp)
+                    buttonIcon = painterResource(id = R.drawable.logo_no_text),
+                    modifier = Modifier
                 )
                 drawerGesturesEnabled.value = true
             }

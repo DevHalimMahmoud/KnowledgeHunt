@@ -10,7 +10,6 @@ import com.example.knowledgehunt.services.FirebaseAuthServices.login
 import com.example.knowledgehunt.services.FirebaseAuthServices.resetPassword
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
-import kotlinx.coroutines.runBlocking
 
 
 class LoginScreenViewModel constructor(
@@ -25,21 +24,17 @@ class LoginScreenViewModel constructor(
     val openDialog: MutableState<Boolean> = mutableStateOf(false)
 ) : ViewModel(), LifecycleObserver {
 
-    fun loginResults(
+    suspend fun loginResults(
     ): Task<AuthResult> {
-        return runBlocking {
-            login(
-                emailState.value.text,
-                password = passwordState.value.text
-            )
-        }
+        return login(
+            emailState.value.text,
+            password = passwordState.value.text
+        )
     }
 
-    fun resetPasswordResults(
+    suspend fun resetPasswordResults(
     ): Task<Void> {
-        return runBlocking {
-            resetPassword(dialogEmailState.value.text)
-        }
+        return resetPassword(dialogEmailState.value.text)
     }
 
 }

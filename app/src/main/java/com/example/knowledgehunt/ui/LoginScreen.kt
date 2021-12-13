@@ -28,7 +28,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.knowledgehunt.R
 import com.example.knowledgehunt.ui.components.*
 import com.example.knowledgehunt.viewModels.LoginScreenViewModel
-import com.google.android.datatransport.runtime.dagger.Provides
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
@@ -93,7 +92,6 @@ fun LoginScreen(navController: NavHostController) {
             TextButton(
                 onClick = {
                     viewModel.openDialog.value = true
-
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -107,7 +105,6 @@ fun LoginScreen(navController: NavHostController) {
             )
             Spacer(modifier = Modifier.size(16.dp))
             OutlinedButtonItem(
-
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(8.dp)
@@ -124,7 +121,6 @@ fun LoginScreen(navController: NavHostController) {
             }
         }
     }
-
 }
 
 @Composable
@@ -132,7 +128,6 @@ fun ForgetDialog(
     viewModel: LoginScreenViewModel, coroutineScope: CoroutineScope,
     context: Context
 ) {
-
     AlertDialog(
         onDismissRequest = {
             // Dismiss the dialog when the user clicks outside the dialog or on the back
@@ -159,7 +154,6 @@ fun ForgetDialog(
             )
         },
         confirmButton = {
-
             OutlinedButtonItem(
                 modifier = Modifier
                     .fillMaxSize()
@@ -176,7 +170,6 @@ fun ForgetDialog(
 }
 
 fun onResetClick(
-
     viewModel: LoginScreenViewModel,
     coroutineScope: CoroutineScope,
     context: Context
@@ -196,21 +189,15 @@ fun onResetClick(
                     Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
                 }
             }
-
         }
-
-
     } else {
         viewModel.loginButtonState.value = true
-
         Toast.makeText(
             context,
             "Please Enter a Valid Email and Password",
             Toast.LENGTH_LONG
         ).show()
     }
-
-
 }
 
 fun onLoginClick(
@@ -228,7 +215,6 @@ fun onLoginClick(
                     navController.navigate(Screens.Home.route) {
                         popUpTo(Screens.Login.route) {
                             inclusive = true
-
                         }
                     }
                     Toast.makeText(context, "Successful login", Toast.LENGTH_LONG)
@@ -241,22 +227,15 @@ fun onLoginClick(
                         .show()
                 }
             }
-
         }
-
-
     } else {
         viewModel.loginButtonState.value = true
-
         Toast.makeText(
             context,
             "Please Enter a Valid Email and Password",
             Toast.LENGTH_LONG
-        )
-            .show()
+        ).show()
     }
-
-
 }
 
 @Preview(showBackground = true)
