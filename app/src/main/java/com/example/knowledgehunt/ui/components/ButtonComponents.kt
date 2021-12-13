@@ -24,7 +24,7 @@ fun ButtonItem(
         colors = ButtonDefaults.buttonColors(
             disabledBackgroundColor = Color.LightGray
         ),
-        onClick = {onClick()},
+        onClick = { onClick() },
         modifier = modifier,
         shape = RoundedCornerShape(16.dp),
 
@@ -47,7 +47,7 @@ fun OutlinedButtonItem(
 
     OutlinedButton(
 
-        onClick = {onClick()},
+        onClick = { onClick() },
         modifier = modifier,
         shape = RoundedCornerShape(16.dp),
 

@@ -1,8 +1,6 @@
 package com.example.knowledgehunt.ui.components
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -13,10 +11,7 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -27,52 +22,62 @@ fun TextFieldUnit(
     hint: String,
     errorText: String,
     errorState: MutableState<Boolean>,
-    modifier: Modifier
+    modifier: Modifier,
+    KeyboardType: KeyboardType
 ) {
 
 
-    Column(Modifier.padding(16.dp)) {
+    Box(modifier = modifier) {
+
+        Column() {
 
 
-        OutlinedTextField(
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.Red,
-                unfocusedBorderColor = Color.Gray,
-            ),
-            value = textState.value,
-            onValueChange = {
-                textState.value = it
+            OutlinedTextField(
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Color.Red,
+                    unfocusedBorderColor = Color.Gray,
+                ),
+                value = textState.value,
+                onValueChange = {
+                    textState.value = it
 
-            },
-            label = {
-                CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                    Text(
-                        text = hint,
-                        style = MaterialTheme.typography.body1
-                    )
-                }
-            },
-            isError = errorState.value,
-            modifier = modifier
-                .fillMaxWidth(),
-            shape = RoundedCornerShape(12.dp),
-            textStyle = MaterialTheme.typography.body1,
-            keyboardOptions = KeyboardOptions.Default.copy(imeAction = imeAction),
-            keyboardActions = KeyboardActions(
-                onAny = {
-                    onImeAction()
-                }
+                },
+                label = {
+                    CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+                        Text(
+                            text = hint,
+                            style = MaterialTheme.typography.body1
+                        )
+                    }
+                },
+                isError = errorState.value,
+
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                shape = RoundedCornerShape(12.dp),
+                textStyle = MaterialTheme.typography.body1,
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType,
+                    imeAction = imeAction
+                ),
+
+                keyboardActions = KeyboardActions(
+                    onAny = {
+                        onImeAction()
+                    }
+
+                )
 
             )
-
-        )
-        if (errorState.value) {
-            Text(
-                text = errorText,
-                color = MaterialTheme.colors.error,
-                style = MaterialTheme.typography.caption,
-                modifier = Modifier.padding(start = 16.dp),
-            )
+            if (errorState.value) {
+                Text(
+                    text = errorText,
+                    color = MaterialTheme.colors.error,
+                    style = MaterialTheme.typography.caption,
+                    modifier = Modifier.padding(start = 16.dp),
+                )
+            }
         }
     }
 }
@@ -86,70 +91,79 @@ fun Password(
     hint: String,
     errorText: String,
     errorState: MutableState<Boolean>,
-    modifier: Modifier
+    modifier: Modifier,
+    keyboardType: KeyboardType
 ) {
     val showPassword = remember { mutableStateOf(false) }
-    Column(Modifier.padding(16.dp)) {
-        OutlinedTextField(
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.Red,
-                unfocusedBorderColor = Color.Gray,
+    Box(modifier = modifier) {
+        Column() {
 
-                ),
-            value = passwordState.value,
-            onValueChange = {
-                passwordState.value = it
-            },
-            modifier = modifier
-                .fillMaxWidth(),
-            shape = RoundedCornerShape(12.dp),
-            textStyle = MaterialTheme.typography.body1,
-            label = {
-                CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                    Text(
-                        text = hint,
-                        style = MaterialTheme.typography.body1
-                    )
-                }
-            },
-            trailingIcon = {
-                if (showPassword.value) {
-                    IconButton(onClick = { showPassword.value = false }) {
-                        Icon(
-                            imageVector = Icons.Filled.Visibility,
-                            contentDescription = null
+
+            OutlinedTextField(
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Color.Red,
+                    unfocusedBorderColor = Color.Gray,
+
+                    ),
+                value = passwordState.value,
+                onValueChange = {
+                    passwordState.value = it
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                shape = RoundedCornerShape(12.dp),
+                textStyle = MaterialTheme.typography.body1,
+                label = {
+                    CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+                        Text(
+                            text = hint,
+                            style = MaterialTheme.typography.body1
                         )
                     }
+                },
+                trailingIcon = {
+                    if (showPassword.value) {
+                        IconButton(onClick = { showPassword.value = false }) {
+                            Icon(
+                                imageVector = Icons.Filled.Visibility,
+                                contentDescription = null
+                            )
+                        }
+                    } else {
+                        IconButton(onClick = { showPassword.value = true }) {
+                            Icon(
+                                imageVector = Icons.Filled.VisibilityOff,
+                                contentDescription = null
+                            )
+                        }
+                    }
+                },
+                visualTransformation = if (showPassword.value) {
+                    VisualTransformation.None
                 } else {
-                    IconButton(onClick = { showPassword.value = true }) {
-                        Icon(
-                            imageVector = Icons.Filled.VisibilityOff,
-                            contentDescription = null
-                        )
+                    PasswordVisualTransformation()
+                },
+                isError = errorState.value,
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = keyboardType,
+                    imeAction = imeAction
+                ),
+                keyboardActions = KeyboardActions(
+                    onAny = {
+                        onImeAction()
                     }
-                }
-            },
-            visualTransformation = if (showPassword.value) {
-                VisualTransformation.None
-            } else {
-                PasswordVisualTransformation()
-            },
-            isError = errorState.value,
-            keyboardOptions = KeyboardOptions.Default.copy(imeAction = imeAction),
-            keyboardActions = KeyboardActions(
-                onAny = {
-                    onImeAction()
-                }
-            )
+                )
 
-        )
-        if (errorState.value) {
-            Text(
-                text = errorText,
-                color = MaterialTheme.colors.error,
-                style = MaterialTheme.typography.caption,
-                modifier = Modifier.padding(start = 16.dp),
             )
+            if (errorState.value) {
+                Text(
+                    text = errorText,
+                    color = MaterialTheme.colors.error,
+                    style = MaterialTheme.typography.caption,
+                    modifier = Modifier.padding(start = 16.dp),
+                )
+            }
         }
     }
 }

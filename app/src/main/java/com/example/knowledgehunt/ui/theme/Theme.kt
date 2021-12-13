@@ -28,6 +28,7 @@ private val DarkThemeColors = darkColors(
     error = Red200,
     onBackground = Color.White
 )
+
 @Composable
 fun KnowledgeHuntTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

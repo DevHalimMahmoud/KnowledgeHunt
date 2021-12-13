@@ -20,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -51,19 +52,21 @@ fun LoginScreen(navController: NavHostController) {
                 contentDescription = null, // decorative element
                 Modifier
                     .align(CenterHorizontally),
-
-                )
+            )
             TextFieldUnit(
                 hint = "Email",
                 onImeAction = {
                     viewModel.emailErrorState.value = viewModel.emailState.value.text.isEmpty()
                     viewModel.focusRequester.requestFocus()
                 },
-                modifier = Modifier,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 imeAction = ImeAction.Next,
                 errorState = viewModel.emailErrorState,
                 textState = viewModel.emailState,
-                errorText = "please enter a valid email"
+                errorText = "please enter a valid email",
+                KeyboardType = KeyboardType.Email
             )
             Password(
                 hint = "password",
@@ -72,11 +75,15 @@ fun LoginScreen(navController: NavHostController) {
                         viewModel.passwordState.value.text.isEmpty()
                     viewModel.focusRequester.freeFocus()
                 },
-                modifier = Modifier.focusRequester(viewModel.focusRequester),
+                modifier = Modifier
+                    .focusRequester(viewModel.focusRequester)
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 errorState = viewModel.passwordErrorState,
                 passwordState = viewModel.passwordState,
                 imeAction = ImeAction.Done,
-                errorText = "please enter a valid password"
+                errorText = "please enter a valid password",
+                keyboardType = KeyboardType.Password
             )
             ButtonItem(
                 modifier = Modifier
@@ -150,7 +157,8 @@ fun ForgetDialog(
                 imeAction = ImeAction.Done,
                 errorState = viewModel.dialogEmailErrorState,
                 textState = viewModel.dialogEmailState,
-                errorText = "please enter a valid email"
+                errorText = "please enter a valid email",
+                KeyboardType = KeyboardType.Email
             )
         },
         confirmButton = {

@@ -1,6 +1,5 @@
 package com.example.knowledgehunt.ui.components
 
-import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -16,13 +15,9 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.knowledgehunt.R
-import com.example.knowledgehunt.ui.Navigation
-import com.example.knowledgehunt.ui.theme.KnowledgeHuntTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
