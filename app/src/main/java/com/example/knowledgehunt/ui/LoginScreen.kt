@@ -175,7 +175,6 @@ fun ForgetDialog(
     )
 }
 
-@Provides
 fun onResetClick(
 
     viewModel: LoginScreenViewModel,
@@ -214,7 +213,6 @@ fun onResetClick(
 
 }
 
-@Provides
 fun onLoginClick(
 
     viewModel: LoginScreenViewModel,

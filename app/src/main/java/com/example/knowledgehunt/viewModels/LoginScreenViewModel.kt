@@ -8,61 +8,33 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
 import com.example.knowledgehunt.services.FirebaseAuthServices.login
 import com.example.knowledgehunt.services.FirebaseAuthServices.resetPassword
-import com.google.android.datatransport.runtime.dagger.Provides
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.runBlocking
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@HiltViewModel
-class LoginScreenViewModel @Inject constructor() : ViewModel(), LifecycleObserver {
-    val openDialog = mutableStateOf(false)
 
-    var dialogEmailState: MutableState<TextFieldValue> = mutableStateOf(
-        TextFieldValue()
-    )
+class LoginScreenViewModel constructor(
+    var dialogEmailState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue()),
+    var dialogEmailErrorState: MutableState<Boolean> = mutableStateOf(false),
+    var focusRequester: FocusRequester = FocusRequester(),
+    var emailState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue()),
+    var emailErrorState: MutableState<Boolean> = mutableStateOf(false),
+    var passwordState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue()),
+    var passwordErrorState: MutableState<Boolean> = mutableStateOf(false),
+    var loginButtonState: MutableState<Boolean> = mutableStateOf(true),
+    val openDialog: MutableState<Boolean> = mutableStateOf(false)
+) : ViewModel(), LifecycleObserver {
 
-    var dialogEmailErrorState: MutableState<Boolean> = mutableStateOf(
-        false
-    )
-
-    var focusRequester: FocusRequester = FocusRequester()
-
-    var emailState: MutableState<TextFieldValue> = mutableStateOf(
-        TextFieldValue()
-    )
-
-    var emailErrorState: MutableState<Boolean> = mutableStateOf(
-        false
-    )
-
-    var passwordState: MutableState<TextFieldValue> = mutableStateOf(
-        TextFieldValue()
-    )
-    var passwordErrorState: MutableState<Boolean> = mutableStateOf(
-        false
-    )
-    var loginButtonState: MutableState<Boolean> = mutableStateOf(
-        true
-    )
-
-    @Provides
-    @Singleton
     fun loginResults(
     ): Task<AuthResult> {
         return runBlocking {
             login(
-
                 emailState.value.text,
                 password = passwordState.value.text
             )
         }
     }
 
-    @Provides
-    @Singleton
     fun resetPasswordResults(
     ): Task<Void> {
         return runBlocking {
