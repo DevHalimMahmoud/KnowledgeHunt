@@ -10,6 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -55,7 +59,8 @@ fun OutlinedButtonItem(
     ) {
         Text(
             text = text,
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(8.dp),
+            fontFamily = FontFamily.Default,
         )
     }
 }

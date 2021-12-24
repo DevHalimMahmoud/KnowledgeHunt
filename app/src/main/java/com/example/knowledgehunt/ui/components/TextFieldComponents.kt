@@ -84,7 +84,7 @@ fun TextFieldUnit(
 
 
 @Composable
-fun Password(
+fun PasswordFiledUnit(
     passwordState: MutableState<TextFieldValue>,
     imeAction: ImeAction,
     onImeAction: () -> Unit = {},

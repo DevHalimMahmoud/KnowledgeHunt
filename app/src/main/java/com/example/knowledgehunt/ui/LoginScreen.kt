@@ -68,7 +68,7 @@ fun LoginScreen(navController: NavHostController) {
                 errorText = "please enter a valid email",
                 KeyboardType = KeyboardType.Email
             )
-            Password(
+            PasswordFiledUnit(
                 hint = "password",
                 onImeAction = {
                     viewModel.passwordErrorState.value =

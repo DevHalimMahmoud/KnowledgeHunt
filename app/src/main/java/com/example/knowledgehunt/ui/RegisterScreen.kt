@@ -37,12 +37,12 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.example.knowledgehunt.ui.components.BackTopBar
-import com.example.knowledgehunt.ui.components.OutlinedButtonItem
-import com.example.knowledgehunt.ui.components.Screens
-import com.example.knowledgehunt.ui.components.TextFieldUnit
+import com.example.knowledgehunt.ui.components.*
 import com.example.knowledgehunt.viewModels.RegisterScreenViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -60,17 +60,27 @@ fun RegisterScreen(navController: NavHostController) {
             )
         },
         floatingActionButton = {
-            Image(
-                Icons.Rounded.Check,
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(50.dp)
-                    .clip(CircleShape)
-                    .border(1.dp, MaterialTheme.colors.primary, CircleShape)
-                    .clickable { },
+            if (viewModel.SignupProgressIndicator.value) {
+                Image(
+                    Icons.Rounded.Check,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(55.dp)
+                        .clip(CircleShape)
+                        .border(1.dp, MaterialTheme.colors.primary, CircleShape)
+                        .clickable { viewModel.SignupProgressIndicator.value = false },
+
+                    )
+            } else {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .size(55.dp)
+                        .clip(CircleShape)
 
                 )
+            }
+
 
         },
 
@@ -84,8 +94,36 @@ fun RegisterScreen(navController: NavHostController) {
 
             RequestContentPermission(viewModel, coroutineScope)
 
-
+            TextFieldUnit(
+                hint = "Email",
+                onImeAction = {
+                    viewModel.emailErrorState.value =
+                        viewModel.emailState.value.text.isEmpty()
+                },
+                modifier = Modifier
+                    .padding(8.dp),
+                imeAction = ImeAction.Next,
+                errorState = viewModel.emailErrorState,
+                textState = viewModel.emailState,
+                errorText = "Required!",
+                KeyboardType = KeyboardType.Text
+            )
+            PasswordFiledUnit(
+                hint = "Password",
+                onImeAction = {
+                    viewModel.passwordErrorState.value =
+                        viewModel.passwordState.value.text.isEmpty()
+                },
+                modifier = Modifier
+                    .padding(8.dp),
+                imeAction = ImeAction.Next,
+                errorState = viewModel.passwordErrorState,
+                passwordState = viewModel.passwordState,
+                errorText = "Required!",
+                keyboardType = KeyboardType.Password
+            )
             Row {
+
                 TextFieldUnit(
                     hint = "First Name",
                     onImeAction = {
@@ -214,7 +252,7 @@ fun RequestContentPermission(
             viewModel.imageUri?.value = uri
 
             if (viewModel.imageUri?.value != null) {
-                viewModel.loadingDismissRequest.value = true
+                viewModel.ImageCompressionProgressIndicator.value = true
                 Toast.makeText(
                     context,
                     "Compressing Image...",
@@ -250,9 +288,9 @@ fun RequestContentPermission(
                     .border(1.dp, MaterialTheme.colors.primary, CircleShape)
             )
         }
-        if (viewModel.loadingDismissRequest.value) {
+        if (viewModel.ImageCompressionProgressIndicator.value) {
             Dialog(
-                onDismissRequest = { viewModel.loadingDismissRequest.value=false},
+                onDismissRequest = { viewModel.ImageCompressionProgressIndicator.value = false },
                 DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true)
             ) {
                 Box(
@@ -291,7 +329,7 @@ fun handelImage(
         viewModel.compressProfileImage(context = context)
 
     }.invokeOnCompletion {
-        viewModel.loadingDismissRequest.value = false
+        viewModel.ImageCompressionProgressIndicator.value = false
     }
 }
 

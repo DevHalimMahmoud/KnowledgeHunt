@@ -12,6 +12,12 @@ import com.example.knowledgehunt.services.ImageServices
 
 
 class RegisterScreenViewModel(
+    var emailState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue()),
+    var emailErrorState: MutableState<Boolean> = mutableStateOf(false),
+
+    var passwordState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue()),
+    var passwordErrorState: MutableState<Boolean> = mutableStateOf(false),
+
     var firstNameState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue()),
     var firstNameErrorState: MutableState<Boolean> = mutableStateOf(false),
 
@@ -37,7 +43,9 @@ class RegisterScreenViewModel(
 
     var floatingActionButtonState: MutableState<Boolean> = mutableStateOf(true),
 
-    val loadingDismissRequest: MutableState<Boolean> = mutableStateOf(false)
+    val ImageCompressionProgressIndicator: MutableState<Boolean> = mutableStateOf(false),
+    val SignupProgressIndicator: MutableState<Boolean> = mutableStateOf(true)
+
 
 ) : ViewModel(), LifecycleObserver {
     suspend fun compressProfileImage(context: Context) {
