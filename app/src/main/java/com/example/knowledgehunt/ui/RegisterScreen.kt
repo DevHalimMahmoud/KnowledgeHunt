@@ -237,6 +237,7 @@ fun RegisterScreen(navController: NavHostController) {
 
                 }
             }
+            Spacer(modifier = Modifier.height(60.dp))
         }
     }
 }
