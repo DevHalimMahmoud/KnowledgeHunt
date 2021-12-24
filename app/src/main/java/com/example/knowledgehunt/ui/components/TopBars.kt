@@ -3,7 +3,9 @@ package com.example.knowledgehunt.ui.components
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.Logout
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
@@ -20,8 +22,10 @@ fun TopBar(
     scope: CoroutineScope,
     scaffoldState: ScaffoldState,
     buttonIcon: Painter,
-    modifier: Modifier
-) {
+    modifier: Modifier,
+    Logout: () -> Unit,
+
+    ) {
     TopAppBar(
         modifier = modifier,
         title = {
@@ -55,6 +59,15 @@ fun TopBar(
                 ) {
                     Icon(
                         imageVector = Icons.Default.AccountCircle,
+                        contentDescription = null,
+                        tint = MaterialTheme.colors.primary
+                    )
+                }
+                IconButton(
+                    onClick = { Logout() }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Logout,
                         contentDescription = null,
                         tint = MaterialTheme.colors.primary
                     )

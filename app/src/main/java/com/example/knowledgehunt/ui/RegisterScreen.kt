@@ -1,9 +1,7 @@
 package com.example.knowledgehunt.ui
 
-import android.graphics.ImageDecoder
+import android.content.Context
 import android.net.Uri
-import android.os.Build
-import android.provider.MediaStore
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -18,11 +16,15 @@ import androidx.compose.material.icons.filled.PersonOutline
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -30,6 +32,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.knowledgehunt.ui.components.BackTopBar
@@ -37,11 +41,16 @@ import com.example.knowledgehunt.ui.components.OutlinedButtonItem
 import com.example.knowledgehunt.ui.components.Screens
 import com.example.knowledgehunt.ui.components.TextFieldUnit
 import com.example.knowledgehunt.viewModels.RegisterScreenViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 @Composable
 fun RegisterScreen(navController: NavHostController) {
     val viewModel: RegisterScreenViewModel = viewModel()
+    val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         topBar = {
@@ -75,7 +84,7 @@ fun RegisterScreen(navController: NavHostController) {
                 .verticalScroll(rememberScrollState())
         ) {
 
-            RequestContentPermission(viewModel)
+            RequestContentPermission(viewModel, coroutineScope)
 
 
             Row {
@@ -197,14 +206,23 @@ fun RegisterScreen(navController: NavHostController) {
 }
 
 @Composable
-fun RequestContentPermission(viewModel: RegisterScreenViewModel) {
+fun RequestContentPermission(
+    viewModel: RegisterScreenViewModel,
+    coroutineScope: CoroutineScope,
+) {
     val context = LocalContext.current
-    val launcher: ManagedActivityResultLauncher<String, Uri?> = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        viewModel.imageUri.value = uri
-    }
-    Column {
+    val launcher: ManagedActivityResultLauncher<String, Uri?> =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
+            viewModel.imageUri?.value = uri
+            if (viewModel.imageUri?.value != null) {
+                viewModel.loadingDismissRequest.value = true
+
+                handelImage(viewModel = viewModel, coroutineScope, context)
+            }
+
+        }
+
+    Column(Modifier.fillMaxWidth()) {
         if (viewModel.bitmap.value == null) {
             Image(
                 Icons.Default.PersonOutline,
@@ -216,46 +234,59 @@ fun RequestContentPermission(viewModel: RegisterScreenViewModel) {
                     .clip(CircleShape)
                     .border(1.dp, Color.Gray, CircleShape)
             )
+        } else {
+
+            Image(
+                bitmap = viewModel.bitmap.value!!.asImageBitmap(),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .align(CenterHorizontally)
+                    .size(250.dp)
+                    .clip(CircleShape)
+                    .border(1.dp, MaterialTheme.colors.primary, CircleShape)
+            )
         }
-        viewModel.imageUri.value?.let {
-            if (Build.VERSION.SDK_INT < 28) {
-                viewModel.bitmap.value = MediaStore.Images
-                    .Media.getBitmap(context.contentResolver, it)
-
-            } else {
-                val source = ImageDecoder
-                    .createSource(context.contentResolver, it)
-                viewModel.bitmap.value = ImageDecoder.decodeBitmap(source)
-            }
-
-            viewModel.bitmap.value?.let { btm ->
-
-                Image(
-                    bitmap = btm.asImageBitmap(),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
+        if (viewModel.loadingDismissRequest.value) {
+            Dialog(
+                onDismissRequest = { },
+                DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false)
+            ) {
+                Box(
+                    contentAlignment = Center,
                     modifier = Modifier
-                        .align(CenterHorizontally)
-                        .size(250.dp)
-                        .clip(CircleShape)
-                        .border(1.dp, MaterialTheme.colors.primary, CircleShape)
-                )
+                        .size(100.dp)
+                        .background(Transparent, shape = RoundedCornerShape(8.dp))
+                ) {
+                    CircularProgressIndicator()
+                }
             }
-
         }
-        Spacer(modifier = Modifier.height(12.dp))
+    }
 
-        OutlinedButtonItem(
-            onClick = {
-                launcher.launch("image/*")
-            },
-            text = "Pick a Profile Image",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            enableState = mutableStateOf(true),
-        )
+    Spacer(modifier = Modifier.height(12.dp))
 
+    OutlinedButtonItem(
+        onClick = {
+            launcher.launch("image/*")
+        },
+        text = "Pick a Profile Image",
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        enableState = remember { mutableStateOf(true) },
+    )
+}
+fun handelImage(
+    viewModel: RegisterScreenViewModel,
+    coroutineScope: CoroutineScope,
+    context: Context,
+) {
+    coroutineScope.launch(Dispatchers.Default, CoroutineStart.DEFAULT) {
+        viewModel.compressImage(context = context)
+
+    }.invokeOnCompletion {
+        viewModel.loadingDismissRequest.value = false
     }
 }
 

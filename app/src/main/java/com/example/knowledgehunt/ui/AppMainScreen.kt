@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,10 +19,14 @@ import com.example.knowledgehunt.R
 import com.example.knowledgehunt.ui.components.AppDrawer
 import com.example.knowledgehunt.ui.components.Screens
 import com.example.knowledgehunt.ui.components.TopBar
+import com.example.knowledgehunt.viewModels.AppMainScreenViewModel
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun AppMainScreen() {
-
+    val viewModel: AppMainScreenViewModel = viewModel()
     val navController: NavHostController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val drawerGesturesEnabled: MutableState<Boolean> = remember { mutableStateOf(false) }
@@ -41,7 +46,16 @@ fun AppMainScreen() {
                     scope = scope,
                     scaffoldState = scaffoldState,
                     buttonIcon = painterResource(id = R.drawable.logo_no_text),
-                    modifier = Modifier
+                    modifier = Modifier,
+                    Logout = {
+                        scope.launch(Dispatchers.Default, CoroutineStart.UNDISPATCHED) {
+                            viewModel.LogoutResults()
+                        }
+                        navController.navigate(Screens.Login.route) {
+                            popUpTo(0)
+                            launchSingleTop = true
+                        }
+                    }
                 )
                 drawerGesturesEnabled.value = true
             }
