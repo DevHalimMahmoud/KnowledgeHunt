@@ -2,6 +2,7 @@ package com.example.knowledgehunt.ui
 
 import android.content.Context
 import android.net.Uri
+import android.widget.Toast
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -41,10 +42,7 @@ import com.example.knowledgehunt.ui.components.OutlinedButtonItem
 import com.example.knowledgehunt.ui.components.Screens
 import com.example.knowledgehunt.ui.components.TextFieldUnit
 import com.example.knowledgehunt.viewModels.RegisterScreenViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 
 @Composable
@@ -214,9 +212,14 @@ fun RequestContentPermission(
     val launcher: ManagedActivityResultLauncher<String, Uri?> =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
             viewModel.imageUri?.value = uri
+
             if (viewModel.imageUri?.value != null) {
                 viewModel.loadingDismissRequest.value = true
-
+                Toast.makeText(
+                    context,
+                    "Compressing Image...",
+                    Toast.LENGTH_SHORT
+                ).show()
                 handelImage(viewModel = viewModel, coroutineScope, context)
             }
 
@@ -268,6 +271,7 @@ fun RequestContentPermission(
 
     OutlinedButtonItem(
         onClick = {
+
             launcher.launch("image/*")
         },
         text = "Pick a Profile Image",
