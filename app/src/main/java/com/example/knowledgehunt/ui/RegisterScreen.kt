@@ -249,8 +249,8 @@ fun RequestContentPermission(
         }
         if (viewModel.loadingDismissRequest.value) {
             Dialog(
-                onDismissRequest = { },
-                DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false)
+                onDismissRequest = { viewModel.loadingDismissRequest.value=false},
+                DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true)
             ) {
                 Box(
                     contentAlignment = Center,
@@ -277,13 +277,14 @@ fun RequestContentPermission(
         enableState = remember { mutableStateOf(true) },
     )
 }
+
 fun handelImage(
     viewModel: RegisterScreenViewModel,
     coroutineScope: CoroutineScope,
     context: Context,
 ) {
     coroutineScope.launch(Dispatchers.Default, CoroutineStart.DEFAULT) {
-        viewModel.compressImage(context = context)
+        viewModel.compressProfileImage(context = context)
 
     }.invokeOnCompletion {
         viewModel.loadingDismissRequest.value = false

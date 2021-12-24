@@ -217,7 +217,7 @@ fun onLoginClick(
 ) {
     viewModel.loginButtonState.value = false
     if (viewModel.emailState.value.text.isNotEmpty() && viewModel.passwordState.value.text.isNotEmpty()) {
-        coroutineScope.launch(Dispatchers.IO, CoroutineStart.UNDISPATCHED) {
+        coroutineScope.launch(Dispatchers.IO, CoroutineStart.DEFAULT) {
             viewModel.loginResults().addOnCompleteListener { task ->
                 task.addOnSuccessListener {
                     navController.navigate(Screens.Home.route) {

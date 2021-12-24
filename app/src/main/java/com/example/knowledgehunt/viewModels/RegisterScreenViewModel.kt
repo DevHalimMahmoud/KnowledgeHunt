@@ -2,17 +2,13 @@ package com.example.knowledgehunt.viewModels
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
-import android.provider.MediaStore
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
-import java.io.ByteArrayOutputStream
+import com.example.knowledgehunt.services.ImageServices
 
 
 class RegisterScreenViewModel(
@@ -44,21 +40,7 @@ class RegisterScreenViewModel(
     val loadingDismissRequest: MutableState<Boolean> = mutableStateOf(false)
 
 ) : ViewModel(), LifecycleObserver {
-    suspend fun compressImage(context: Context) {
-        val tempBitmap: Bitmap = if (Build.VERSION.SDK_INT < 28) {
-            MediaStore.Images
-                .Media.getBitmap(context.contentResolver, imageUri?.value)
-
-        } else {
-            val source = ImageDecoder
-                .createSource(context.contentResolver, imageUri?.value!!)
-            ImageDecoder.decodeBitmap(source)
-        }
-        val ostream = ByteArrayOutputStream()
-
-        tempBitmap.compress(Bitmap.CompressFormat.PNG, 75, ostream)
-        bitmap.value =
-            BitmapFactory.decodeByteArray(ostream.toByteArray(), 0, ostream.toByteArray().size);
+    suspend fun compressProfileImage(context: Context) {
+        bitmap.value = ImageServices.compressImage(context = context, imageUri)
     }
-
 }

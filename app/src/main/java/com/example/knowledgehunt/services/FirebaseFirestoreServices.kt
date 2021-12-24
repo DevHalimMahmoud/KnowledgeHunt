@@ -10,11 +10,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.scopes.ViewModelScoped
 import java.util.*
 
-@Module
-@ViewModelScoped
+
 object FirebaseFirestoreServices {
-    @Provides
-    @ViewModelScoped
+
     fun addDonationData(data: HashMap<String, Any?>): Task<DocumentReference> {
 
         return FirebaseFirestore.getInstance().collection("requests")
@@ -25,8 +23,7 @@ object FirebaseFirestoreServices {
             }
     }
 
-    @Provides
-    @ViewModelScoped
+
     fun getUserName(): MutableLiveData<String> {
 
         return MutableLiveData<String>().apply {
@@ -44,8 +41,7 @@ object FirebaseFirestoreServices {
         }
     }
 
-    @Provides
-    @ViewModelScoped
+
     fun addUserDataToFirestore(data: HashMap<String, Any?>): Task<Void> {
 
         return FirebaseFirestore.getInstance().collection("users")
