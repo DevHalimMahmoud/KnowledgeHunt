@@ -33,8 +33,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.knowledgehunt.ui.components.*
@@ -61,30 +59,35 @@ fun RegisterScreen(navController: NavHostController) {
         },
         floatingActionButton = {
             if (viewModel.SignupProgressIndicator.value) {
-                Image(
-                    Icons.Rounded.Check,
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size(55.dp)
-                        .clip(CircleShape)
-                        .border(1.dp, MaterialTheme.colors.primary, CircleShape)
-                        .clickable { viewModel.SignupProgressIndicator.value = false },
+                if (viewModel.notEmpty()) {
+                    Image(
+                        Icons.Rounded.Check,
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(55.dp)
+                            .clip(CircleShape)
+                            .border(1.dp, MaterialTheme.colors.primary, CircleShape)
+                            .clickable {
+                                viewModel.SignupProgressIndicator.value = false
 
+
+                                viewModel.signupNewUser()
+
+
+                            },
                     )
+                }
             } else {
                 CircularProgressIndicator(
                     modifier = Modifier
                         .size(55.dp)
                         .clip(CircleShape)
-
                 )
             }
-
-
         },
 
-        isFloatingActionButtonDocked = viewModel.floatingActionButtonState.value
+        isFloatingActionButtonDocked = false
     ) {
         Column(
             modifier = Modifier
@@ -183,7 +186,7 @@ fun RegisterScreen(navController: NavHostController) {
                 errorText = "Required!",
                 KeyboardType = KeyboardType.Phone
             )
-            Row(modifier = Modifier.wrapContentSize(Alignment.Center)) {
+            Row(modifier = Modifier.wrapContentSize(Center)) {
                 TextFieldUnit(
                     hint = "Age",
                     onImeAction = {
@@ -277,7 +280,6 @@ fun RequestContentPermission(
                     .border(1.dp, Color.Gray, CircleShape)
             )
         } else {
-
             Image(
                 bitmap = viewModel.bitmap.value!!.asImageBitmap(),
                 contentDescription = null,
@@ -290,19 +292,17 @@ fun RequestContentPermission(
             )
         }
         if (viewModel.ImageCompressionProgressIndicator.value) {
-            Dialog(
-                onDismissRequest = { viewModel.ImageCompressionProgressIndicator.value = false },
-                DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true)
+
+            Box(
+                contentAlignment = Center,
+                modifier = Modifier
+                    .size(100.dp)
+                    .background(Transparent, shape = RoundedCornerShape(8.dp))
+                    .align(CenterHorizontally)
             ) {
-                Box(
-                    contentAlignment = Center,
-                    modifier = Modifier
-                        .size(100.dp)
-                        .background(Transparent, shape = RoundedCornerShape(8.dp))
-                ) {
-                    CircularProgressIndicator()
-                }
+                CircularProgressIndicator()
             }
+
         }
     }
 

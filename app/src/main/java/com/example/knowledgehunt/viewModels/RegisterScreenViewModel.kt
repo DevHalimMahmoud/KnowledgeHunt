@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
+import com.example.knowledgehunt.services.FirebaseAuthServices
 import com.example.knowledgehunt.services.ImageServices
 
 
@@ -41,14 +42,28 @@ class RegisterScreenViewModel(
 
     val bitmap: MutableState<Bitmap?> = mutableStateOf(null),
 
-    var floatingActionButtonState: MutableState<Boolean> = mutableStateOf(true),
-
     val ImageCompressionProgressIndicator: MutableState<Boolean> = mutableStateOf(false),
     val SignupProgressIndicator: MutableState<Boolean> = mutableStateOf(true)
 
 
 ) : ViewModel(), LifecycleObserver {
+
     suspend fun compressProfileImage(context: Context) {
         bitmap.value = ImageServices.compressImage(context = context, imageUri)
     }
+
+    fun signupNewUser() {
+        FirebaseAuthServices.createUserWithEmailAndPassword(
+            emailState.value.text,
+            passwordState.value.text
+        )
+    }
+
+    fun notEmpty(): Boolean {
+        return emailState.value.text.isNotBlank() && passwordState.value.text.isNotBlank() && firstNameState.value.text.isNotBlank() &&
+                lastNameState.value.text.isNotBlank() && userNameState.value.text.isNotBlank() && phoneState.value.text.isNotBlank() &&
+                ageState.value.text.isNotBlank() && bitmap.value != null
+    }
+
+    
 }

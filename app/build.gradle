@@ -87,7 +87,6 @@ dependencies {
     implementation 'androidx.activity:activity-ktx:1.4.0'
 
 
-    implementation 'id.zelory:compressor:3.0.1'
 
 
 
