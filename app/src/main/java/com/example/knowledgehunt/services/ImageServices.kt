@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import androidx.compose.runtime.MutableState
-import com.google.android.gms.tasks.Task
 import java.io.ByteArrayOutputStream
 
 object ImageServices {

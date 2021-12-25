@@ -4,7 +4,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
 import com.example.knowledgehunt.services.FirebaseAuthServices.login
 import com.example.knowledgehunt.services.FirebaseAuthServices.resetPassword

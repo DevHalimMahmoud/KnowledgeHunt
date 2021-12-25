@@ -2,12 +2,9 @@ package com.example.knowledgehunt.services
 
 import androidx.lifecycle.MutableLiveData
 import com.example.knowledgehunt.services.FirebaseAuthServices.getCurrentUserId
-import com.google.android.datatransport.runtime.dagger.Module
-import com.google.android.datatransport.runtime.dagger.Provides
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import dagger.hilt.android.scopes.ViewModelScoped
 import java.util.*
 
 

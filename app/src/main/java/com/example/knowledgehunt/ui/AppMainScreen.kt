@@ -85,7 +85,7 @@ fun Navigation(
 ) {
     NavHost(navController, startDestination = Screens.Splash.route) {
         composable(Screens.Home.route) {
-            scope.launch(Dispatchers.Default,CoroutineStart.DEFAULT ) {
+            scope.launch(Dispatchers.Default, CoroutineStart.DEFAULT) {
                 if (viewModel.loggedIn()) {
                     viewModel.getTopBarProfileImage()
                 }

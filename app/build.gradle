@@ -87,9 +87,6 @@ dependencies {
     implementation 'androidx.activity:activity-ktx:1.4.0'
 
 
-
-
-
 }
 // Allow references to generated code
 kapt {

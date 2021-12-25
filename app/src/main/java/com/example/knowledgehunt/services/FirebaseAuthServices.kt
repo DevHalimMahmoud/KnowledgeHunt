@@ -1,19 +1,14 @@
 package com.example.knowledgehunt.services
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
 
 
 object FirebaseAuthServices {
 
-    suspend  fun getCurrentUserId(): String? {
+    suspend fun getCurrentUserId(): String? {
 
         return FirebaseAuth.getInstance().currentUser?.uid
     }
@@ -23,12 +18,12 @@ object FirebaseAuthServices {
         return FirebaseAuth.getInstance().currentUser
     }
 
-    suspend  fun sendEmailVerification(): Task<Void> {
+    suspend fun sendEmailVerification(): Task<Void> {
 
         return getCurrentUser()!!.sendEmailVerification().addOnCompleteListener { }
     }
 
-    suspend  fun getAuthInstance(): FirebaseAuth {
+    suspend fun getAuthInstance(): FirebaseAuth {
 
         return FirebaseAuth.getInstance()
     }
