@@ -22,7 +22,7 @@ class LoginScreenViewModel constructor(
     var passwordErrorState: MutableState<Boolean> = mutableStateOf(false),
     var loginButtonState: MutableState<Boolean> = mutableStateOf(true),
     val openDialog: MutableState<Boolean> = mutableStateOf(false)
-) : ViewModel(), LifecycleObserver {
+) : ViewModel() {
 
     suspend fun loginResults(
     ): Task<AuthResult> {

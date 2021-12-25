@@ -19,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -48,6 +47,7 @@ fun RegisterScreen(navController: NavHostController) {
     val viewModel: RegisterScreenViewModel = viewModel()
     val coroutineScope = rememberCoroutineScope()
 
+    val context = LocalContext.current
     Scaffold(
         topBar = {
             BackTopBar(
@@ -58,6 +58,7 @@ fun RegisterScreen(navController: NavHostController) {
             )
         },
         floatingActionButton = {
+
             if (viewModel.SignupProgressIndicator.value) {
                 if (viewModel.notEmpty()) {
                     Image(
@@ -70,10 +71,29 @@ fun RegisterScreen(navController: NavHostController) {
                             .border(1.dp, MaterialTheme.colors.primary, CircleShape)
                             .clickable {
                                 viewModel.SignupProgressIndicator.value = false
+                                coroutineScope
+                                    .launch(Dispatchers.Default, CoroutineStart.ATOMIC) {
+                                        viewModel
+                                            .signupNewUser()
+                                            .addOnCompleteListener {
+                                                coroutineScope
+                                                    .launch(
+                                                        Dispatchers.Main,
+                                                        CoroutineStart.LAZY
+                                                    ) {
+                                                        Toast
+                                                            .makeText(
+                                                                context,
+                                                                viewModel.SignupError,
+                                                                Toast.LENGTH_LONG
+                                                            )
+                                                            .show()
+                                                        navController.popBackStack()
+                                                    }
+                                                    .start()
+                                            }
+                                    }
 
-                                coroutineScope.launch(Dispatchers.IO, CoroutineStart.DEFAULT) {
-                                    viewModel.signupNewUser()
-                                }
 
                             },
                     )
@@ -95,7 +115,7 @@ fun RegisterScreen(navController: NavHostController) {
                 .verticalScroll(rememberScrollState())
         ) {
 
-            RequestContentPermission(viewModel, coroutineScope)
+            RequestContentPermission(viewModel, coroutineScope, context)
 
             TextFieldUnit(
                 hint = "Email",
@@ -249,8 +269,9 @@ fun RegisterScreen(navController: NavHostController) {
 fun RequestContentPermission(
     viewModel: RegisterScreenViewModel,
     coroutineScope: CoroutineScope,
+    context: Context
 ) {
-    val context = LocalContext.current
+
     val launcher: ManagedActivityResultLauncher<String, Uri?> =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
             viewModel.imageUri?.value = uri

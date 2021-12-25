@@ -30,7 +30,7 @@ object FirebaseFirestoreServices {
 
             val db = FirebaseFirestore.getInstance()
             getCurrentUserId().let {
-                db.collection("users").document(
+                db.collection("user").document(
                     it!!
                 )
             }.addSnapshotListener { value, e ->
@@ -42,9 +42,9 @@ object FirebaseFirestoreServices {
     }
 
 
-    suspend fun addUserDataToFirestore(data: HashMap<String, Any?>): Task<Void> {
+    suspend fun addUserDataToFirestore(data: MutableMap<String, Any?>): Task<Void> {
 
-        return FirebaseFirestore.getInstance().collection("users")
+        return FirebaseFirestore.getInstance().collection("user")
             .document(getCurrentUserId().toString())
             .set(data).addOnSuccessListener {
                 return@addOnSuccessListener

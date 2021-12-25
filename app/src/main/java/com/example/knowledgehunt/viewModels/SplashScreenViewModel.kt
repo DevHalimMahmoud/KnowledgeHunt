@@ -8,7 +8,7 @@ import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.runBlocking
 
 @SuppressLint("CustomSplashScreen")
-class SplashScreenViewModel : ViewModel(), LifecycleObserver {
+class SplashScreenViewModel : ViewModel() {
 
     val currentUser: FirebaseUser? by lazy { runBlocking { getCurrentUser() } }
 
