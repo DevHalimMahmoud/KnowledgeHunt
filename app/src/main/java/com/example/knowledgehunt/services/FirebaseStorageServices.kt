@@ -1,6 +1,7 @@
 package com.example.knowledgehunt.services
 
 import android.graphics.Bitmap
+import com.google.android.gms.tasks.Task
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
@@ -36,4 +37,14 @@ object FirebaseStorageServices {
 
     }
 
+    suspend fun getProfileImage(): Task<ByteArray> {
+
+        val islandRef =
+            getReference().child("user/${FirebaseAuthServices.getCurrentUserId().toString()}.PNG")
+
+        val ONE_MEGABYTE: Long = 1024 * 1024
+        return islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener {
+        }.addOnFailureListener {
+        }
+    }
 }

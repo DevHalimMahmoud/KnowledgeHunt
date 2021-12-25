@@ -1,15 +1,21 @@
 package com.example.knowledgehunt.ui.components
 
+import android.graphics.Bitmap
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.Logout
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
@@ -24,8 +30,8 @@ fun TopBar(
     buttonIcon: Painter,
     modifier: Modifier,
     Logout: () -> Unit,
-
-    ) {
+    profileImage: Bitmap
+) {
     TopAppBar(
         modifier = modifier,
         title = {
@@ -45,22 +51,29 @@ fun TopBar(
         actions = {
             CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                 IconButton(
-                    onClick = { /* TODO: Open search */ }
+                    onClick = { /* TODO: Open search */ },
+                    Modifier.size(40.dp)
                 ) {
                     Icon(
 
                         imageVector = Icons.Filled.Search,
                         contentDescription = null,
-                        tint = MaterialTheme.colors.primary
-                    )
+                        tint = MaterialTheme.colors.primary,
+
+                        )
                 }
                 IconButton(
-                    onClick = { /* TODO: Open account? */ }
+                    onClick = { /* TODO: Open account? */ },
+                    Modifier
+                        .size(45.dp)
+                        .padding(2.dp)
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.AccountCircle,
+                    Image(
+                        bitmap = profileImage.asImageBitmap(),
                         contentDescription = null,
-                        tint = MaterialTheme.colors.primary
+                        Modifier
+                            .clip(CircleShape)
+                            .fillMaxSize()
                     )
                 }
                 IconButton(

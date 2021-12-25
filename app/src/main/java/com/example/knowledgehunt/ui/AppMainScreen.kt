@@ -20,6 +20,7 @@ import com.example.knowledgehunt.ui.components.AppDrawer
 import com.example.knowledgehunt.ui.components.Screens
 import com.example.knowledgehunt.ui.components.TopBar
 import com.example.knowledgehunt.viewModels.AppMainScreenViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -48,14 +49,16 @@ fun AppMainScreen() {
                     buttonIcon = painterResource(id = R.drawable.logo_no_text),
                     modifier = Modifier,
                     Logout = {
-                        scope.launch(Dispatchers.Default, CoroutineStart.UNDISPATCHED) {
+                        scope.launch(Dispatchers.IO, CoroutineStart.DEFAULT) {
                             viewModel.LogoutResults()
                         }
                         navController.navigate(Screens.Login.route) {
                             popUpTo(0)
                             launchSingleTop = true
                         }
-                    }
+                    },
+
+                    viewModel.profileImage.value
                 )
                 drawerGesturesEnabled.value = true
             }
@@ -70,16 +73,27 @@ fun AppMainScreen() {
             )
         },
     ) {
-        Navigation(navController = navController)
+        Navigation(navController = navController, viewModel, scope)
     }
 }
 
 @Composable
-fun Navigation(navController: NavHostController) {
+fun Navigation(
+    navController: NavHostController,
+    viewModel: AppMainScreenViewModel,
+    scope: CoroutineScope
+) {
     NavHost(navController, startDestination = Screens.Splash.route) {
         composable(Screens.Home.route) {
+            scope.launch(Dispatchers.Default,CoroutineStart.DEFAULT ) {
+                if (viewModel.loggedIn()) {
+                    viewModel.getTopBarProfileImage()
+                }
+            }
+
             HomeScreen(
                 openDrawer = {
+
                 }, navController
             )
         }
