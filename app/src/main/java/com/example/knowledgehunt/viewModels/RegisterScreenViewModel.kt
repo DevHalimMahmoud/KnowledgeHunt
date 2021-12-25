@@ -52,7 +52,7 @@ class RegisterScreenViewModel(
         bitmap.value = ImageServices.compressImage(context = context, imageUri)
     }
 
-    fun signupNewUser() {
+    suspend fun signupNewUser() {
         FirebaseAuthServices.createUserWithEmailAndPassword(
             emailState.value.text,
             passwordState.value.text

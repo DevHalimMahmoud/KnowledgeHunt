@@ -71,9 +71,9 @@ fun RegisterScreen(navController: NavHostController) {
                             .clickable {
                                 viewModel.SignupProgressIndicator.value = false
 
-
-                                viewModel.signupNewUser()
-
+                                coroutineScope.launch(Dispatchers.IO, CoroutineStart.DEFAULT) {
+                                    viewModel.signupNewUser()
+                                }
 
                             },
                     )

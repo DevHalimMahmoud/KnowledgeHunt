@@ -1,43 +1,39 @@
 package com.example.knowledgehunt.services
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import android.graphics.Bitmap
-
-import java.io.FileOutputStream
-
-import android.graphics.BitmapFactory
 import java.io.File
-
 import java.io.FileInputStream
-import java.lang.Exception
+import java.io.FileOutputStream
 
 
 object FirebaseAuthServices {
 
-    fun getCurrentUserId(): String? {
+    suspend  fun getCurrentUserId(): String? {
 
         return FirebaseAuth.getInstance().currentUser?.tenantId
     }
 
-    fun getCurrentUser(): FirebaseUser? {
+    suspend fun getCurrentUser(): FirebaseUser? {
 
         return FirebaseAuth.getInstance().currentUser
     }
 
-    fun sendEmailVerification(): Task<Void> {
+    suspend  fun sendEmailVerification(): Task<Void> {
 
         return getCurrentUser()!!.sendEmailVerification().addOnCompleteListener { }
     }
 
-    fun getAuthInstance(): FirebaseAuth {
+    suspend  fun getAuthInstance(): FirebaseAuth {
 
         return FirebaseAuth.getInstance()
     }
 
-    fun createUserWithEmailAndPassword(email: String, password: String): Task<AuthResult> {
+    suspend fun createUserWithEmailAndPassword(email: String, password: String): Task<AuthResult> {
 
         return getAuthInstance().createUserWithEmailAndPassword(email, password)
     }

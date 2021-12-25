@@ -13,7 +13,7 @@ import java.util.*
 
 object FirebaseFirestoreServices {
 
-    fun addDonationData(data: HashMap<String, Any?>): Task<DocumentReference> {
+    suspend fun addDonationData(data: HashMap<String, Any?>): Task<DocumentReference> {
 
         return FirebaseFirestore.getInstance().collection("requests")
             .add(data).addOnSuccessListener {
@@ -24,7 +24,7 @@ object FirebaseFirestoreServices {
     }
 
 
-    fun getUserName(): MutableLiveData<String> {
+    suspend fun getUserName(): MutableLiveData<String> {
 
         return MutableLiveData<String>().apply {
 
@@ -42,7 +42,7 @@ object FirebaseFirestoreServices {
     }
 
 
-    fun addUserDataToFirestore(data: HashMap<String, Any?>): Task<Void> {
+    suspend fun addUserDataToFirestore(data: HashMap<String, Any?>): Task<Void> {
 
         return FirebaseFirestore.getInstance().collection("users")
             .document(getCurrentUserId().toString())
