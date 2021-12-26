@@ -72,14 +72,14 @@ fun RegisterScreen(navController: NavHostController) {
                             .clickable {
                                 viewModel.SignupProgressIndicator.value = false
                                 coroutineScope
-                                    .launch(Dispatchers.Default, CoroutineStart.ATOMIC) {
+                                    .launch(Dispatchers.Unconfined, CoroutineStart.DEFAULT) {
                                         viewModel
                                             .signupNewUser()
                                             .addOnCompleteListener {
                                                 coroutineScope
                                                     .launch(
                                                         Dispatchers.Main,
-                                                        CoroutineStart.LAZY
+                                                        CoroutineStart.DEFAULT
                                                     ) {
                                                         Toast
                                                             .makeText(
@@ -90,7 +90,7 @@ fun RegisterScreen(navController: NavHostController) {
                                                             .show()
                                                         navController.popBackStack()
                                                     }
-                                                    .start()
+
                                             }
                                     }
 

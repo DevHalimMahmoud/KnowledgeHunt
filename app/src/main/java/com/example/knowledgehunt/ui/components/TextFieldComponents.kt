@@ -23,15 +23,11 @@ fun TextFieldUnit(
     errorText: String,
     errorState: MutableState<Boolean>,
     modifier: Modifier,
-    KeyboardType: KeyboardType
+    KeyboardType: KeyboardType,
 ) {
-
-
     Box(modifier = modifier) {
 
         Column() {
-
-
             OutlinedTextField(
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Color.Red,
@@ -68,7 +64,6 @@ fun TextFieldUnit(
                     }
 
                 )
-
             )
             if (errorState.value) {
                 Text(
@@ -97,8 +92,6 @@ fun PasswordFiledUnit(
     val showPassword = remember { mutableStateOf(false) }
     Box(modifier = modifier) {
         Column() {
-
-
             OutlinedTextField(
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Color.Red,

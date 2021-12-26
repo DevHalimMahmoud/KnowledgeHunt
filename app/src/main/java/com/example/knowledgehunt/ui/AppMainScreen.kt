@@ -37,7 +37,6 @@ fun AppMainScreen() {
     // CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
     Scaffold(
         drawerGesturesEnabled = drawerGesturesEnabled.value,
-
         scaffoldState = scaffoldState,
         topBar = {
             if (currentRoute == Screens.Articles.route || currentRoute == Screens.Home.route || currentRoute == Screens.Help.route) {

@@ -25,25 +25,24 @@ object FirebaseStorageServices {
     suspend fun uploadProfileImage(bitmap: Bitmap): StorageTask<UploadTask.TaskSnapshot> {
 
         val userImagesRef =
-            getReference().child("user/${FirebaseAuthServices.getCurrentUserId().toString()}.PNG")
+            getReference().child("user/${FirebaseAuthServices.getCurrentUserId().toString()}.JPEG")
 
         val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 75, baos)
         val data = baos.toByteArray()
         val uploadTask = userImagesRef.putBytes(data)
         return uploadTask.addOnFailureListener {
         }.addOnSuccessListener { taskSnapshot ->
         }
-
     }
 
     suspend fun getProfileImage(): Task<ByteArray> {
 
         val islandRef =
-            getReference().child("user/${FirebaseAuthServices.getCurrentUserId().toString()}.PNG")
+            getReference().child("user/${FirebaseAuthServices.getCurrentUserId().toString()}.JPEG")
 
-        val ONE_MEGABYTE: Long = 1024 * 1024
-        return islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener {
+        val FOUR_MEGABYTE: Long = 4096 * 4096
+        return islandRef.getBytes(FOUR_MEGABYTE).addOnSuccessListener {
         }.addOnFailureListener {
         }
     }
