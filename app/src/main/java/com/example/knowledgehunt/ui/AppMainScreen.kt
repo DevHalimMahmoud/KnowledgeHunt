@@ -20,7 +20,6 @@ import com.example.knowledgehunt.ui.components.AppDrawer
 import com.example.knowledgehunt.ui.components.Screens
 import com.example.knowledgehunt.ui.components.TopBar
 import com.example.knowledgehunt.viewModels.AppMainScreenViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -73,7 +72,7 @@ fun AppMainScreen() {
             )
         },
     ) {
-        Navigation(navController = navController, viewModel, scope)
+        Navigation(navController = navController, viewModel)
     }
 }
 
@@ -81,11 +80,10 @@ fun AppMainScreen() {
 fun Navigation(
     navController: NavHostController,
     viewModel: AppMainScreenViewModel,
-    scope: CoroutineScope
 ) {
     NavHost(navController, startDestination = Screens.Splash.route) {
         composable(Screens.Home.route) {
-            scope.launch(Dispatchers.Default, CoroutineStart.DEFAULT) {
+            LaunchedEffect(Dispatchers.Default, CoroutineStart.DEFAULT) {
                 if (viewModel.loggedIn()) {
                     viewModel.getTopBarProfileImage()
                 }

@@ -65,7 +65,7 @@ fun TopBar(
                 IconButton(
                     onClick = { /* TODO: Open account? */ },
                     Modifier
-                        .size(45.dp)
+                        .size(38.dp)
                         .padding(2.dp)
                 ) {
                     Image(
