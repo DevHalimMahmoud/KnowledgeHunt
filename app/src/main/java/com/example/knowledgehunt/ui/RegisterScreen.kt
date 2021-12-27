@@ -15,10 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.PersonOutline
 import androidx.compose.material.icons.rounded.Check
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -32,6 +29,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.knowledgehunt.ui.components.*
@@ -48,7 +47,31 @@ fun RegisterScreen(navController: NavHostController) {
     val coroutineScope = rememberCoroutineScope()
 
     val context = LocalContext.current
+
+    if (viewModel.SigninStates.value) {
+        LaunchedEffect(
+            Dispatchers.Main,
+            CoroutineStart.DEFAULT
+        ) {
+
+            Toast
+                .makeText(
+                    context,
+                    viewModel.SignupError.value,
+                    Toast.LENGTH_LONG
+                )
+                .show()
+            if (viewModel.SignupError.value == "User Created Successfully please verify your email") {
+                navController.popBackStack()
+            }
+            viewModel.SigninStates.value = false
+        }
+
+    }
+
     Scaffold(
+
+
         topBar = {
             BackTopBar(
                 title = Screens.Register.title,
@@ -72,29 +95,9 @@ fun RegisterScreen(navController: NavHostController) {
                             .clickable {
                                 viewModel.SignupProgressIndicator.value = false
                                 coroutineScope
-                                    .launch(Dispatchers.Unconfined, CoroutineStart.DEFAULT) {
-                                        viewModel
-                                            .signupNewUser()
-                                            .addOnCompleteListener {
-                                                coroutineScope
-                                                    .launch(
-                                                        Dispatchers.Main,
-                                                        CoroutineStart.DEFAULT
-                                                    ) {
-                                                        Toast
-                                                            .makeText(
-                                                                context,
-                                                                viewModel.SignupError,
-                                                                Toast.LENGTH_LONG
-                                                            )
-                                                            .show()
-                                                        navController.popBackStack()
-                                                    }
-
-                                            }
+                                    .launch {
+                                        viewModel.signupNewUser()
                                     }
-
-
                             },
                     )
                 }
@@ -114,7 +117,7 @@ fun RegisterScreen(navController: NavHostController) {
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-
+            
             RequestContentPermission(viewModel, coroutineScope, context)
 
             TextFieldUnit(
