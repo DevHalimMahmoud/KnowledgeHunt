@@ -1,7 +1,9 @@
 package com.example.knowledgehunt.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
@@ -51,7 +53,9 @@ fun AppDrawer(
     scope: CoroutineScope,
     scaffoldState: ScaffoldState,
 ) {
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(modifier = modifier
+        .fillMaxSize()
+        .verticalScroll(ScrollState(0))) {
         HuntLogo(Modifier.padding(16.dp))
         Divider(color = MaterialTheme.colors.onSurface.copy(alpha = .2f))
         Spacer(Modifier.height(24.dp))
