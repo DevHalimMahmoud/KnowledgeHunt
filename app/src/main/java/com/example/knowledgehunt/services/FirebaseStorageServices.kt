@@ -29,7 +29,7 @@ object FirebaseStorageServices {
             getReference().child("user/${FirebaseAuth.getInstance().currentUser?.uid.toString()}.JPEG")
 
         val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 75, baos)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()
         val uploadTask = userImagesRef.putBytes(data)
         return uploadTask.addOnFailureListener {

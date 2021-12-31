@@ -24,7 +24,7 @@ object ImageServices {
         }
         val ostream = ByteArrayOutputStream()
 
-        tempBitmap.compress(Bitmap.CompressFormat.JPEG, 75, ostream)
+        tempBitmap.compress(Bitmap.CompressFormat.JPEG, 100, ostream)
         return BitmapFactory.decodeByteArray(ostream.toByteArray(), 0, ostream.toByteArray().size);
     }
 
