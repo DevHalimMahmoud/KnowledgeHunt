@@ -1,12 +1,10 @@
 package com.example.knowledgehunt.ui
 
 import SplashScreen
-import androidx.compose.material.DrawerValue
-import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberDrawerState
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -61,6 +59,7 @@ fun AppMainScreen() {
                 drawerGesturesEnabled.value = true
             }
         },
+        drawerBackgroundColor = MaterialTheme.colors.onPrimary,
 //        drawerScrimColor = Color.Red,  // Color for the fade background when you open/close the drawer
         drawerContent = {
             AppDrawer(

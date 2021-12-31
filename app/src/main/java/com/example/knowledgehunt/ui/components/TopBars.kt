@@ -37,7 +37,7 @@ fun TopBar(
         modifier = modifier,
         title = {
             Text(
-                text = title, color = Color.Black
+                text = title, color = MaterialTheme.colors.onSurface
             )
         },
         navigationIcon = {
@@ -104,7 +104,7 @@ fun BackTopBar(
     TopAppBar(
         modifier = modifier,
         title = {
-            Text(text = title, color = Color.Black)
+            Text(text = title, color = MaterialTheme.colors.surface)
         },
         navigationIcon = {
             IconButton(onClick = {
@@ -115,7 +115,7 @@ fun BackTopBar(
                 )
             }
         },
-        backgroundColor = MaterialTheme.colors.surface,
+        backgroundColor = MaterialTheme.colors.onSurface,
         elevation = 0.dp
     )
 }

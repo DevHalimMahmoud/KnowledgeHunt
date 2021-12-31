@@ -97,7 +97,7 @@ private fun HuntLogo(modifier: Modifier = Modifier) {
         HuntIcon()
         Spacer(Modifier.width(8.dp))
         Image(
-            painter = painterResource(id = R.drawable.logo_with_title),
+            painter = painterResource(id = R.drawable.logo_no_text),
             contentDescription = null, // decorative element
         )
     }
@@ -106,7 +106,7 @@ private fun HuntLogo(modifier: Modifier = Modifier) {
 @Composable
 fun HuntIcon(modifier: Modifier = Modifier) {
     Image(
-        painter = painterResource(id = R.drawable.logo_with_title),
+        painter = painterResource(id = R.drawable.logo_no_text),
         contentDescription = null, // decorative element
     )
 }
@@ -123,7 +123,7 @@ private fun DrawerButton(
     val textIconColor = if (isSelected) {
         colors.primary
     } else {
-        colors.onSurface.copy(alpha = 0.6f)
+        colors.onSurface
     }
     val backgroundColor = if (isSelected) {
         colors.primary.copy(alpha = 0.12f)
