@@ -36,7 +36,7 @@ fun AppMainScreen() {
         drawerGesturesEnabled = drawerGesturesEnabled.value,
         scaffoldState = scaffoldState,
         topBar = {
-            if (currentRoute == Screens.Articles.route || currentRoute == Screens.Home.route || currentRoute == Screens.Help.route) {
+            if (currentRoute == Screens.Articles.route || currentRoute == Screens.Home.route || currentRoute == Screens.About.route) {
                 TopBar(
                     title = currentRoute.toString().uppercase(),
                     scope = scope,
@@ -98,7 +98,7 @@ fun Navigation(
                 }, navController
             )
         }
-        composable(Screens.Help.route) {
+        composable(Screens.About.route) {
             About(
                 openDrawer = {
                 }, navController
@@ -110,7 +110,7 @@ fun Navigation(
                 navController = navController
             )
         }
-        composable(Screens.Test.route) {
+        composable(Screens.Help.route) {
             Screen(
                 navController = navController
             )

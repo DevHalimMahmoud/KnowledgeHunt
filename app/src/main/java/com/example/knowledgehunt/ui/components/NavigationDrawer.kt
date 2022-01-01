@@ -6,9 +6,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Article
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,23 +26,23 @@ import kotlinx.coroutines.launch
 sealed class Screens(val title: String, val route: String) {
     object Home : Screens("Home", "home")
     object Articles : Screens("Articles", "articles")
-    object Help : Screens("Help", "help")
+    object About : Screens("About", "about")
     object Splash : Screens("Splash", "splash")
     object Login : Screens("Login", "login")
     object Register : Screens("Create Account", "register")
-    object Test : Screens("Test", "test")
+    object Help : Screens("Help", "help")
 
 }
 
 private val screens = listOf(
     Screens.Home,
     Screens.Articles,
-    Screens.Help
+    Screens.About
 )
 private val icon = listOf(
     Icons.Filled.Home,
-    Icons.Filled.Star,
-    Icons.Filled.AccountBox
+    Icons.Filled.Article,
+    Icons.Filled.Info
 )
 
 @Composable

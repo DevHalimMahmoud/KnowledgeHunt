@@ -15,24 +15,6 @@ import com.example.knowledgehunt.ui.components.Screens
 
 @Composable
 fun Articles(openDrawer: () -> Unit, navController: NavHostController) {
-    Scaffold(
-        topBar = {
 
-        }
-    ) {
-        Column(modifier = Modifier.fillMaxSize()) {
-
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(text = "Account.", style = MaterialTheme.typography.h4)
-                Button(onClick = { navController.navigate(Screens.Test.route) }) {
-
-                }
-            }
-        }
-    }
 
 }
