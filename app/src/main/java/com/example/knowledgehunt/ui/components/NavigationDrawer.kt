@@ -53,9 +53,11 @@ fun AppDrawer(
     scope: CoroutineScope,
     scaffoldState: ScaffoldState,
 ) {
-    Column(modifier = modifier
-        .fillMaxSize()
-        .verticalScroll(ScrollState(0))) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(ScrollState(0))
+    ) {
         HuntLogo(Modifier.padding(16.dp))
         Divider(color = MaterialTheme.colors.onSurface.copy(alpha = .2f))
         Spacer(Modifier.height(24.dp))

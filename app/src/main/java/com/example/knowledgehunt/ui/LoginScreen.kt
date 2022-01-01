@@ -51,7 +51,8 @@ fun LoginScreen(navController: NavHostController) {
                 painter = painterResource(id = R.drawable.logo_with_title),
                 contentDescription = null, // decorative element
                 Modifier
-                    .align(CenterHorizontally).fillMaxWidth(),
+                    .align(CenterHorizontally)
+                    .fillMaxWidth(),
             )
             TextFieldUnit(
                 hint = "Email",

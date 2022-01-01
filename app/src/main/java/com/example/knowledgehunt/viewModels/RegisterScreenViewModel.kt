@@ -103,7 +103,8 @@ class RegisterScreenViewModel(
                                             }
 
                                         } else {
-                                            SignupError.value = task.exception?.localizedMessage.toString()
+                                            SignupError.value =
+                                                task.exception?.localizedMessage.toString()
                                             SignupProgressIndicator.value = true
                                             SigninStates.value = true
 

@@ -14,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -115,7 +114,7 @@ fun BackTopBar(
                 )
             }
         },
-        backgroundColor = MaterialTheme.colors.onSurface,
+        backgroundColor = MaterialTheme.colors.surface,
         elevation = 0.dp
     )
 }
