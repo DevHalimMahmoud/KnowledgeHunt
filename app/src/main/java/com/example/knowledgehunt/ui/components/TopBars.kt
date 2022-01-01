@@ -104,7 +104,7 @@ fun BackTopBar(
     TopAppBar(
         modifier = modifier,
         title = {
-            Text(text = title, color = MaterialTheme.colors.surface)
+            Text(text = title, color = MaterialTheme.colors.onSurface)
         },
         navigationIcon = {
             IconButton(onClick = {
