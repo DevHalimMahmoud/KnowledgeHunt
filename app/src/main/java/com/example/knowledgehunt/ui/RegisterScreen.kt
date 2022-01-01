@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Transparent
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -83,7 +84,7 @@ fun RegisterScreen(navController: NavHostController) {
             if (viewModel.SignupProgressIndicator.value) {
                 if (viewModel.notEmpty()) {
                     Image(
-                        Icons.Rounded.Check,
+                        imageVector = Icons.Rounded.Check,
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
@@ -299,7 +300,8 @@ fun RequestContentPermission(
                     .align(CenterHorizontally)
                     .size(250.dp)
                     .clip(CircleShape)
-                    .border(1.dp, Color.Gray, CircleShape)
+                    .border(1.dp, MaterialTheme.colors.onSurface, CircleShape),
+                colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface)
             )
         } else {
             Image(
