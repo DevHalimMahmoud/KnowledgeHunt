@@ -2,7 +2,6 @@ package com.example.knowledgehunt.services
 
 import android.graphics.Bitmap
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
@@ -23,10 +22,14 @@ object FirebaseStorageServices {
 
     }
 
-    suspend fun uploadProfileImage(bitmap: Bitmap): StorageTask<UploadTask.TaskSnapshot> {
+    suspend fun uploadProfileImage(
+        bitmap: Bitmap,
+        bath: String,
+        name: String
+    ): StorageTask<UploadTask.TaskSnapshot> {
 
         val userImagesRef =
-            getReference().child("user/${FirebaseAuth.getInstance().currentUser?.uid.toString()}.JPEG")
+            getReference().child("$bath/${name}.JPEG")
 
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)

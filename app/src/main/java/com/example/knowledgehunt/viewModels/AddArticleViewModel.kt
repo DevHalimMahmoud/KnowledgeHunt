@@ -5,8 +5,17 @@ import android.graphics.Bitmap
 import android.net.Uri
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.knowledgehunt.services.FirebaseAuthServices
+import com.example.knowledgehunt.services.FirebaseFirestoreServices
+import com.example.knowledgehunt.services.FirebaseStorageServices
 import com.example.knowledgehunt.services.ImageServices
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.*
 
 class AddArticleViewModel(
 
@@ -20,17 +29,72 @@ class AddArticleViewModel(
     var PublishError: MutableState<String> = mutableStateOf("Article Published Successfully!"),
     var PublishStates: MutableState<Boolean> = mutableStateOf(false),
 
+    var titleState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue()),
+    var titleErrorState: MutableState<Boolean> = mutableStateOf(false),
 
-    ) : ViewModel() {
+    var descriptionState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue()),
+    var descriptionErrorState: MutableState<Boolean> = mutableStateOf(false),
+
+    var contentState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue()),
+    var contentErrorState: MutableState<Boolean> = mutableStateOf(false),
+    var mutableMap: HashMap<String, Any?> = hashMapOf()
+
+) : ViewModel() {
 
     suspend fun compressProfileImage(context: Context) {
         bitmap.value = ImageServices.compressImage(context = context, imageUri)
     }
 
-
     fun notEmpty(): Boolean {
+        return titleState.value.text.isNotBlank() && descriptionState.value.text.isNotBlank() && contentState.value.text.isNotBlank() &&
+                bitmap.value != null
+    }
 
-        return true
+    private suspend fun dataMap(): HashMap<String, Any?> {
+        mutableMap["content"] = contentState.value.text
+        mutableMap["date"] = java.sql.Timestamp(System.currentTimeMillis())
+        mutableMap["description"] = descriptionState.value.text
+        mutableMap["reactions"] = listOf(0, 0, 0, 0, 0)
+        mutableMap["title"] = titleState.value.text
+        mutableMap["user_id"] = FirebaseAuthServices.getCurrentUserId()
+
+
+        return mutableMap
+    }
+
+    fun publishArticle() {
+        viewModelScope.launch(Dispatchers.IO, CoroutineStart.DEFAULT) {
+            mutableMap = dataMap()
+            FirebaseFirestoreServices.addArticleDataToFirestore(mutableMap)
+                .addOnCompleteListener { task1 ->
+
+                    if (task1.isSuccessful) {
+                        viewModelScope.launch(Dispatchers.IO, CoroutineStart.DEFAULT) {
+                            FirebaseStorageServices.uploadProfileImage(
+                                bitmap.value!!,
+                                "article",
+                                task1.result.id
+                            ).addOnCompleteListener { task2 ->
+                                PublishArticleProgressIndicator.value = true
+                                PublishStates.value = true
+                                if (task2.isSuccessful) {
+                                    PublishError.value =
+                                        "Article Published Successfully!"
+                                } else {
+                                    PublishError.value =
+                                        task2.exception?.localizedMessage.toString()
+
+                                }
+                            }
+                        }
+                    } else {
+                        PublishError.value = task1.exception?.localizedMessage.toString()
+                        PublishArticleProgressIndicator.value = true
+                        PublishStates.value = true
+                    }
+                }
+        }
+
     }
 
 

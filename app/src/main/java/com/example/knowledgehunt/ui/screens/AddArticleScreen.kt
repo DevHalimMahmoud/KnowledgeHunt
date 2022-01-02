@@ -26,12 +26,15 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.knowledgehunt.models.Screens
 import com.example.knowledgehunt.ui.components.BackTopBar
 import com.example.knowledgehunt.ui.components.OutlinedButtonItem
+import com.example.knowledgehunt.ui.components.TextFieldUnit
 import com.example.knowledgehunt.viewModels.AddArticleViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
@@ -92,10 +95,10 @@ fun AddArticleScreen(
                             .border(1.dp, MaterialTheme.colors.primary, CircleShape)
                             .clickable {
                                 viewModel.PublishArticleProgressIndicator.value = false
-//                                coroutineScope
-//                                    .launch {
-//                                        viewModel.publishArticle()
-//                                    }
+                                coroutineScope
+                                    .launch {
+                                        viewModel.publishArticle()
+                                    }
                             },
                     )
                 }
@@ -117,7 +120,51 @@ fun AddArticleScreen(
 
             ArticleImage(viewModel, coroutineScope, context)
 
+            TextFieldUnit(
+                hint = "Title",
+                onImeAction = {
+                    viewModel.titleErrorState.value =
+                        viewModel.titleState.value.text.isEmpty()
+                },
+                modifier = Modifier
+                    .padding(8.dp),
+                imeAction = ImeAction.Next,
+                errorState = viewModel.titleErrorState,
+                textState = viewModel.titleState,
+                errorText = "Required!",
+                KeyboardType = KeyboardType.Text
+            )
+            TextFieldUnit(
+                hint = "Description",
+                onImeAction = {
+                    viewModel.descriptionErrorState.value =
+                        viewModel.descriptionState.value.text.isEmpty()
+                },
+                modifier = Modifier
+                    .padding(8.dp),
+                imeAction = ImeAction.Next,
+                errorState = viewModel.descriptionErrorState,
+                textState = viewModel.descriptionState,
+                errorText = "Required!",
+                KeyboardType = KeyboardType.Text
+            )
+            TextFieldUnit(
+                hint = "Article Content",
+                onImeAction = {
+                    viewModel.contentErrorState.value =
+                        viewModel.contentState.value.text.isEmpty()
+                },
+                modifier = Modifier
+                    .height(300.dp)
 
+                    .padding(8.dp),
+                imeAction = ImeAction.Next,
+                errorState = viewModel.contentErrorState,
+                textState = viewModel.contentState,
+                errorText = "Required!",
+                KeyboardType = KeyboardType.Text,
+
+                )
         }
     }
 }

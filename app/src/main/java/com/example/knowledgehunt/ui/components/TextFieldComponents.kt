@@ -50,7 +50,7 @@ fun TextFieldUnit(
 
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentHeight(),
+                    .fillMaxHeight(),
                 shape = RoundedCornerShape(12.dp),
                 textStyle = MaterialTheme.typography.body1,
                 keyboardOptions = KeyboardOptions.Default.copy(

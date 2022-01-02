@@ -49,4 +49,15 @@ object FirebaseFirestoreServices {
                 return@addOnFailureListener
             }
     }
+
+    suspend fun addArticleDataToFirestore(data: MutableMap<String, Any?>): Task<DocumentReference> {
+
+        return FirebaseFirestore.getInstance().collection("articles")
+            .add(data).addOnSuccessListener {
+
+                return@addOnSuccessListener
+            }.addOnFailureListener {
+                return@addOnFailureListener
+            }
+    }
 }

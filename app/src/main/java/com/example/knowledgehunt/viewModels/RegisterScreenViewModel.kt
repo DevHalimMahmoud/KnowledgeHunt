@@ -14,6 +14,7 @@ import com.example.knowledgehunt.services.FirebaseStorageServices.uploadProfileI
 import com.example.knowledgehunt.services.ImageServices
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import kotlinx.coroutines.CoroutineStart
@@ -127,7 +128,7 @@ class RegisterScreenViewModel(
             }
     }
 
-    suspend fun addEmailAndPassword(): Task<AuthResult> {
+    private suspend fun addEmailAndPassword(): Task<AuthResult> {
         return FirebaseAuthServices.createUserWithEmailAndPassword(
             emailState.value.text,
             passwordState.value.text
@@ -136,13 +137,17 @@ class RegisterScreenViewModel(
 
     }
 
-    suspend fun uploadImageToStorage(): StorageTask<UploadTask.TaskSnapshot> {
+    private suspend fun uploadImageToStorage(): StorageTask<UploadTask.TaskSnapshot> {
 
-        return uploadProfileImage(bitmap.value!!)
+        return uploadProfileImage(
+            bitmap.value!!,
+            "user",
+            FirebaseAuth.getInstance().currentUser?.uid.toString()
+        )
 
     }
 
-    suspend fun addDataToFireStore(): Task<Void> {
+    private suspend fun addDataToFireStore(): Task<Void> {
 
         return FirebaseFirestoreServices.addUserDataToFirestore(dataMap())
 
