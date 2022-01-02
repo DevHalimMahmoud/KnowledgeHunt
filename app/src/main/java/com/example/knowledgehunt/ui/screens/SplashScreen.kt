@@ -17,7 +17,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.knowledgehunt.R
-import com.example.knowledgehunt.ui.components.Screens
+import com.example.knowledgehunt.models.Screens
 import com.example.knowledgehunt.viewModels.SplashScreenViewModel
 import kotlinx.coroutines.delay
 

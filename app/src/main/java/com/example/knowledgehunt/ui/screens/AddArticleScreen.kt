@@ -29,9 +29,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.knowledgehunt.models.Screens
 import com.example.knowledgehunt.ui.components.BackTopBar
 import com.example.knowledgehunt.ui.components.OutlinedButtonItem
-import com.example.knowledgehunt.ui.components.Screens
 import com.example.knowledgehunt.viewModels.AddArticleViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart

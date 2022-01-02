@@ -32,7 +32,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.example.knowledgehunt.ui.components.*
+import com.example.knowledgehunt.models.Screens
+import com.example.knowledgehunt.ui.components.BackTopBar
+import com.example.knowledgehunt.ui.components.OutlinedButtonItem
+import com.example.knowledgehunt.ui.components.PasswordFiledUnit
+import com.example.knowledgehunt.ui.components.TextFieldUnit
 import com.example.knowledgehunt.viewModels.RegisterScreenViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart

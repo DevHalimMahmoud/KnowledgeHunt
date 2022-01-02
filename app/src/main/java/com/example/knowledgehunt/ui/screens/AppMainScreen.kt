@@ -13,8 +13,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.knowledgehunt.R
+import com.example.knowledgehunt.models.Screens
 import com.example.knowledgehunt.ui.components.AppDrawer
-import com.example.knowledgehunt.ui.components.Screens
 import com.example.knowledgehunt.ui.components.TopBar
 import com.example.knowledgehunt.viewModels.AppMainScreenViewModel
 import kotlinx.coroutines.CoroutineStart

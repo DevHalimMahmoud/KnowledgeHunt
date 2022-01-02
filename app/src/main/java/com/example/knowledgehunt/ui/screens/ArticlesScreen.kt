@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.knowledgehunt.ui.components.Screens
+import com.example.knowledgehunt.models.Screens
 
 @Composable
 fun Articles(openDrawer: () -> Unit, navController: NavHostController) {

@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.example.knowledgehunt.ui.components.Screens
+import com.example.knowledgehunt.models.Screens
 
 @Composable
 fun About(openDrawer: () -> Unit, navController: NavHostController) {

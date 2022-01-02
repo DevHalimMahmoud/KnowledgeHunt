@@ -20,20 +20,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.knowledgehunt.R
+import com.example.knowledgehunt.models.Screens
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-sealed class Screens(val title: String, val route: String) {
-    object Home : Screens("Home", "home")
-    object Articles : Screens("Articles", "articles")
-    object AddArticle : Screens("Write Article", "add_article")
-    object About : Screens("About", "about")
-    object Splash : Screens("Splash", "splash")
-    object Login : Screens("Login", "login")
-    object Register : Screens("Create Account", "register")
-    object Help : Screens("Help", "help")
-
-}
 
 private val screens = listOf(
     Screens.Home,
