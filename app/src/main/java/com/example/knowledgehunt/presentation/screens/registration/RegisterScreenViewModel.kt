@@ -171,6 +171,7 @@ class RegisterScreenViewModel @Inject constructor(
         mutableMap["num_articles"] = 0
         mutableMap["num_ask"] = 0
         mutableMap["num_contests"] = 0
+        mutableMap["num_upvote"] = 0
         mutableMap["num_downvote"] = 0
         mutableMap["num_mcq"] = 0
         mutableMap["phone_num"] = phoneState.value.text
