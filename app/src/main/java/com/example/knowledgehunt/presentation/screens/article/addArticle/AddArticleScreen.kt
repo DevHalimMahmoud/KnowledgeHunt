@@ -29,6 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.knowledgehunt.domain.models.Screens
@@ -44,7 +45,7 @@ import kotlinx.coroutines.launch
 fun AddArticleScreen(
     navController: NavHostController,
 ) {
-    val viewModel: AddArticleViewModel = viewModel()
+    val viewModel: AddArticleViewModel = hiltViewModel()
     val coroutineScope = rememberCoroutineScope()
 
     val context = LocalContext.current

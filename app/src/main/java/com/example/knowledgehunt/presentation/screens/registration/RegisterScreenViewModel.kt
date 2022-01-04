@@ -8,62 +8,64 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.knowledgehunt.data.repository.FirebaseAuthServices
-import com.example.knowledgehunt.data.repository.FirebaseFirestoreServices
-import com.example.knowledgehunt.data.repository.FirebaseStorageServices.uploadProfileImage
-import com.example.knowledgehunt.data.repository.ImageServices
+import com.example.knowledgehunt.domain.use_case.UseCases
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@HiltViewModel
+class RegisterScreenViewModel @Inject constructor(
+    private val useCases: UseCases
+) : ViewModel() {
 
-class RegisterScreenViewModel(
-    var emailState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue()),
-    var emailErrorState: MutableState<Boolean> = mutableStateOf(false),
+    var emailState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
+    var emailErrorState: MutableState<Boolean> = mutableStateOf(false)
 
-    var passwordState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue()),
-    var passwordErrorState: MutableState<Boolean> = mutableStateOf(false),
+    var passwordState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
+    var passwordErrorState: MutableState<Boolean> = mutableStateOf(false)
 
-    var firstNameState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue()),
-    var firstNameErrorState: MutableState<Boolean> = mutableStateOf(false),
+    var firstNameState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
+    var firstNameErrorState: MutableState<Boolean> = mutableStateOf(false)
 
-    var lastNameState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue()),
-    var lastNameErrorState: MutableState<Boolean> = mutableStateOf(false),
+    var lastNameState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
+    var lastNameErrorState: MutableState<Boolean> = mutableStateOf(false)
 
-    var userNameState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue()),
-    var userNameErrorState: MutableState<Boolean> = mutableStateOf(false),
+    var userNameState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
+    var userNameErrorState: MutableState<Boolean> = mutableStateOf(false)
 
-    var phoneState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue()),
-    var phoneErrorState: MutableState<Boolean> = mutableStateOf(false),
+    var phoneState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
+    var phoneErrorState: MutableState<Boolean> = mutableStateOf(false)
 
-    var ageState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue()),
-    var ageErrorState: MutableState<Boolean> = mutableStateOf(false),
+    var ageState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
+    var ageErrorState: MutableState<Boolean> = mutableStateOf(false)
 
-    var genderExpanded: MutableState<Boolean> = mutableStateOf(false),
-    val genderItems: List<String> = listOf("Male", "Female", "Other"),
-    var genderSelectedIndex: MutableState<Int> = mutableStateOf(0),
+    var genderExpanded: MutableState<Boolean> = mutableStateOf(false)
+    val genderItems: List<String> = listOf("Male", "Female", "Other")
+    var genderSelectedIndex: MutableState<Int> = mutableStateOf(0)
 
-    val imageUri: MutableState<Uri?>? = mutableStateOf(null),
-    val bitmap: MutableState<Bitmap?> = mutableStateOf(null),
+    val imageUri: MutableState<Uri?>? = mutableStateOf(null)
+    val bitmap: MutableState<Bitmap?> = mutableStateOf(null)
 
-    val ImageCompressionProgressIndicator: MutableState<Boolean> = mutableStateOf(false),
+    val ImageCompressionProgressIndicator: MutableState<Boolean> = mutableStateOf(false)
 
-    val SignupProgressIndicator: MutableState<Boolean> = mutableStateOf(true),
-    var SignupError: MutableState<String> = mutableStateOf("User Created Successfully please verify your email"),
-    var SignupStates: MutableState<Boolean> = mutableStateOf(false),
+    val SignupProgressIndicator: MutableState<Boolean> = mutableStateOf(true)
+    var SignupError: MutableState<String> =
+        mutableStateOf("User Created Successfully please verify your email")
+    var SignupStates: MutableState<Boolean> = mutableStateOf(false)
 
     var mutableMap: HashMap<String, Any?> = hashMapOf()
 
-) : ViewModel() {
 
     suspend fun compressProfileImage(context: Context) {
-        bitmap.value = ImageServices.compressImage(context = context, imageUri)
+        bitmap.value = useCases.compressImage(context = context, imageUri)
     }
 
     suspend fun signupNewUser(): Task<AuthResult> {
@@ -79,7 +81,7 @@ class RegisterScreenViewModel(
                     viewModelScope.launch(
                         Dispatchers.IO, CoroutineStart.DEFAULT
                     ) {
-                        FirebaseAuthServices.sendEmailVerification()
+                        useCases.sendEmailVerification
                     }
                     viewModelScope.launch(
                         Dispatchers.Default,
@@ -97,7 +99,7 @@ class RegisterScreenViewModel(
                                                 CoroutineStart.DEFAULT
                                             ) {
                                                 SignupProgressIndicator.value = true
-                                                FirebaseAuthServices.Logout()
+                                                useCases.logout
                                                 SignupError.value =
                                                     "User Created Successfully please verify your email"
                                                 SignupStates.value = true
@@ -129,7 +131,7 @@ class RegisterScreenViewModel(
     }
 
     private suspend fun addEmailAndPassword(): Task<AuthResult> {
-        return FirebaseAuthServices.createUserWithEmailAndPassword(
+        return useCases.createUserWithEmailAndPassword(
             emailState.value.text,
             passwordState.value.text
         )
@@ -139,7 +141,7 @@ class RegisterScreenViewModel(
 
     private suspend fun uploadImageToStorage(): StorageTask<UploadTask.TaskSnapshot> {
 
-        return uploadProfileImage(
+        return useCases.uploadStorageImage(
             bitmap.value!!,
             "user",
             FirebaseAuth.getInstance().currentUser?.uid.toString()
@@ -149,7 +151,7 @@ class RegisterScreenViewModel(
 
     private suspend fun addDataToFireStore(): Task<Void> {
 
-        return FirebaseFirestoreServices.addUserDataToFirestore(dataMap())
+        return useCases.addUserDataToFirestore(dataMap())
 
 
     }

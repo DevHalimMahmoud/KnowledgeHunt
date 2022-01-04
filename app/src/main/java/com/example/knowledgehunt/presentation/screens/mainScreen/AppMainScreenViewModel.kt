@@ -9,37 +9,35 @@ import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
 import com.example.knowledgehunt.R
-import com.example.knowledgehunt.data.repository.FirebaseAuthServices
-import com.example.knowledgehunt.data.repository.FirebaseStorageServices
+import com.example.knowledgehunt.domain.use_case.UseCases
+import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class AppMainScreenViewModel constructor(
+@HiltViewModel
+class AppMainScreenViewModel @Inject constructor(
+    private val useCases: UseCases
+
+) : ViewModel(), LifecycleObserver {
     var profileImage: MutableState<Bitmap> =
         mutableStateOf(R.drawable.logo_no_text.toDrawable().toBitmap(50, 50))
-) : ViewModel(), LifecycleObserver {
 
-
-    //    init {
-//        viewModelScope.launch {
-//            if (FirebaseAuthServices.getCurrentUser() != null) {
-//                getTopBarProfileImage()
-//            }
-//        }
-//    }
     suspend fun loggedIn(): Boolean {
-        return FirebaseAuthServices.getCurrentUser() != null
+        return useCases.getCurrentUser() != null
 
     }
 
     suspend fun LogoutResults() {
-        FirebaseAuthServices.Logout()
+        useCases.logout()
     }
 
     suspend fun getTopBarProfileImage() {
 
 
-        FirebaseStorageServices.getProfileImage().addOnCompleteListener { task ->
-            profileImage.value =
-                BitmapFactory.decodeByteArray(task.result, 0, task.result.size)
-        }
+        useCases.getStorageImage("user", FirebaseAuth.getInstance().currentUser?.uid.toString())
+            .addOnCompleteListener { task ->
+                profileImage.value =
+                    BitmapFactory.decodeByteArray(task.result, 0, task.result.size)
+            }
     }
 }

@@ -8,41 +8,41 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.knowledgehunt.data.repository.FirebaseAuthServices
-import com.example.knowledgehunt.data.repository.FirebaseFirestoreServices
-import com.example.knowledgehunt.data.repository.FirebaseStorageServices
-import com.example.knowledgehunt.data.repository.ImageServices
+import com.example.knowledgehunt.domain.use_case.UseCases
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
+import javax.inject.Inject
 
-class AddArticleViewModel(
-
-
-    val imageUri: MutableState<Uri?>? = mutableStateOf(null),
-    val bitmap: MutableState<Bitmap?> = mutableStateOf(null),
-
-    val ImageCompressionProgressIndicator: MutableState<Boolean> = mutableStateOf(false),
-
-    val PublishArticleProgressIndicator: MutableState<Boolean> = mutableStateOf(true),
-    var PublishError: MutableState<String> = mutableStateOf("Article Published Successfully!"),
-    var PublishStates: MutableState<Boolean> = mutableStateOf(false),
-
-    var titleState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue()),
-    var titleErrorState: MutableState<Boolean> = mutableStateOf(false),
-
-    var descriptionState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue()),
-    var descriptionErrorState: MutableState<Boolean> = mutableStateOf(false),
-
-    var contentState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue()),
-    var contentErrorState: MutableState<Boolean> = mutableStateOf(false),
-    var mutableMap: HashMap<String, Any?> = hashMapOf()
+@HiltViewModel
+class AddArticleViewModel @Inject constructor(
+    private val useCases: UseCases
 
 ) : ViewModel() {
 
+    val imageUri: MutableState<Uri?>? = mutableStateOf(null)
+    val bitmap: MutableState<Bitmap?> = mutableStateOf(null)
+
+    val ImageCompressionProgressIndicator: MutableState<Boolean> = mutableStateOf(false)
+
+    val PublishArticleProgressIndicator: MutableState<Boolean> = mutableStateOf(true)
+    var PublishError: MutableState<String> = mutableStateOf("Article Published Successfully!")
+    var PublishStates: MutableState<Boolean> = mutableStateOf(false)
+
+    var titleState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
+    var titleErrorState: MutableState<Boolean> = mutableStateOf(false)
+
+    var descriptionState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
+    var descriptionErrorState: MutableState<Boolean> = mutableStateOf(false)
+
+    var contentState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
+    var contentErrorState: MutableState<Boolean> = mutableStateOf(false)
+    var mutableMap: HashMap<String, Any?> = hashMapOf()
+
     suspend fun compressProfileImage(context: Context) {
-        bitmap.value = ImageServices.compressImage(context = context, imageUri)
+        bitmap.value = useCases.compressImage(context = context, imageUri)
     }
 
     fun notEmpty(): Boolean {
@@ -56,7 +56,7 @@ class AddArticleViewModel(
         mutableMap["description"] = descriptionState.value.text
         mutableMap["reactions"] = listOf(0, 0, 0, 0, 0)
         mutableMap["title"] = titleState.value.text
-        mutableMap["user_id"] = FirebaseAuthServices.getCurrentUserId()
+        mutableMap["user_id"] = useCases.getCurrentUserID()
 
 
         return mutableMap
@@ -65,12 +65,12 @@ class AddArticleViewModel(
     fun publishArticle() {
         viewModelScope.launch(Dispatchers.IO, CoroutineStart.DEFAULT) {
             mutableMap = dataMap()
-            FirebaseFirestoreServices.addArticleDataToFirestore(mutableMap)
+            useCases.addArticleDataToFirestore(mutableMap)
                 .addOnCompleteListener { task1 ->
 
                     if (task1.isSuccessful) {
                         viewModelScope.launch(Dispatchers.IO, CoroutineStart.DEFAULT) {
-                            FirebaseStorageServices.uploadProfileImage(
+                            useCases.uploadStorageImage(
                                 bitmap.value!!,
                                 "article",
                                 task1.result.id
