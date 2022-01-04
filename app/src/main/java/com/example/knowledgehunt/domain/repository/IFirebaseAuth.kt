@@ -7,7 +7,7 @@ import com.google.firebase.auth.FirebaseUser
 
 interface IFirebaseAuth {
 
-    suspend fun getCurrentUserId(): String?
+    suspend fun getCurrentUserId(): String
 
     suspend fun getCurrentUser(): FirebaseUser?
 

@@ -9,6 +9,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.knowledgehunt.domain.use_case.UseCases
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
@@ -56,7 +57,7 @@ class AddArticleViewModel @Inject constructor(
         mutableMap["description"] = descriptionState.value.text
         mutableMap["reactions"] = listOf(0, 0, 0, 0, 0)
         mutableMap["title"] = titleState.value.text
-        mutableMap["user_id"] = useCases.getCurrentUserID()
+        mutableMap["user_id"] = FirebaseAuth.getInstance().currentUser?.uid!!
 
 
         return mutableMap

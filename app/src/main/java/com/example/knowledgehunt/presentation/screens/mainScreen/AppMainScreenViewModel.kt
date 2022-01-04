@@ -34,7 +34,7 @@ class AppMainScreenViewModel @Inject constructor(
     suspend fun getTopBarProfileImage() {
 
 
-        useCases.getStorageImage("user", FirebaseAuth.getInstance().currentUser?.uid.toString())
+        useCases.getStorageImage("user", FirebaseAuth.getInstance().currentUser?.uid!!)
             .addOnCompleteListener { task ->
                 profileImage.value =
                     BitmapFactory.decodeByteArray(task.result, 0, task.result.size)

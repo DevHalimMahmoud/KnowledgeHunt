@@ -3,7 +3,6 @@ package com.example.knowledgehunt.domain.use_case
 import android.content.Context
 import android.net.Uri
 import androidx.compose.runtime.MutableState
-import com.example.knowledgehunt.data.repository.ImageImpl
 import com.example.knowledgehunt.domain.repository.IImage
 
 

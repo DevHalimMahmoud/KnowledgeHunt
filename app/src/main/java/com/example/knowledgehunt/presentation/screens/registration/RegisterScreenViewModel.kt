@@ -144,7 +144,7 @@ class RegisterScreenViewModel @Inject constructor(
         return useCases.uploadStorageImage(
             bitmap.value!!,
             "user",
-            FirebaseAuth.getInstance().currentUser?.uid.toString()
+            FirebaseAuth.getInstance().currentUser?.uid!!
         )
 
     }
