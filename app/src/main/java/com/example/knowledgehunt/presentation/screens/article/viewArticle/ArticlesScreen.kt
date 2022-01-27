@@ -1,4 +1,4 @@
-package com.example.knowledgehunt.presentation.screens.article
+package com.example.knowledgehunt.presentation.screens.article.viewArticle
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size

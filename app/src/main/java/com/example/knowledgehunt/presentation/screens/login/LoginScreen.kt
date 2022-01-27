@@ -1,4 +1,4 @@
-package com.example.knowledgehunt.presentation.screens
+package com.example.knowledgehunt.presentation.screens.login
 
 import android.content.Context
 import android.widget.Toast
@@ -32,7 +32,6 @@ import com.example.knowledgehunt.presentation.components.ButtonItem
 import com.example.knowledgehunt.presentation.components.OutlinedButtonItem
 import com.example.knowledgehunt.presentation.components.PasswordFiledUnit
 import com.example.knowledgehunt.presentation.components.TextFieldUnit
-import com.example.knowledgehunt.presentation.screens.login.LoginScreenViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
@@ -56,7 +55,8 @@ fun LoginScreen(navController: NavHostController) {
                 contentDescription = null, // decorative element
                 Modifier
                     .align(CenterHorizontally)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
             )
             TextFieldUnit(
                 hint = "Email",

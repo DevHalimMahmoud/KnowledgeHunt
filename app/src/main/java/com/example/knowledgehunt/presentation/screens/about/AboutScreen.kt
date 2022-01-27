@@ -1,4 +1,4 @@
-package com.example.knowledgehunt.presentation.screens
+package com.example.knowledgehunt.presentation.screens.about
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

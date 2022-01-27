@@ -1,4 +1,4 @@
-package com.example.knowledgehunt.presentation.screens
+package com.example.knowledgehunt.presentation.screens.mainScreen
 
 import SplashScreen
 import androidx.compose.material.*
@@ -16,9 +16,12 @@ import com.example.knowledgehunt.R
 import com.example.knowledgehunt.domain.models.Screens
 import com.example.knowledgehunt.presentation.components.AppDrawer
 import com.example.knowledgehunt.presentation.components.TopBar
-import com.example.knowledgehunt.presentation.screens.article.Articles
+import com.example.knowledgehunt.presentation.screens.about.About
+import com.example.knowledgehunt.presentation.screens.help.Screen
+import com.example.knowledgehunt.presentation.screens.article.viewArticle.Articles
 import com.example.knowledgehunt.presentation.screens.article.addArticle.AddArticleScreen
-import com.example.knowledgehunt.presentation.screens.mainScreen.AppMainScreenViewModel
+import com.example.knowledgehunt.presentation.screens.home.HomeScreen
+import com.example.knowledgehunt.presentation.screens.login.LoginScreen
 import com.example.knowledgehunt.presentation.screens.registration.RegisterScreen
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers

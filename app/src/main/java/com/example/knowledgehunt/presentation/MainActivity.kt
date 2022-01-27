@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.knowledgehunt.presentation.screens.AppMainScreen
+import com.example.knowledgehunt.presentation.screens.mainScreen.AppMainScreen
 import com.example.knowledgehunt.presentation.theme.KnowledgeHuntTheme
 import dagger.hilt.android.AndroidEntryPoint
 

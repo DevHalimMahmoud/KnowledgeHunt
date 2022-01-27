@@ -1,4 +1,4 @@
-package com.example.knowledgehunt.presentation.screens
+package com.example.knowledgehunt.presentation.screens.home
 
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
