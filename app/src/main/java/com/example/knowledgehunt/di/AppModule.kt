@@ -41,23 +41,38 @@ object AppModule {
     ): IImage = ImageImpl()
 
     @Provides
-    fun provideUseCases(
-        firebaseFirestoreRepository: IFirebaseFirestore,
-        firebaseStorageRepository: IFirebaseStorage,
+    fun provideAuthUseCases(
         firebaseAuthRepository: IFirebaseAuth,
-        imageRepository: IImage,
-    ) = UseCases(
-        UploadStorageImage(firebaseStorageRepository),
+    ) = AuthUseCases(
         CreateUserWithEmailAndPassword(firebaseAuthRepository),
         Logout(firebaseAuthRepository),
         GetCurrentUser(firebaseAuthRepository),
-        CompressImage(imageRepository),
         SendEmailVerification(firebaseAuthRepository),
-        AddUserDataToFirestore(firebaseFirestoreRepository),
-        GetStorageImage(firebaseStorageRepository),
         GetCurrentUserID(firebaseAuthRepository),
         Login(firebaseAuthRepository),
         ResetPassword(firebaseAuthRepository),
+    )
+
+    @Provides
+    fun provideStorageUseCases(
+        firebaseStorageRepository: IFirebaseStorage,
+    ) = StorageUseCases(
+        UploadStorageImage(firebaseStorageRepository),
+        GetStorageImage(firebaseStorageRepository),
+    )
+
+    @Provides
+    fun provideFirestoreUseCases(
+        firebaseFirestoreRepository: IFirebaseFirestore,
+    ) = FirestoreUseCases(
+        AddUserDataToFirestore(firebaseFirestoreRepository),
         AddArticleDataToFirestore(firebaseFirestoreRepository),
+    )
+
+    @Provides
+    fun provideImageUseCases(
+        imageRepository: IImage,
+    ) = ImageUseCases(
+        CompressImage(imageRepository),
     )
 }

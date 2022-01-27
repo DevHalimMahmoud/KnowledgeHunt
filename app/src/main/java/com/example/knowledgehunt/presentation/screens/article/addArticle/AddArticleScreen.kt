@@ -49,7 +49,7 @@ fun AddArticleScreen(
 
     val context = LocalContext.current
 
-    if (viewModel.PublishStates.value) {
+    if (viewModel.publishStates.value) {
         LaunchedEffect(
             Dispatchers.Main,
             CoroutineStart.DEFAULT
@@ -58,14 +58,14 @@ fun AddArticleScreen(
             Toast
                 .makeText(
                     context,
-                    viewModel.PublishError.value,
+                    viewModel.publishError.value,
                     Toast.LENGTH_LONG
                 )
                 .show()
-            if (viewModel.PublishError.value == "Article Published Successfully!") {
+            if (viewModel.publishError.value == "Article Published Successfully!") {
                 navController.popBackStack()
             }
-            viewModel.PublishStates.value = false
+            viewModel.publishStates.value = false
         }
 
     }
@@ -82,7 +82,7 @@ fun AddArticleScreen(
         },
         floatingActionButton = {
 
-            if (viewModel.PublishArticleProgressIndicator.value) {
+            if (viewModel.publishArticleProgressIndicator.value) {
                 if (viewModel.notEmpty()) {
                     Image(
                         imageVector = Icons.Outlined.Check,
@@ -93,7 +93,7 @@ fun AddArticleScreen(
                             .clip(CircleShape)
                             .border(1.dp, MaterialTheme.colors.primary, CircleShape)
                             .clickable {
-                                viewModel.PublishArticleProgressIndicator.value = false
+                                viewModel.publishArticleProgressIndicator.value = false
                                 coroutineScope
                                     .launch {
                                         viewModel.publishArticle()
@@ -180,7 +180,7 @@ fun ArticleImage(
             viewModel.imageUri?.value = uri
 
             if (viewModel.imageUri?.value != null) {
-                viewModel.ImageCompressionProgressIndicator.value = true
+                viewModel.imageCompressionProgressIndicator.value = true
                 Toast.makeText(
                     context,
                     "Compressing Image...",
@@ -213,7 +213,7 @@ fun ArticleImage(
                     .height(250.dp)
             )
         }
-        if (viewModel.ImageCompressionProgressIndicator.value) {
+        if (viewModel.imageCompressionProgressIndicator.value) {
 
             Box(
                 contentAlignment = Alignment.Center,
@@ -252,6 +252,6 @@ fun handelArticleImage(
         viewModel.compressProfileImage(context = context)
 
     }.invokeOnCompletion {
-        viewModel.ImageCompressionProgressIndicator.value = false
+        viewModel.imageCompressionProgressIndicator.value = false
     }
 }

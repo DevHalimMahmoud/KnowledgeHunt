@@ -8,7 +8,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.knowledgehunt.domain.use_case.UseCases
+import com.example.knowledgehunt.domain.use_case.AuthUseCases
+import com.example.knowledgehunt.domain.use_case.FirestoreUseCases
+import com.example.knowledgehunt.domain.use_case.ImageUseCases
+import com.example.knowledgehunt.domain.use_case.StorageUseCases
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -23,9 +26,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterScreenViewModel @Inject constructor(
-    private val useCases: UseCases
-) : ViewModel() {
+    private val authUseCases: AuthUseCases,
+    private val storageUseCases: StorageUseCases,
+    private val firestoreUseCases: FirestoreUseCases,
+    private val imageUseCases: ImageUseCases
 
+) : ViewModel() {
     var emailState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
     var emailErrorState: MutableState<Boolean> = mutableStateOf(false)
 
@@ -51,21 +57,21 @@ class RegisterScreenViewModel @Inject constructor(
     val genderItems: List<String> = listOf("Male", "Female", "Other")
     var genderSelectedIndex: MutableState<Int> = mutableStateOf(0)
 
-    val imageUri: MutableState<Uri?>? = mutableStateOf(null)
+    val imageUri: MutableState<Uri?> = mutableStateOf(null)
     val bitmap: MutableState<Bitmap?> = mutableStateOf(null)
 
-    val ImageCompressionProgressIndicator: MutableState<Boolean> = mutableStateOf(false)
+    val imageCompressionProgressIndicator: MutableState<Boolean> = mutableStateOf(false)
 
-    val SignupProgressIndicator: MutableState<Boolean> = mutableStateOf(true)
-    var SignupError: MutableState<String> =
+    val signupProgressIndicator: MutableState<Boolean> = mutableStateOf(true)
+    var signupError: MutableState<String> =
         mutableStateOf("User Created Successfully please verify your email")
-    var SignupStates: MutableState<Boolean> = mutableStateOf(false)
+    var signupStates: MutableState<Boolean> = mutableStateOf(false)
 
     var mutableMap: HashMap<String, Any?> = hashMapOf()
 
 
     suspend fun compressProfileImage(context: Context) {
-        bitmap.value = useCases.compressImage(context = context, imageUri)
+        bitmap.value = imageUseCases.compressImage(context = context, imageUri)
     }
 
     suspend fun signupNewUser(): Task<AuthResult> {
@@ -81,7 +87,7 @@ class RegisterScreenViewModel @Inject constructor(
                     viewModelScope.launch(
                         Dispatchers.IO, CoroutineStart.DEFAULT
                     ) {
-                        useCases.sendEmailVerification
+                        authUseCases.sendEmailVerification
                     }
                     viewModelScope.launch(
                         Dispatchers.Default,
@@ -98,40 +104,40 @@ class RegisterScreenViewModel @Inject constructor(
                                                 Dispatchers.IO,
                                                 CoroutineStart.DEFAULT
                                             ) {
-                                                SignupProgressIndicator.value = true
-                                                useCases.logout
-                                                SignupError.value =
+                                                signupProgressIndicator.value = true
+                                                authUseCases.logout
+                                                signupError.value =
                                                     "User Created Successfully please verify your email"
-                                                SignupStates.value = true
+                                                signupStates.value = true
                                             }
 
                                         } else {
-                                            SignupError.value =
+                                            signupError.value =
                                                 task.exception?.localizedMessage.toString()
-                                            SignupProgressIndicator.value = true
-                                            SignupStates.value = true
+                                            signupProgressIndicator.value = true
+                                            signupStates.value = true
 
                                         }
                                     }
                                 }
                             } else {
-                                SignupError.value = task.exception?.localizedMessage.toString()
-                                SignupProgressIndicator.value = true
-                                SignupStates.value = true
+                                signupError.value = task.exception?.localizedMessage.toString()
+                                signupProgressIndicator.value = true
+                                signupStates.value = true
 
                             }
                         }
                     }
                 } else {
-                    SignupError.value = task.exception?.localizedMessage.toString()
-                    SignupProgressIndicator.value = true
-                    SignupStates.value = true
+                    signupError.value = task.exception?.localizedMessage.toString()
+                    signupProgressIndicator.value = true
+                    signupStates.value = true
                 }
             }
     }
 
     private suspend fun addEmailAndPassword(): Task<AuthResult> {
-        return useCases.createUserWithEmailAndPassword(
+        return authUseCases.createUserWithEmailAndPassword(
             emailState.value.text,
             passwordState.value.text
         )
@@ -141,7 +147,7 @@ class RegisterScreenViewModel @Inject constructor(
 
     private suspend fun uploadImageToStorage(): StorageTask<UploadTask.TaskSnapshot> {
 
-        return useCases.uploadStorageImage(
+        return storageUseCases.uploadStorageImage(
             bitmap.value!!,
             "user",
             FirebaseAuth.getInstance().currentUser?.uid!!
@@ -151,7 +157,7 @@ class RegisterScreenViewModel @Inject constructor(
 
     private suspend fun addDataToFireStore(): Task<Void> {
 
-        return useCases.addUserDataToFirestore(dataMap())
+        return firestoreUseCases.addUserDataToFirestore(dataMap())
 
 
     }

@@ -9,32 +9,31 @@ import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
 import com.example.knowledgehunt.R
-import com.example.knowledgehunt.domain.use_case.UseCases
+import com.example.knowledgehunt.domain.use_case.AuthUseCases
+import com.example.knowledgehunt.domain.use_case.StorageUseCases
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class AppMainScreenViewModel @Inject constructor(
-    private val useCases: UseCases
+    private val authUseCases: AuthUseCases,
+    private val storageUseCases: StorageUseCases
 
 ) : ViewModel(), LifecycleObserver {
     var profileImage: MutableState<Bitmap> =
-        mutableStateOf(R.drawable.logo_no_text.toDrawable().toBitmap(50, 50))
+        mutableStateOf(R.drawable.logo_no_text.toDrawable().toBitmap(5, 5))
 
     suspend fun loggedIn(): Boolean {
-        return useCases.getCurrentUser() != null
-
+        return authUseCases.getCurrentUser() != null
     }
 
-    suspend fun LogoutResults() {
-        useCases.logout()
+    suspend fun logoutResults() {
+        authUseCases.logout()
     }
 
     suspend fun getTopBarProfileImage() {
-
-
-        useCases.getStorageImage("user", FirebaseAuth.getInstance().currentUser?.uid!!)
+        storageUseCases.getStorageImage("user", FirebaseAuth.getInstance().currentUser?.uid!!)
             .addOnCompleteListener { task ->
                 profileImage.value =
                     BitmapFactory.decodeByteArray(task.result, 0, task.result.size)

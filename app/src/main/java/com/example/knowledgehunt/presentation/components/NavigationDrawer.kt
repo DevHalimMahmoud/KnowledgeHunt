@@ -66,6 +66,7 @@ fun AppDrawer(
                         navController.graph.startDestinationRoute?.let { route ->
                             popUpTo(route) {
                                 saveState = true
+                                inclusive = true
                             }
                         }
                         // Avoid multiple copies of the same destination when

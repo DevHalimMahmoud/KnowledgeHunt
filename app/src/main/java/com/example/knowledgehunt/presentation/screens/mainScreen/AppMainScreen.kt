@@ -17,9 +17,9 @@ import com.example.knowledgehunt.domain.models.Screens
 import com.example.knowledgehunt.presentation.components.AppDrawer
 import com.example.knowledgehunt.presentation.components.TopBar
 import com.example.knowledgehunt.presentation.screens.about.About
-import com.example.knowledgehunt.presentation.screens.help.Screen
-import com.example.knowledgehunt.presentation.screens.article.viewArticle.Articles
 import com.example.knowledgehunt.presentation.screens.article.addArticle.AddArticleScreen
+import com.example.knowledgehunt.presentation.screens.article.viewArticle.Articles
+import com.example.knowledgehunt.presentation.screens.help.Screen
 import com.example.knowledgehunt.presentation.screens.home.HomeScreen
 import com.example.knowledgehunt.presentation.screens.login.LoginScreen
 import com.example.knowledgehunt.presentation.screens.registration.RegisterScreen
@@ -51,15 +51,14 @@ fun AppMainScreen() {
                     modifier = Modifier,
                     Logout = {
                         scope.launch(Dispatchers.IO, CoroutineStart.DEFAULT) {
-                            viewModel.LogoutResults()
+                            viewModel.logoutResults()
                         }
                         navController.navigate(Screens.Login.route) {
                             popUpTo(0)
                             launchSingleTop = true
                         }
                     },
-
-                    viewModel.profileImage.value
+                    profileImage = viewModel.profileImage.value
                 )
                 drawerGesturesEnabled.value = true
             }

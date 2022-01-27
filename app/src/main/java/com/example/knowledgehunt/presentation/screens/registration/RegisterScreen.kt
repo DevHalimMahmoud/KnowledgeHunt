@@ -47,10 +47,9 @@ import kotlinx.coroutines.launch
 fun RegisterScreen(navController: NavHostController) {
     val viewModel: RegisterScreenViewModel = hiltViewModel()
     val coroutineScope = rememberCoroutineScope()
-
     val context = LocalContext.current
 
-    if (viewModel.SignupStates.value) {
+    if (viewModel.signupStates.value) {
         LaunchedEffect(
             Dispatchers.Main,
             CoroutineStart.DEFAULT
@@ -59,14 +58,14 @@ fun RegisterScreen(navController: NavHostController) {
             Toast
                 .makeText(
                     context,
-                    viewModel.SignupError.value,
+                    viewModel.signupError.value,
                     Toast.LENGTH_LONG
                 )
                 .show()
-            if (viewModel.SignupError.value == "User Created Successfully please verify your email") {
+            if (viewModel.signupError.value == "User Created Successfully please verify your email") {
                 navController.popBackStack()
             }
-            viewModel.SignupStates.value = false
+            viewModel.signupStates.value = false
         }
 
     }
@@ -83,7 +82,7 @@ fun RegisterScreen(navController: NavHostController) {
         },
         floatingActionButton = {
 
-            if (viewModel.SignupProgressIndicator.value) {
+            if (viewModel.signupProgressIndicator.value) {
                 if (viewModel.notEmpty()) {
                     Image(
                         imageVector = Icons.Rounded.Check,
@@ -94,7 +93,7 @@ fun RegisterScreen(navController: NavHostController) {
                             .clip(CircleShape)
                             .border(1.dp, MaterialTheme.colors.primary, CircleShape)
                             .clickable {
-                                viewModel.SignupProgressIndicator.value = false
+                                viewModel.signupProgressIndicator.value = false
                                 coroutineScope
                                     .launch {
                                         viewModel.signupNewUser()
@@ -280,7 +279,7 @@ fun ProfileImage(
             viewModel.imageUri?.value = uri
 
             if (viewModel.imageUri?.value != null) {
-                viewModel.ImageCompressionProgressIndicator.value = true
+                viewModel.imageCompressionProgressIndicator.value = true
                 Toast.makeText(
                     context,
                     "Compressing Image...",
@@ -316,7 +315,7 @@ fun ProfileImage(
                     .border(1.dp, MaterialTheme.colors.primary, CircleShape)
             )
         }
-        if (viewModel.ImageCompressionProgressIndicator.value) {
+        if (viewModel.imageCompressionProgressIndicator.value) {
 
             Box(
                 contentAlignment = Center,
@@ -355,7 +354,7 @@ fun handelImage(
         viewModel.compressProfileImage(context = context)
 
     }.invokeOnCompletion {
-        viewModel.ImageCompressionProgressIndicator.value = false
+        viewModel.imageCompressionProgressIndicator.value = false
     }
 }
 

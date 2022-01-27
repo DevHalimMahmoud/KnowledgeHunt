@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
-import com.example.knowledgehunt.domain.use_case.UseCases
+import com.example.knowledgehunt.domain.use_case.AuthUseCases
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginScreenViewModel @Inject constructor(
-    private val useCases: UseCases
+    private val authUseCases: AuthUseCases,
 ) : ViewModel() {
 
     var dialogEmailState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
@@ -28,7 +28,7 @@ class LoginScreenViewModel @Inject constructor(
 
     suspend fun loginResults(
     ): Task<AuthResult> {
-        return useCases.login(
+        return authUseCases.login(
             emailState.value.text,
             password = passwordState.value.text
         )
@@ -36,7 +36,7 @@ class LoginScreenViewModel @Inject constructor(
 
     suspend fun resetPasswordResults(
     ): Task<Void> {
-        return useCases.resetPassword(dialogEmailState.value.text)
+        return authUseCases.resetPassword(dialogEmailState.value.text)
     }
 
 }

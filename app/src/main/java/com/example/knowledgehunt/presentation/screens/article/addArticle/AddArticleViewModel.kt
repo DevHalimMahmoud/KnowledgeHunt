@@ -8,29 +8,31 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.knowledgehunt.domain.use_case.UseCases
+import com.example.knowledgehunt.domain.use_case.FirestoreUseCases
+import com.example.knowledgehunt.domain.use_case.ImageUseCases
+import com.example.knowledgehunt.domain.use_case.StorageUseCases
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class AddArticleViewModel @Inject constructor(
-    private val useCases: UseCases
-
+    private val storageUseCases: StorageUseCases,
+    private val imageUseCases: ImageUseCases,
+    private val firestoreUseCases: FirestoreUseCases,
 ) : ViewModel() {
 
-    val imageUri: MutableState<Uri?>? = mutableStateOf(null)
+    val imageUri: MutableState<Uri?> = mutableStateOf(null)
     val bitmap: MutableState<Bitmap?> = mutableStateOf(null)
 
-    val ImageCompressionProgressIndicator: MutableState<Boolean> = mutableStateOf(false)
+    val imageCompressionProgressIndicator: MutableState<Boolean> = mutableStateOf(false)
 
-    val PublishArticleProgressIndicator: MutableState<Boolean> = mutableStateOf(true)
-    var PublishError: MutableState<String> = mutableStateOf("Article Published Successfully!")
-    var PublishStates: MutableState<Boolean> = mutableStateOf(false)
+    val publishArticleProgressIndicator: MutableState<Boolean> = mutableStateOf(true)
+    var publishError: MutableState<String> = mutableStateOf("Article Published Successfully!")
+    var publishStates: MutableState<Boolean> = mutableStateOf(false)
 
     var titleState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
     var titleErrorState: MutableState<Boolean> = mutableStateOf(false)
@@ -43,7 +45,7 @@ class AddArticleViewModel @Inject constructor(
     var mutableMap: HashMap<String, Any?> = hashMapOf()
 
     suspend fun compressProfileImage(context: Context) {
-        bitmap.value = useCases.compressImage(context = context, imageUri)
+        bitmap.value = imageUseCases.compressImage(context = context, imageUri)
     }
 
     fun notEmpty(): Boolean {
@@ -66,32 +68,32 @@ class AddArticleViewModel @Inject constructor(
     fun publishArticle() {
         viewModelScope.launch(Dispatchers.IO, CoroutineStart.DEFAULT) {
             mutableMap = dataMap()
-            useCases.addArticleDataToFirestore(mutableMap)
+            firestoreUseCases.addArticleDataToFirestore(mutableMap)
                 .addOnCompleteListener { task1 ->
 
                     if (task1.isSuccessful) {
                         viewModelScope.launch(Dispatchers.IO, CoroutineStart.DEFAULT) {
-                            useCases.uploadStorageImage(
+                            storageUseCases.uploadStorageImage(
                                 bitmap.value!!,
                                 "article",
                                 task1.result.id
                             ).addOnCompleteListener { task2 ->
-                                PublishArticleProgressIndicator.value = true
-                                PublishStates.value = true
+                                publishArticleProgressIndicator.value = true
+                                publishStates.value = true
                                 if (task2.isSuccessful) {
-                                    PublishError.value =
+                                    publishError.value =
                                         "Article Published Successfully!"
                                 } else {
-                                    PublishError.value =
+                                    publishError.value =
                                         task2.exception?.localizedMessage.toString()
 
                                 }
                             }
                         }
                     } else {
-                        PublishError.value = task1.exception?.localizedMessage.toString()
-                        PublishArticleProgressIndicator.value = true
-                        PublishStates.value = true
+                        publishError.value = task1.exception?.localizedMessage.toString()
+                        publishArticleProgressIndicator.value = true
+                        publishStates.value = true
                     }
                 }
         }
