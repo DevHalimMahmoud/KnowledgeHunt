@@ -1,6 +1,7 @@
 package com.example.knowledgehunt.data.repository
 
 import android.graphics.Bitmap
+import android.net.Uri
 import com.example.knowledgehunt.domain.repository.IFirebaseStorage
 import com.google.android.gms.tasks.Task
 import com.google.firebase.storage.FirebaseStorage
@@ -41,15 +42,13 @@ class FirebaseStorageImpl : IFirebaseStorage {
         }
     }
 
-    override suspend fun getStorageImage(
+    override suspend fun getStorageImageUrl(
         bath: String,
         name: String
-    ): Task<ByteArray> {
+    ): Task<Uri> {
 
-        val islandRef =
-            FirebaseStorage.getInstance().reference.child("$bath/${name}.JPEG")
+        return FirebaseStorage.getInstance().reference.child("$bath/${name}.JPEG").downloadUrl
 
-        val TWO_MEGABYTE: Long = 2048 * 2048
-        return islandRef.getBytes(TWO_MEGABYTE).addOnCompleteListener { task -> }
+
     }
 }

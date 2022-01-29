@@ -58,7 +58,7 @@ fun AppMainScreen() {
                             launchSingleTop = true
                         }
                     },
-                    profileImage = viewModel.profileImage.value
+                    profileImageUrl = viewModel.profileImageUrl.value
                 )
                 drawerGesturesEnabled.value = true
             }

@@ -1,6 +1,7 @@
 package com.example.knowledgehunt.domain.repository
 
 import android.graphics.Bitmap
+import android.net.Uri
 import com.google.android.gms.tasks.Task
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -19,9 +20,9 @@ interface IFirebaseStorage {
     ): StorageTask<UploadTask.TaskSnapshot>
 
 
-    suspend fun getStorageImage(
+    suspend fun getStorageImageUrl(
         bath: String,
         name: String
-    ): Task<ByteArray>
+    ): Task<Uri>
 
 }

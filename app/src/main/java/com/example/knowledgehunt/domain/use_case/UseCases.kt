@@ -17,7 +17,7 @@ data class FirestoreUseCases(
 
 data class StorageUseCases(
     val uploadStorageImage: UploadStorageImage,
-    val getStorageImage: GetStorageImage,
+    val getStorageImageUrl: GetStorageImageUrl,
 )
 
 data class ImageUseCases(

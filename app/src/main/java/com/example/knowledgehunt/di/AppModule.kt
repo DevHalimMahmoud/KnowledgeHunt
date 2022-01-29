@@ -58,7 +58,7 @@ object AppModule {
         firebaseStorageRepository: IFirebaseStorage,
     ) = StorageUseCases(
         UploadStorageImage(firebaseStorageRepository),
-        GetStorageImage(firebaseStorageRepository),
+        GetStorageImageUrl(firebaseStorageRepository),
     )
 
     @Provides

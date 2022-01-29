@@ -6,14 +6,14 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PostAdd
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.knowledgehunt.domain.models.Screens
+import compose.icons.TablerIcons
+import compose.icons.tablericons.CodePlus
 
 @Composable
 fun Articles(openDrawer: () -> Unit, navController: NavHostController) {
@@ -21,8 +21,8 @@ fun Articles(openDrawer: () -> Unit, navController: NavHostController) {
         floatingActionButton = {
 
             Icon(
-                imageVector = Icons.Default.PostAdd,
-                tint = MaterialTheme.colors.primary,
+                imageVector = TablerIcons.CodePlus,
+                tint = MaterialTheme.colors.secondary,
                 contentDescription = null,
                 modifier = Modifier
                     .size(50.dp)

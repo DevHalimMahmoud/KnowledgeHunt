@@ -1,14 +1,10 @@
 package com.example.knowledgehunt.presentation.screens.mainScreen
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.core.graphics.drawable.toBitmap
-import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
-import com.example.knowledgehunt.R
 import com.example.knowledgehunt.domain.use_case.AuthUseCases
 import com.example.knowledgehunt.domain.use_case.StorageUseCases
 import com.google.firebase.auth.FirebaseAuth
@@ -21,8 +17,8 @@ class AppMainScreenViewModel @Inject constructor(
     private val storageUseCases: StorageUseCases
 
 ) : ViewModel(), LifecycleObserver {
-    var profileImage: MutableState<Bitmap> =
-        mutableStateOf(R.drawable.logo_no_text.toDrawable().toBitmap(5, 5))
+    var profileImageUrl: MutableState<Uri> = mutableStateOf(Uri.EMPTY)
+
 
     suspend fun loggedIn(): Boolean {
         return authUseCases.getCurrentUser() != null
@@ -33,10 +29,10 @@ class AppMainScreenViewModel @Inject constructor(
     }
 
     suspend fun getTopBarProfileImage() {
-        storageUseCases.getStorageImage("user", FirebaseAuth.getInstance().currentUser?.uid!!)
+        storageUseCases.getStorageImageUrl("user", FirebaseAuth.getInstance().currentUser?.uid!!)
             .addOnCompleteListener { task ->
-                profileImage.value =
-                    BitmapFactory.decodeByteArray(task.result, 0, task.result.size)
+                profileImageUrl.value =
+                    task.result.normalizeScheme()
             }
     }
 }

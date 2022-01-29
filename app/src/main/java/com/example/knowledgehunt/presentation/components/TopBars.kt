@@ -1,8 +1,6 @@
 package com.example.knowledgehunt.presentation.components
 
-import android.graphics.Bitmap
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.fillMaxSize
+import android.net.Uri
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -15,11 +13,11 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import com.skydoves.landscapist.ShimmerParams
+import com.skydoves.landscapist.glide.GlideImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -31,7 +29,7 @@ fun TopBar(
     buttonIcon: Painter,
     modifier: Modifier,
     Logout: () -> Unit,
-    profileImage: Bitmap
+    profileImageUrl: Uri
 ) {
     TopAppBar(
         modifier = modifier,
@@ -65,18 +63,27 @@ fun TopBar(
                 }
                 IconButton(
                     onClick = { /* TODO: Open account? */ },
-                    Modifier
-                        .size(38.dp)
-                        .padding(2.dp)
-                ) {
-                    Image(
-                        bitmap = profileImage.asImageBitmap(),
-                        contentDescription = null,
-                        Modifier
-                            .clip(CircleShape)
-                            .fillMaxSize(),
-                        contentScale = ContentScale.Crop
-                    )
+
+                    ) {
+                    GlideImage( // CoilImage, FrescoImage
+                        imageModel = profileImageUrl,
+                        modifier = modifier
+                            .size(40.dp)
+                            .padding(2.dp)
+                            .clip(CircleShape),
+                        // shows a shimmering effect when loading an image.
+                        shimmerParams = ShimmerParams(
+                            baseColor = MaterialTheme.colors.background,
+                            highlightColor = MaterialTheme.colors.secondary,
+                            durationMillis = 350,
+                            dropOff = 0.65f,
+                            tilt = 20f
+                        ),
+                        // shows an error text message when request failed.
+                        failure = {
+
+                        })
+
                 }
                 IconButton(
                     onClick = { Logout() }
