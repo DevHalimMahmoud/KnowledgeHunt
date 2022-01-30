@@ -17,8 +17,8 @@ class AppMainScreenViewModel @Inject constructor(
     private val storageUseCases: StorageUseCases
 
 ) : ViewModel(), LifecycleObserver {
-    var profileImageUrl: MutableState<Uri> = mutableStateOf(Uri.EMPTY)
-
+    var profileImageUrl: MutableState<Uri> =
+        mutableStateOf(Uri.parse("https://storage.googleapis.com/glaze-ecom.appspot.com/images/P2uSA0D_6/thumbs/232.png"))
 
     suspend fun loggedIn(): Boolean {
         return authUseCases.getCurrentUser() != null
