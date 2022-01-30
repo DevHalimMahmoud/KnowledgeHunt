@@ -39,6 +39,7 @@ class FirebaseStorageImpl : IFirebaseStorage {
         val uploadTask = userImagesRef.putBytes(data)
         return uploadTask.addOnFailureListener {
         }.addOnSuccessListener { taskSnapshot ->
+
         }
     }
 

@@ -10,4 +10,5 @@ interface IFirebaseFirestore {
     suspend fun addUserDataToFirestore(data: MutableMap<String, Any?>): Task<Void>
 
     suspend fun addArticleDataToFirestore(data: MutableMap<String, Any?>): Task<DocumentReference>
+
 }

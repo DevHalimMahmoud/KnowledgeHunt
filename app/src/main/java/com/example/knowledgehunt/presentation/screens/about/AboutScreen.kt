@@ -1,8 +1,6 @@
 package com.example.knowledgehunt.presentation.screens.about
 
 import android.widget.TextView
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,7 +28,8 @@ fun About(openDrawer: () -> Unit, navController: NavHostController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState()).padding(4.dp),
+                .verticalScroll(rememberScrollState())
+                .padding(4.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
