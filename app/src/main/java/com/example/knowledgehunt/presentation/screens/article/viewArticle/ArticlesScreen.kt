@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -65,6 +66,7 @@ fun Articles(openDrawer: () -> Unit, navController: NavHostController) {
                 items(
                     viewModel.articleState.value
                 ) { article ->
+
                     ArticleCardItem(
                         article
                     )

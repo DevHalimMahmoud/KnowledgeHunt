@@ -13,4 +13,11 @@ interface IFirebaseFirestore {
     suspend fun addArticleDataToFirestore(data: MutableMap<String, Any?>): Task<DocumentReference>
 
     suspend fun getCollectionFromFirestore(collectionPath: String): CollectionReference
+
+    suspend fun addDataToDocument(
+        collection: String,
+        id: String,
+        data: MutableMap<String, Any?>
+    ): Task<Void>
+
 }

@@ -81,8 +81,24 @@ class AddArticleViewModel @Inject constructor(
                                 publishArticleProgressIndicator.value = true
                                 publishStates.value = true
                                 if (task2.isSuccessful) {
-                                    publishError.value =
-                                        "Article Published Successfully!"
+                                    viewModelScope.launch(Dispatchers.IO, CoroutineStart.DEFAULT) {
+                                        task2.result.storage.downloadUrl.addOnSuccessListener {
+                                            viewModelScope.launch(
+                                                Dispatchers.IO,
+                                                CoroutineStart.DEFAULT
+                                            ) {
+                                                firestoreUseCases.addDataToDocument(
+                                                    "articles", task1.result.id,
+                                                    hashMapOf("imageUrl" to it.toString())
+                                                )
+                                                publishError.value =
+                                                    "Article Published Successfully!"
+                                            }
+                                        }
+
+
+                                    }
+
                                 } else {
                                     publishError.value =
                                         task2.exception?.localizedMessage.toString()

@@ -67,7 +67,8 @@ object AppModule {
     ) = FirestoreUseCases(
         AddUserDataToFirestore(firebaseFirestoreRepository),
         AddArticleDataToFirestore(firebaseFirestoreRepository),
-        GetCollection(firebaseFirestoreRepository)
+        GetCollection(firebaseFirestoreRepository),
+        AddDataToDocument(firebaseFirestoreRepository)
     )
 
     @Provides

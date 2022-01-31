@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 
 
 class FirebaseFirestoreImpl : IFirebaseFirestore {
@@ -56,6 +57,19 @@ class FirebaseFirestoreImpl : IFirebaseFirestore {
         return FirebaseFirestore.getInstance().collection(collectionPath)
 
 
+    }
+
+    override suspend fun addDataToDocument(
+        collection: String,
+        id: String,
+        data: MutableMap<String, Any?>
+    ): Task<Void> {
+        return FirebaseFirestore.getInstance().collection(collection).document(id)
+            .set(data, SetOptions.merge()).addOnSuccessListener {
+
+            }.addOnFailureListener {
+
+            }
     }
 
 

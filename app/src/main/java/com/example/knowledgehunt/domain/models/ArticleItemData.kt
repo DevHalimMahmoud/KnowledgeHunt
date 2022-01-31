@@ -9,7 +9,7 @@ data class ArticleItemData(
     val date: Timestamp? = null,
     val content: String? = null,
     val reactions: List<Int>? = null,
-//    val imageUrl: Uri
+    val imageUrl: String? = null,
 )
 
 

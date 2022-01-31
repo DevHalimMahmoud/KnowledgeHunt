@@ -14,6 +14,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import com.example.knowledgehunt.domain.models.ArticleItemData
 import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
@@ -21,7 +22,10 @@ import java.text.SimpleDateFormat
 
 
 @Composable
-fun ArticleCardItem(articleItemData: ArticleItemData, modifier: Modifier = Modifier) {
+fun ArticleCardItem(
+    articleItemData: ArticleItemData,
+    modifier: Modifier = Modifier,
+) {
     val typography = MaterialTheme.typography
     val df = SimpleDateFormat("dd MMM yyyy")
     Column(
@@ -33,10 +37,10 @@ fun ArticleCardItem(articleItemData: ArticleItemData, modifier: Modifier = Modif
     ) {
 
         GlideImage(
-            imageModel = "https://tech-echo.com/wp-content/uploads/2020/09/android-11-update-features.jpg",
+            imageModel = articleItemData.imageUrl,
             contentScale = ContentScale.FillBounds,
             modifier = modifier
-                .clip(RoundedCornerShape(16.dp))
+                .clip(RoundedCornerShape(16.dp)).heightIn(max=250.dp)
                 .wrapContentHeight()
                 .fillMaxWidth(),
 
@@ -88,7 +92,7 @@ fun ArticleCardItem(articleItemData: ArticleItemData, modifier: Modifier = Modif
                 style = TextStyle(Color.Gray),
             )
         }
-        
+
         Box(
             modifier
                 .fillMaxWidth()
