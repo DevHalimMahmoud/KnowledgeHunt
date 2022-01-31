@@ -14,7 +14,8 @@ data class FirestoreUseCases(
     val addUserDataToFirestore: AddUserDataToFirestore,
     val addArticleDataToFirestore: AddArticleDataToFirestore,
     val getCollection: GetCollection,
-    val addDataToDocument: AddDataToDocument
+    val addDataToDocument: AddDataToDocument,
+    val getDocumentById: GetDocumentById
 )
 
 data class StorageUseCases(

@@ -68,7 +68,8 @@ object AppModule {
         AddUserDataToFirestore(firebaseFirestoreRepository),
         AddArticleDataToFirestore(firebaseFirestoreRepository),
         GetCollection(firebaseFirestoreRepository),
-        AddDataToDocument(firebaseFirestoreRepository)
+        AddDataToDocument(firebaseFirestoreRepository),
+        GetDocumentById(firebaseFirestoreRepository),
     )
 
     @Provides

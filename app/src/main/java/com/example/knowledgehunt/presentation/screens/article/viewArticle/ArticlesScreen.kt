@@ -1,5 +1,7 @@
 package com.example.knowledgehunt.presentation.screens.article.viewArticle
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
@@ -9,10 +11,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
@@ -25,10 +24,10 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import compose.icons.TablerIcons
 import compose.icons.tablericons.CodePlus
 
-@Composable
-fun Articles(openDrawer: () -> Unit, navController: NavHostController) {
-//    val shimmerInstance = rememberShimmer(shimmerBounds = ShimmerBounds.View)
 
+@Composable
+fun Articles(navController: NavHostController) {
+//    var shimmerInstance = rememberShimmer(shimmerBounds = ShimmerBounds.Custom)
     val viewModel: ArticleScreenViewModel = hiltViewModel()
     val isRefreshing by viewModel.isRefreshing.collectAsState()
     Scaffold(
@@ -46,35 +45,38 @@ fun Articles(openDrawer: () -> Unit, navController: NavHostController) {
                     },
             )
         },
-//        modifier = Modifier.shimmer(shimmerInstance)
+//        modifier = Modifier.shimmer(customShimmer = null)
     ) {
-
-//        ArticleCardItem(
-//            articleItemData = ArticleItemData(
-//                "1",
-//                "Title",
-//                "Subtitle",
-//                Uri.parse("https://www.fixservis.sk/media/filer_public/de/fe/defe8629-6cf0-4d68-b7c5-5a43ce3819f2/denny-muller-hfwa-axq6ek-unsplash.jpg")
-//            )
-//        )
         SwipeRefresh(
             state = rememberSwipeRefreshState(isRefreshing),
-            onRefresh = { viewModel.refresh() },
-            modifier = Modifier.fillMaxWidth()
+            onRefresh = {
+                viewModel.refresh()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
         ) {
             LazyColumn {
-                items(
-                    viewModel.articleState.value
-                ) { article ->
 
+                items(
+                    viewModel.articleState.value,
+
+                    ) { article ->
+                    val author: MutableState<String> = remember {
+                        mutableStateOf("Author")
+                    }
+                    if (author.value == "Author") {
+                        LaunchedEffect(key1 = true) {
+                            viewModel.getAuthorName(article, author)
+                        }
+                    }
+                    Log.d(TAG, "Articles: ${author.value}")
                     ArticleCardItem(
-                        article
+                        article,
+                        author.value
                     )
                 }
             }
         }
-
     }
-
 }
 

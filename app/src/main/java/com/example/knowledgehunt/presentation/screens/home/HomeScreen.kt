@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 
 
 @Composable
-fun HomeScreen(openDrawer: () -> Unit, navController: NavHostController) {
+fun HomeScreen(navController: NavHostController) {
 
     Scaffold(
         topBar = {

@@ -4,10 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.knowledgehunt.domain.repository.IFirebaseFirestore
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.*
 
 
 class FirebaseFirestoreImpl : IFirebaseFirestore {
@@ -35,21 +32,13 @@ class FirebaseFirestoreImpl : IFirebaseFirestore {
 
         return FirebaseFirestore.getInstance().collection("user")
             .document(FirebaseAuth.getInstance().uid.toString())
-            .set(data).addOnSuccessListener {
-                return@addOnSuccessListener
-            }.addOnFailureListener {
-                return@addOnFailureListener
-            }
+            .set(data)
     }
 
     override suspend fun addArticleDataToFirestore(data: MutableMap<String, Any?>): Task<DocumentReference> {
 
         return FirebaseFirestore.getInstance().collection("articles")
-            .add(data).addOnSuccessListener {
-
-            }.addOnFailureListener {
-
-            }
+            .add(data)
     }
 
     override suspend fun getCollectionFromFirestore(collectionPath: String): CollectionReference {
@@ -65,11 +54,11 @@ class FirebaseFirestoreImpl : IFirebaseFirestore {
         data: MutableMap<String, Any?>
     ): Task<Void> {
         return FirebaseFirestore.getInstance().collection(collection).document(id)
-            .set(data, SetOptions.merge()).addOnSuccessListener {
+            .set(data, SetOptions.merge())
+    }
 
-            }.addOnFailureListener {
-
-            }
+    override suspend fun getDocumentById(collection: String, id: String): Task<DocumentSnapshot> {
+        return FirebaseFirestore.getInstance().collection(collection).document(id).get()
     }
 
 

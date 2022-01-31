@@ -92,21 +92,17 @@ fun Navigation(
             }
 
             HomeScreen(
-                openDrawer = {
-
-                }, navController
+                navController
             )
         }
         composable(Screens.Articles.route) {
             Articles(
-                openDrawer = {
-                }, navController
+                navController
             )
         }
         composable(Screens.About.route) {
             About(
-                openDrawer = {
-                }, navController
+                navController
             )
         }
         composable(Screens.Splash.route) {

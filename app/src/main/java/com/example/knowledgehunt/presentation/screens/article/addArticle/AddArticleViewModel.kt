@@ -11,7 +11,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.knowledgehunt.domain.use_case.FirestoreUseCases
 import com.example.knowledgehunt.domain.use_case.ImageUseCases
 import com.example.knowledgehunt.domain.use_case.StorageUseCases
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.storage.UploadTask
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
@@ -70,52 +73,61 @@ class AddArticleViewModel @Inject constructor(
             mutableMap = dataMap()
             firestoreUseCases.addArticleDataToFirestore(mutableMap)
                 .addOnCompleteListener { task1 ->
+                    uploadImage(task1)
 
-                    if (task1.isSuccessful) {
-                        viewModelScope.launch(Dispatchers.IO, CoroutineStart.DEFAULT) {
-                            storageUseCases.uploadStorageImage(
-                                bitmap.value!!,
-                                "article",
-                                task1.result.id
-                            ).addOnCompleteListener { task2 ->
-                                publishArticleProgressIndicator.value = true
-                                publishStates.value = true
-                                if (task2.isSuccessful) {
-                                    viewModelScope.launch(Dispatchers.IO, CoroutineStart.DEFAULT) {
-                                        task2.result.storage.downloadUrl.addOnSuccessListener {
-                                            viewModelScope.launch(
-                                                Dispatchers.IO,
-                                                CoroutineStart.DEFAULT
-                                            ) {
-                                                firestoreUseCases.addDataToDocument(
-                                                    "articles", task1.result.id,
-                                                    hashMapOf("imageUrl" to it.toString())
-                                                )
-                                                publishError.value =
-                                                    "Article Published Successfully!"
-                                            }
-                                        }
-
-
-                                    }
-
-                                } else {
-                                    publishError.value =
-                                        task2.exception?.localizedMessage.toString()
-
-                                }
-                            }
-                        }
-                    } else {
-                        publishError.value = task1.exception?.localizedMessage.toString()
-                        publishArticleProgressIndicator.value = true
-                        publishStates.value = true
-                    }
                 }
         }
 
     }
 
+    private fun uploadImage(task1: Task<DocumentReference>) {
+        if (task1.isSuccessful) {
+            viewModelScope.launch(Dispatchers.IO, CoroutineStart.DEFAULT) {
+                storageUseCases.uploadStorageImage(
+                    bitmap.value!!,
+                    "article",
+                    task1.result.id
+                ).addOnCompleteListener { task2 ->
+                    publishArticleProgressIndicator.value = true
+                    publishStates.value = true
+                    getStorageImageUrl(task2, task1)
+                }
+            }
+        } else {
+            publishError.value = task1.exception?.localizedMessage.toString()
+            publishArticleProgressIndicator.value = true
+            publishStates.value = true
+        }
+
+    }
+
+    private fun getStorageImageUrl(
+        task2: Task<UploadTask.TaskSnapshot>,
+        task1: Task<DocumentReference>
+    ) {
+        if (task2.isSuccessful) {
+            viewModelScope.launch(Dispatchers.IO, CoroutineStart.DEFAULT) {
+                task2.result.storage.downloadUrl.addOnSuccessListener {
+                    viewModelScope.launch(
+                        Dispatchers.IO,
+                        CoroutineStart.DEFAULT
+                    ) {
+                        firestoreUseCases.addDataToDocument(
+                            "articles", task1.result.id,
+                            hashMapOf("imageUrl" to it.toString())
+                        )
+                        publishError.value =
+                            "Article Published Successfully!"
+                    }
+                }
+            }
+        } else {
+            publishError.value =
+                task2.exception?.localizedMessage.toString()
+
+        }
+
+    }
 
 }
 

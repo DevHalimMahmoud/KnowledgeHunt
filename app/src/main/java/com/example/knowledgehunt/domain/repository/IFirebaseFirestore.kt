@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
 
 interface IFirebaseFirestore {
     suspend fun getUserName(): MutableLiveData<String>
@@ -20,4 +21,8 @@ interface IFirebaseFirestore {
         data: MutableMap<String, Any?>
     ): Task<Void>
 
+    suspend fun getDocumentById(
+        collection: String,
+        id: String,
+    ): Task<DocumentSnapshot>
 }

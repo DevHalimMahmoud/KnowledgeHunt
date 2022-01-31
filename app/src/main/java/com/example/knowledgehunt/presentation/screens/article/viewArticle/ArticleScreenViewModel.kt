@@ -1,12 +1,15 @@
 package com.example.knowledgehunt.presentation.screens.article.viewArticle
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.knowledgehunt.domain.models.ArticleItemData
 import com.example.knowledgehunt.domain.use_case.FirestoreUseCases
+import com.google.firebase.firestore.DocumentSnapshot
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +22,7 @@ class ArticleScreenViewModel @Inject constructor(
     private val firestoreUseCases: FirestoreUseCases,
 ) : ViewModel() {
     private val _isRefreshing = MutableStateFlow(false)
-
+    var document: DocumentSnapshot? = null
     val isRefreshing: StateFlow<Boolean>
         get() = _isRefreshing.asStateFlow()
 
@@ -33,6 +36,10 @@ class ArticleScreenViewModel @Inject constructor(
     fun refresh() {
         // This doesn't handle multiple 'refreshing' tasks, don't use this
         viewModelScope.launch {
+            firestoreUseCases.getCollection("articles").addSnapshotListener { snapshot, e ->
+                _articleState.value =
+                    snapshot?.toObjects(ArticleItemData::class.java) as List<ArticleItemData>
+            }
             // A fake 2 second 'refresh'
             _isRefreshing.emit(true)
             delay(2000)
@@ -40,12 +47,33 @@ class ArticleScreenViewModel @Inject constructor(
         }
     }
 
-    fun getArticles() {
+    private fun getArticles() {
         viewModelScope.launch {
             firestoreUseCases.getCollection("articles").addSnapshotListener { snapshot, e ->
                 _articleState.value =
                     snapshot?.toObjects(ArticleItemData::class.java) as List<ArticleItemData>
             }
+        }
+    }
+
+
+    suspend fun getAuthorName(
+        articleItemData: ArticleItemData,
+        author: MutableState<String>,
+    ) {
+        if (document == null) {
+            viewModelScope.async {
+                firestoreUseCases.getDocumentById(
+                    "user",
+                    articleItemData.user_id!!
+                )
+            }.await().addOnCompleteListener {
+                document = it.result
+                author.value = it.result.get("f_name").toString()
+            }
+        } else {
+
+            author.value = document!!.get("f_name").toString()
         }
     }
 

@@ -21,7 +21,7 @@ import com.example.knowledgehunt.domain.models.Screens
 
 
 @Composable
-fun About(openDrawer: () -> Unit, navController: NavHostController) {
+fun About(navController: NavHostController) {
     val context = LocalContext.current
     Column(modifier = Modifier.fillMaxSize()) {
 

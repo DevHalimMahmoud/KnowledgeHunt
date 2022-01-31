@@ -14,7 +14,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
 import com.example.knowledgehunt.domain.models.ArticleItemData
 import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
@@ -24,6 +23,7 @@ import java.text.SimpleDateFormat
 @Composable
 fun ArticleCardItem(
     articleItemData: ArticleItemData,
+    author: String,
     modifier: Modifier = Modifier,
 ) {
     val typography = MaterialTheme.typography
@@ -40,7 +40,8 @@ fun ArticleCardItem(
             imageModel = articleItemData.imageUrl,
             contentScale = ContentScale.FillBounds,
             modifier = modifier
-                .clip(RoundedCornerShape(16.dp)).heightIn(max=250.dp)
+                .clip(RoundedCornerShape(16.dp))
+                .heightIn(max = 250.dp)
                 .wrapContentHeight()
                 .fillMaxWidth(),
 
@@ -78,7 +79,7 @@ fun ArticleCardItem(
 
         Row(modifier = Modifier) {
             Text(
-                text = "Author",
+                text = author,
                 style = TextStyle(Color.Gray),
                 modifier = Modifier
                     .padding(bottom = 4.dp)
@@ -98,7 +99,7 @@ fun ArticleCardItem(
                 .fillMaxWidth()
                 .align(CenterHorizontally)
                 .heightIn(1.dp)
-                .background(color = Color.LightGray)
+                .background(MaterialTheme.colors.onError)
         )
     }
 }
