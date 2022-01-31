@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.knowledgehunt.domain.repository.IFirebaseFirestore
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -45,10 +46,17 @@ class FirebaseFirestoreImpl : IFirebaseFirestore {
         return FirebaseFirestore.getInstance().collection("articles")
             .add(data).addOnSuccessListener {
 
-                return@addOnSuccessListener
             }.addOnFailureListener {
-                return@addOnFailureListener
+
             }
     }
+
+    override suspend fun getCollectionFromFirestore(collectionPath: String): CollectionReference {
+
+        return FirebaseFirestore.getInstance().collection(collectionPath)
+
+
+    }
+
 
 }

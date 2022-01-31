@@ -1,12 +1,15 @@
 package com.example.knowledgehunt.domain.models
 
-import android.net.Uri
+import com.google.firebase.Timestamp
 
 data class ArticleItemData(
-    val id: String,
-    val title: String,
-    val subtitle: String,
-    val imageUrl: Uri
+    val user_id: String? = null,
+    val title: String? = null,
+    val description: String? = null,
+    val date: Timestamp? = null,
+    val content: String? = null,
+    val reactions: List<Int>? = null,
+//    val imageUrl: Uri
 )
 
 

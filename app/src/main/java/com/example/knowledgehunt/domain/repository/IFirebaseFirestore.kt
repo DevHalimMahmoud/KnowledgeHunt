@@ -2,6 +2,7 @@ package com.example.knowledgehunt.domain.repository
 
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 
 interface IFirebaseFirestore {
@@ -11,4 +12,5 @@ interface IFirebaseFirestore {
 
     suspend fun addArticleDataToFirestore(data: MutableMap<String, Any?>): Task<DocumentReference>
 
+    suspend fun getCollectionFromFirestore(collectionPath: String): CollectionReference
 }

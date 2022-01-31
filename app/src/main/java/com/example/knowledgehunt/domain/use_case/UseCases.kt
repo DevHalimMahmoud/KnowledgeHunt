@@ -13,6 +13,7 @@ data class AuthUseCases(
 data class FirestoreUseCases(
     val addUserDataToFirestore: AddUserDataToFirestore,
     val addArticleDataToFirestore: AddArticleDataToFirestore,
+    val getCollection: GetCollection
 )
 
 data class StorageUseCases(

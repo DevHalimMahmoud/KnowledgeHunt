@@ -93,6 +93,7 @@ dependencies {
     implementation "br.com.devsrsouza.compose.icons.android:tabler-icons:1.0.0"
 
     implementation "com.github.skydoves:landscapist-glide:1.4.5"
+    implementation 'com.valentinilk.shimmer:compose-shimmer:1.0.0'
 
     implementation "com.google.accompanist:accompanist-swiperefresh:0.24.1-alpha"
 
