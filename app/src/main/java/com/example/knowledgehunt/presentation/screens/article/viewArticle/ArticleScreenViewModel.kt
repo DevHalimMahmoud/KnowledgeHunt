@@ -21,7 +21,7 @@ import javax.inject.Inject
 class ArticleScreenViewModel @Inject constructor(
     private val firestoreUseCases: FirestoreUseCases,
 ) : ViewModel() {
-    private val _isRefreshing = MutableStateFlow(false)
+    private val _isRefreshing = MutableStateFlow(true)
     var document: DocumentSnapshot? = null
     val isRefreshing: StateFlow<Boolean>
         get() = _isRefreshing.asStateFlow()
@@ -52,7 +52,11 @@ class ArticleScreenViewModel @Inject constructor(
             firestoreUseCases.getCollection("articles").addSnapshotListener { snapshot, e ->
                 _articleState.value =
                     snapshot?.toObjects(ArticleItemData::class.java) as List<ArticleItemData>
+
+
             }
+            delay(800)
+            _isRefreshing.emit(false)
         }
     }
 

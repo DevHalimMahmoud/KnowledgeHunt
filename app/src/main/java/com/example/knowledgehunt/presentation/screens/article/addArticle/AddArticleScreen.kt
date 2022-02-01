@@ -177,9 +177,9 @@ fun ArticleImage(
 
     val launcher: ManagedActivityResultLauncher<String, Uri?> =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
-            viewModel.imageUri?.value = uri
+            viewModel.imageUri.value = uri
 
-            if (viewModel.imageUri?.value != null) {
+            if (viewModel.imageUri.value != null) {
                 viewModel.imageCompressionProgressIndicator.value = true
                 Toast.makeText(
                     context,
