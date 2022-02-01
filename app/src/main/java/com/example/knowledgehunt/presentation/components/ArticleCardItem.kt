@@ -65,6 +65,7 @@ fun ArticleCardItem(
             Spacer(Modifier.height(4.dp))
 
             Text(
+                color = Color(palette?.vibrantSwatch?.rgb ?: rgb(0, 0, 0)),
                 text = articleItemData.title!!,
                 style = typography.h6,
                 modifier = Modifier
@@ -73,6 +74,7 @@ fun ArticleCardItem(
                 overflow = TextOverflow.Ellipsis
             )
             Text(
+                color = Color(palette?.vibrantSwatch?.rgb ?: rgb(0, 0, 0)),
                 text = articleItemData.description!!,
                 style = typography.subtitle1,
                 modifier = Modifier
@@ -87,16 +89,16 @@ fun ArticleCardItem(
             ) {
                 Text(
                     text = author,
-                    style = TextStyle(Color.Gray),
+                    style = TextStyle(Color(palette?.vibrantSwatch?.rgb ?: rgb(0, 0, 0))),
 
                     )
                 Text(
                     text = " - ",
-                    style = TextStyle(Color.Gray),
+                    style = TextStyle(Color(palette?.vibrantSwatch?.rgb ?: rgb(0, 0, 0))),
                 )
                 Text(
                     text = df.format(articleItemData.date?.toDate()?.time).toString(),
-                    style = TextStyle(Color.Gray),
+                    style = TextStyle(Color(palette?.vibrantSwatch?.rgb ?: rgb(0, 0, 0))),
                 )
             }
         }

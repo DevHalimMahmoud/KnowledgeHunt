@@ -65,20 +65,17 @@ class ArticleScreenViewModel @Inject constructor(
         articleItemData: ArticleItemData,
         author: MutableState<String>,
     ) {
-        if (document == null) {
-            viewModelScope.async {
-                firestoreUseCases.getArticleAuthorNameById(
-                    "user",
-                    articleItemData.user_id!!
-                )
-            }.await().addOnCompleteListener {
-                document = it.result
-                author.value = it.result.get("f_name").toString()
-            }
-        } else {
 
-            author.value = document!!.get("f_name").toString()
+        viewModelScope.async {
+            firestoreUseCases.getArticleAuthorNameById(
+                "user",
+                articleItemData.user_id!!
+            )
+        }.await().addOnCompleteListener {
+            document = it.result
+            author.value = it.result.get("f_name").toString()
         }
+
     }
 
 }
