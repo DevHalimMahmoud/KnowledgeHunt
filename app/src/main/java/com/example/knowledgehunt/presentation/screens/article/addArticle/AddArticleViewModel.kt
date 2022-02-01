@@ -112,7 +112,7 @@ class AddArticleViewModel @Inject constructor(
                         Dispatchers.IO,
                         CoroutineStart.DEFAULT
                     ) {
-                        firestoreUseCases.addDataToDocument(
+                        firestoreUseCases.addImageUrlToArticleDocument(
                             "articles", task1.result.id,
                             hashMapOf("imageUrl" to it.toString())
                         )

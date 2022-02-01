@@ -36,7 +36,7 @@ class ArticleScreenViewModel @Inject constructor(
     fun refresh() {
         // This doesn't handle multiple 'refreshing' tasks, don't use this
         viewModelScope.launch {
-            firestoreUseCases.getCollection("articles").addSnapshotListener { snapshot, e ->
+            firestoreUseCases.getArticles("articles").addSnapshotListener { snapshot, e ->
                 _articleState.value =
                     snapshot?.toObjects(ArticleItemData::class.java) as List<ArticleItemData>
             }
@@ -49,7 +49,7 @@ class ArticleScreenViewModel @Inject constructor(
 
     private fun getArticles() {
         viewModelScope.launch {
-            firestoreUseCases.getCollection("articles").addSnapshotListener { snapshot, e ->
+            firestoreUseCases.getArticles("articles").addSnapshotListener { snapshot, e ->
                 _articleState.value =
                     snapshot?.toObjects(ArticleItemData::class.java) as List<ArticleItemData>
 
@@ -67,7 +67,7 @@ class ArticleScreenViewModel @Inject constructor(
     ) {
         if (document == null) {
             viewModelScope.async {
-                firestoreUseCases.getDocumentById(
+                firestoreUseCases.getArticleAuthorNameById(
                     "user",
                     articleItemData.user_id!!
                 )
