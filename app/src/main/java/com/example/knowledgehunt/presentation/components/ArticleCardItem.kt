@@ -1,7 +1,6 @@
 package com.example.knowledgehunt.presentation.components
 
 import android.graphics.Color.rgb
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -44,7 +43,7 @@ fun ArticleCardItem(
         elevation = 8.dp
     ) {
         Column(
-            Modifier.background(color = Color(palette?.lightMutedSwatch?.rgb ?: rgb(255, 255, 255)))
+//            Modifier.background(color = Color(palette?.lightMutedSwatch?.rgb ?: rgb(255, 255, 255)))
 
         ) {
 
@@ -65,7 +64,7 @@ fun ArticleCardItem(
             Spacer(Modifier.height(4.dp))
 
             Text(
-                color = Color(palette?.vibrantSwatch?.rgb ?: rgb(0, 0, 0)),
+                color = Color(palette?.mutedSwatch?.rgb ?: rgb(0, 0, 0)),
                 text = articleItemData.title!!,
                 style = typography.h6,
                 modifier = Modifier
@@ -74,7 +73,7 @@ fun ArticleCardItem(
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                color = Color(palette?.vibrantSwatch?.rgb ?: rgb(0, 0, 0)),
+                color = Color(palette?.mutedSwatch?.rgb ?: rgb(0, 0, 0)),
                 text = articleItemData.description!!,
                 style = typography.subtitle1,
                 modifier = Modifier
@@ -89,17 +88,25 @@ fun ArticleCardItem(
             ) {
                 Text(
                     text = author,
-                    style = TextStyle(Color(palette?.vibrantSwatch?.rgb ?: rgb(0, 0, 0))),
-
+                    style = TextStyle(Color(palette?.mutedSwatch?.rgb ?: rgb(0, 0, 0))),
                     )
                 Text(
-                    text = " - ",
-                    style = TextStyle(Color(palette?.vibrantSwatch?.rgb ?: rgb(0, 0, 0))),
+                    text = " ・ ",
+                    style = TextStyle(Color(palette?.mutedSwatch?.rgb ?: rgb(0, 0, 0))),
+                )
+                Text(
+                    text = "${articleItemData.reactions?.sum().toString()} Reactions",
+                    style = TextStyle(Color(palette?.mutedSwatch?.rgb ?: rgb(0, 0, 0))),
+                )
+                Text(
+                    text = " ・ ",
+                    style = TextStyle(Color(palette?.mutedSwatch?.rgb ?: rgb(0, 0, 0))),
                 )
                 Text(
                     text = df.format(articleItemData.date?.toDate()?.time).toString(),
-                    style = TextStyle(Color(palette?.vibrantSwatch?.rgb ?: rgb(0, 0, 0))),
+                    style = TextStyle(Color(palette?.mutedSwatch?.rgb ?: rgb(0, 0, 0))),
                 )
+
             }
         }
     }
