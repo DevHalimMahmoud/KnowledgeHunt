@@ -15,13 +15,11 @@ class FirebaseStorageImpl : IFirebaseStorage {
     override suspend fun getInstance(): FirebaseStorage {
 
         return FirebaseStorage.getInstance()
-
     }
 
     override suspend fun getReference(): StorageReference {
 
         return FirebaseStorage.getInstance().reference
-
     }
 
     override suspend fun uploadStorageImage(
@@ -32,24 +30,16 @@ class FirebaseStorageImpl : IFirebaseStorage {
 
         val userImagesRef =
             FirebaseStorage.getInstance().reference.child("$bath/${name}.JPEG")
-
         val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos)
         val data = baos.toByteArray()
-        val uploadTask = userImagesRef.putBytes(data)
-        return uploadTask.addOnFailureListener {
-        }.addOnSuccessListener { taskSnapshot ->
-
-        }
+        return userImagesRef.putBytes(data)
     }
 
     override suspend fun getStorageImageUrl(
         bath: String,
         name: String
     ): Task<Uri> {
-
         return FirebaseStorage.getInstance().reference.child("$bath/${name}.JPEG").downloadUrl
-
-
     }
 }

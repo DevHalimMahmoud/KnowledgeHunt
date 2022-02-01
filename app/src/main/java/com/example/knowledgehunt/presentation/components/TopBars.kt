@@ -33,6 +33,7 @@ fun TopBar(
 ) {
     TopAppBar(
         modifier = modifier,
+
         title = {
             Text(
                 text = title, color = MaterialTheme.colors.onSurface
@@ -96,7 +97,7 @@ fun TopBar(
                 }
             }
         },
-        backgroundColor = MaterialTheme.colors.surface,
+        backgroundColor = MaterialTheme.colors.onPrimary,
         elevation = 0.dp
     )
 }

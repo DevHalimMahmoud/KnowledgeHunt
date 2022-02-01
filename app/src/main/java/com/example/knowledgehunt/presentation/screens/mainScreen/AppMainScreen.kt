@@ -1,11 +1,15 @@
 package com.example.knowledgehunt.presentation.screens.mainScreen
 
 import SplashScreen
+import androidx.compose.foundation.border
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -44,11 +48,14 @@ fun AppMainScreen() {
         topBar = {
             if (currentRoute == Screens.Articles.route || currentRoute == Screens.Home.route || currentRoute == Screens.About.route) {
                 TopBar(
+
                     title = currentRoute.toString().uppercase(),
                     scope = scope,
                     scaffoldState = scaffoldState,
                     buttonIcon = painterResource(id = R.drawable.logo_no_text),
-                    modifier = Modifier,
+                    modifier = Modifier
+                        .border(1.dp, color = MaterialTheme.colors.onError, CircleShape)
+                        .clip(CircleShape),
                     Logout = {
                         scope.launch(Dispatchers.IO, CoroutineStart.DEFAULT) {
                             viewModel.logoutResults()

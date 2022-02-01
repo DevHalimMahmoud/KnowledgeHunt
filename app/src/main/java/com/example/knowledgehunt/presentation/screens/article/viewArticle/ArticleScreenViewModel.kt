@@ -55,7 +55,7 @@ class ArticleScreenViewModel @Inject constructor(
 
 
             }
-            delay(800)
+            delay(1000)
             _isRefreshing.emit(false)
         }
     }
