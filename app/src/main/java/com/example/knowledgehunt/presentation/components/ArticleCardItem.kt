@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
@@ -17,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.palette.graphics.Palette
 import com.example.knowledgehunt.domain.models.ArticleItemData
 import com.skydoves.landscapist.CircularReveal
+import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
 import com.skydoves.landscapist.palette.BitmapPalette
 import java.text.SimpleDateFormat
@@ -58,7 +60,14 @@ fun ArticleCardItem(
                 circularReveal = CircularReveal(800),
                 bitmapPalette = BitmapPalette {
                     palette = it
-                }
+                },
+                shimmerParams = ShimmerParams(
+                    baseColor = MaterialTheme.colors.background,
+                    highlightColor = Color(palette?.mutedSwatch?.rgb ?: MaterialTheme.colors.secondary.toArgb()),
+                    durationMillis = 350,
+                    dropOff = 0.65f,
+                    tilt = 20f
+                ),
             )
 
             Spacer(Modifier.height(4.dp))
@@ -89,7 +98,7 @@ fun ArticleCardItem(
                 Text(
                     text = author,
                     style = TextStyle(Color(palette?.mutedSwatch?.rgb ?: rgb(0, 0, 0))),
-                    )
+                )
                 Text(
                     text = " ・ ",
                     style = TextStyle(Color(palette?.mutedSwatch?.rgb ?: rgb(0, 0, 0))),

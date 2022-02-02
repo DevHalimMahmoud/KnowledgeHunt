@@ -67,8 +67,8 @@ fun Articles(navController: NavHostController) {
                     if (author.value == "Author") {
                         LaunchedEffect(key1 = true) {
                             viewModel.getAuthorName(article, author)
+//                            Log.d(TAG, "Articles: ${author.value}")
                         }
-                        Log.d(TAG, "Articles: ${author.value}")
                     }
 
                     ArticleCardItem(
