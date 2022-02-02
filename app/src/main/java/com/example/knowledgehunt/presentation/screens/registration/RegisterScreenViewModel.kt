@@ -138,7 +138,7 @@ class RegisterScreenViewModel @Inject constructor(
 
     private suspend fun addEmailAndPassword(): Task<AuthResult> {
         return authUseCases.createUserWithEmailAndPassword(
-            emailState.value.text,
+            emailState.value.text.trim(),
             passwordState.value.text
         )
 

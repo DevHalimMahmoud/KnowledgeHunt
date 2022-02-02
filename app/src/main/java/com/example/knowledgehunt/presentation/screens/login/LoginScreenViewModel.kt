@@ -29,14 +29,14 @@ class LoginScreenViewModel @Inject constructor(
     suspend fun loginResults(
     ): Task<AuthResult> {
         return authUseCases.login(
-            emailState.value.text,
+            emailState.value.text.trim(),
             password = passwordState.value.text
         )
     }
 
     suspend fun resetPasswordResults(
     ): Task<Void> {
-        return authUseCases.resetPassword(dialogEmailState.value.text)
+        return authUseCases.resetPassword(dialogEmailState.value.text.trim())
     }
 
 }
