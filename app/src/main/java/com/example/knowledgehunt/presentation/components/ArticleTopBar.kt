@@ -12,9 +12,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.ShimmerParams
@@ -23,7 +21,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun TopBar(
+fun ArticleTopBar(
     title: String = "",
     scope: CoroutineScope,
     scaffoldState: ScaffoldState,
@@ -32,6 +30,7 @@ fun TopBar(
     Logout: () -> Unit,
     profileImageUrl: Uri
 ) {
+
     TopAppBar(
         modifier = modifier,
 
@@ -94,30 +93,3 @@ fun TopBar(
         elevation = 0.dp
     )
 }
-
-@Composable
-fun BackTopBar(
-    title: String,
-    buttonIcon: ImageVector,
-    modifier: Modifier,
-    onClick: () -> Unit,
-) {
-    TopAppBar(
-        modifier = modifier,
-        title = {
-            Text(text = title, color = MaterialTheme.colors.onSurface)
-        },
-        navigationIcon = {
-            IconButton(onClick = {
-                onClick()
-            }) {
-                Icon(
-                    buttonIcon, "", tint = MaterialTheme.colors.primary
-                )
-            }
-        },
-        backgroundColor = Color.Transparent,
-        elevation = 0.dp
-    )
-}
-
