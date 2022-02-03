@@ -1,7 +1,5 @@
 package com.example.knowledgehunt.presentation.screens.article.viewArticle
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
@@ -73,7 +71,8 @@ fun Articles(navController: NavHostController) {
 
                     ArticleCardItem(
                         article,
-                        author.value
+                        author.value,
+                        navController = navController,
                     )
                 }
             }

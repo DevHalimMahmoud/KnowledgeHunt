@@ -1,6 +1,7 @@
 package com.example.knowledgehunt.presentation.components
 
 import android.graphics.Color.rgb
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -15,8 +16,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.palette.graphics.Palette
 import com.example.knowledgehunt.domain.models.ArticleItemData
+import com.example.knowledgehunt.domain.models.Screens
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
@@ -29,19 +32,24 @@ fun ArticleCardItem(
     articleItemData: ArticleItemData,
     author: String,
     modifier: Modifier = Modifier,
-
-    ) {
+    navController: NavController
+) {
     var palette by remember { mutableStateOf<Palette?>(null) }
 
     val typography = MaterialTheme.typography
     val df = SimpleDateFormat("dd MMM yyyy")
     Card(
+
         shape = RoundedCornerShape(16.dp),
         modifier = modifier
+            .clickable {
+                navController.navigate(Screens.ArticleDetails.route)
+            }
 
             .fillMaxWidth()
             .wrapContentHeight()
             .padding(8.dp),
+
         elevation = 8.dp
     ) {
         Column(
@@ -63,7 +71,9 @@ fun ArticleCardItem(
                 },
                 shimmerParams = ShimmerParams(
                     baseColor = MaterialTheme.colors.background,
-                    highlightColor = Color(palette?.mutedSwatch?.rgb ?: MaterialTheme.colors.secondary.toArgb()),
+                    highlightColor = Color(
+                        palette?.mutedSwatch?.rgb ?: MaterialTheme.colors.secondary.toArgb()
+                    ),
                     durationMillis = 350,
                     dropOff = 0.65f,
                     tilt = 20f
