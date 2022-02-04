@@ -48,7 +48,7 @@ fun KnowledgeHuntTheme(
 
     MaterialTheme(
         colors = colors,
-        typography = Typography,
+        typography = KnowledgeHuntTypography,
         shapes = Shapes,
         content = content
     )

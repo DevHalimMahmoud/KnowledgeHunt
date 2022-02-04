@@ -16,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.knowledgehunt.R
 import com.example.knowledgehunt.domain.models.Screens
 import com.example.knowledgehunt.presentation.components.AppDrawer
@@ -139,11 +140,23 @@ fun Navigation(
                 navController = navController
             )
         }
-        composable(Screens.ArticleDetails.route) {
+        composable(
+            Screens.ArticleDetails.route,
+            arguments = listOf(
+                navArgument("userId") { defaultValue = "userId" },
+                navArgument("content") { defaultValue = "article" },
+                navArgument("date") { defaultValue = "date" },
+                navArgument("description") { defaultValue = "description" },
+                navArgument("imageUrl") { defaultValue = "imageUrl" },
+                navArgument("title") { defaultValue = "title" },
+                navArgument("reactions") { defaultValue = "0" },
+            )
+        ) {
             ArticleDetailsScreen(
                 navController
             )
         }
+
     }
 }
 

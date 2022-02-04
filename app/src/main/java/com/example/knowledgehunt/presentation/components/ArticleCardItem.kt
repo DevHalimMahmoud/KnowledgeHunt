@@ -43,7 +43,9 @@ fun ArticleCardItem(
         shape = RoundedCornerShape(16.dp),
         modifier = modifier
             .clickable {
-                navController.navigate(Screens.ArticleDetails.route)
+                navController.navigate(
+                    Screens.ArticleDetails.route
+                )
             }
 
             .fillMaxWidth()
@@ -85,7 +87,7 @@ fun ArticleCardItem(
             Text(
                 color = Color(palette?.mutedSwatch?.rgb ?: rgb(0, 0, 0)),
                 text = articleItemData.title!!,
-                style = typography.h6,
+                style = MaterialTheme.typography.subtitle1,
                 modifier = Modifier
                     .padding(bottom = 4.dp, end = 8.dp, start = 8.dp),
                 maxLines = 3,
@@ -94,7 +96,7 @@ fun ArticleCardItem(
             Text(
                 color = Color(palette?.mutedSwatch?.rgb ?: rgb(0, 0, 0)),
                 text = articleItemData.description!!,
-                style = typography.subtitle1,
+                style = typography.subtitle2,
                 modifier = Modifier
                     .padding(bottom = 4.dp, end = 8.dp, start = 8.dp),
                 maxLines = 2,
@@ -130,6 +132,7 @@ fun ArticleCardItem(
         }
     }
 }
+
 
 
 
