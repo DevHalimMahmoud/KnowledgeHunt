@@ -43,8 +43,17 @@ fun ArticleCardItem(
         shape = RoundedCornerShape(16.dp),
         modifier = modifier
             .clickable {
+
                 navController.navigate(
-                    Screens.ArticleDetails.route
+                    "${Screens.ArticleDetails.route}/${articleItemData.user_id}/${articleItemData.content}/${
+                        df.format(
+                            articleItemData.date?.toDate()?.time
+                        )
+                    }/${articleItemData.description}/${articleItemData.title}/${
+                        articleItemData.reactions
+                            ?.sum()
+                            .toString()
+                    }/${author}"
                 )
             }
 

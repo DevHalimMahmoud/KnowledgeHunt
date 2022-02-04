@@ -14,13 +14,23 @@ import com.example.knowledgehunt.presentation.components.ArticleTopBar
 
 @Composable
 fun ArticleDetailsScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    user_id: String?,
+    content: String?,
+    date: String?,
+    description: String?,
+//    imageUrl: String?,
+    title: String?,
+    reactions: String?,
+    author: String?
+
 ) {
 
     Scaffold(
         topBar = {
             ArticleTopBar(
-                title = "a7aaaaa",
+
+                title = author,
                 profileImageUrl = Uri.parse("https://storage.googleapis.com/glaze-ecom.appspot.com/images/P2uSA0D_6/thumbs/232.png"),
                 modifier = Modifier
                     .border(1.dp, color = MaterialTheme.colors.onError, CircleShape)

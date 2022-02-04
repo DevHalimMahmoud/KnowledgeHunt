@@ -12,7 +12,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.PersonOutline
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.runtime.*
@@ -37,6 +36,8 @@ import com.example.knowledgehunt.presentation.components.BackTopBar
 import com.example.knowledgehunt.presentation.components.OutlinedButtonItem
 import com.example.knowledgehunt.presentation.components.PasswordFiledUnit
 import com.example.knowledgehunt.presentation.components.TextFieldUnit
+import compose.icons.TablerIcons
+import compose.icons.tablericons.ArrowBack
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
@@ -75,7 +76,7 @@ fun RegisterScreen(navController: NavHostController) {
         topBar = {
             BackTopBar(
                 title = Screens.Register.title,
-                buttonIcon = Icons.Default.ArrowBack,
+                buttonIcon = TablerIcons.ArrowBack,
                 modifier = Modifier,
                 onClick = { navController.popBackStack() }
             )
@@ -276,9 +277,9 @@ fun ProfileImage(
 
     val launcher: ManagedActivityResultLauncher<String, Uri?> =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
-            viewModel.imageUri?.value = uri
+            viewModel.imageUri.value = uri
 
-            if (viewModel.imageUri?.value != null) {
+            if (viewModel.imageUri.value != null) {
                 viewModel.imageCompressionProgressIndicator.value = true
                 Toast.makeText(
                     context,

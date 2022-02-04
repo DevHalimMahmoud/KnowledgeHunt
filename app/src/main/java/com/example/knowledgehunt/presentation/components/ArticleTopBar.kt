@@ -1,7 +1,11 @@
 package com.example.knowledgehunt.presentation.components
 
 import android.net.Uri
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement.Start
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -17,22 +21,18 @@ import compose.icons.tablericons.ArrowBack
 
 @Composable
 fun ArticleTopBar(
-
     title: String?,
     back: () -> Unit,
     modifier: Modifier,
-
     profileImageUrl: Uri,
-
-    ) {
-
+) {
     TopAppBar(
         modifier = modifier,
         title = {
             Row(
+                horizontalArrangement = Start,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentWidth(align = Alignment.CenterHorizontally)
+                    .wrapContentWidth(align = Alignment.Start)
             ) {
 
                 GlideImage(
