@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.knowledgehunt.domain.models.ArticleItemData
 import com.example.knowledgehunt.domain.use_case.FirestoreUseCases
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.Query
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
@@ -49,12 +50,13 @@ class ArticleScreenViewModel @Inject constructor(
 
     private fun getArticles() {
         viewModelScope.launch {
-            firestoreUseCases.getArticles("articles").addSnapshotListener { snapshot, e ->
-                _articleState.value =
-                    snapshot?.toObjects(ArticleItemData::class.java) as List<ArticleItemData>
+            firestoreUseCases.getArticles("articles").orderBy("date", Query.Direction.DESCENDING)
+                .addSnapshotListener { snapshot, e ->
+                    _articleState.value =
+                        snapshot?.toObjects(ArticleItemData::class.java) as List<ArticleItemData>
 
 
-            }
+                }
             delay(1000)
             _isRefreshing.emit(false)
         }
@@ -73,7 +75,8 @@ class ArticleScreenViewModel @Inject constructor(
             )
         }.await().addOnCompleteListener {
             document = it.result
-            author.value = it.result.get("f_name").toString()
+            author.value =
+                it.result.get("f_name").toString() + " " + it.result.get("l_name").toString()
         }
 
     }

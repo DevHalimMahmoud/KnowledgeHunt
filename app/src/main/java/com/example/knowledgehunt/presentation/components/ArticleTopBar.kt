@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
@@ -39,8 +40,8 @@ fun ArticleTopBar(
                     // CoilImage, FrescoImage
                     imageModel = profileImageUrl,
                     modifier = modifier
-                        .size(40.dp)
-
+                        .size(45.dp)
+                        .align(CenterVertically)
                         .clip(CircleShape),
                     // shows a shimmering effect when loading an image.
                     shimmerParams = ShimmerParams(

@@ -20,12 +20,12 @@ import androidx.navigation.NavController
 import androidx.palette.graphics.Palette
 import com.example.knowledgehunt.domain.models.ArticleItemData
 import com.example.knowledgehunt.domain.models.Screens
+import com.example.knowledgehunt.domain.utils.ArticleArguments
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
 import com.skydoves.landscapist.palette.BitmapPalette
 import java.text.SimpleDateFormat
-
 
 @Composable
 fun ArticleCardItem(
@@ -39,24 +39,13 @@ fun ArticleCardItem(
     val typography = MaterialTheme.typography
     val df = SimpleDateFormat("dd MMM yyyy")
     Card(
-
         shape = RoundedCornerShape(16.dp),
         modifier = modifier
             .clickable {
-
-                navController.navigate(
-                    "${Screens.ArticleDetails.route}/${articleItemData.user_id}/${articleItemData.content}/${
-                        df.format(
-                            articleItemData.date?.toDate()?.time
-                        )
-                    }/${articleItemData.description}/${articleItemData.title}/${
-                        articleItemData.reactions
-                            ?.sum()
-                            .toString()
-                    }/${author}"
-                )
+                ArticleArguments.instance?.author = author
+                ArticleArguments.instance?.articleItemData = articleItemData
+                navController.navigate(Screens.ArticleDetails.route)
             }
-
             .fillMaxWidth()
             .wrapContentHeight()
             .padding(8.dp),
@@ -65,9 +54,7 @@ fun ArticleCardItem(
     ) {
         Column(
 //            Modifier.background(color = Color(palette?.lightMutedSwatch?.rgb ?: rgb(255, 255, 255)))
-
         ) {
-
             GlideImage(
                 imageModel = articleItemData.imageUrl,
                 contentScale = ContentScale.FillBounds,
@@ -111,7 +98,6 @@ fun ArticleCardItem(
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
-
             Row(
                 modifier = Modifier
                     .padding(bottom = 4.dp, start = 8.dp),
@@ -136,7 +122,6 @@ fun ArticleCardItem(
                     text = df.format(articleItemData.date?.toDate()?.time).toString(),
                     style = TextStyle(Color(palette?.mutedSwatch?.rgb ?: rgb(0, 0, 0))),
                 )
-
             }
         }
     }

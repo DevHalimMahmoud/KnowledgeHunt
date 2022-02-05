@@ -12,12 +12,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.example.knowledgehunt.R
 import com.example.knowledgehunt.domain.models.Screens
 import com.example.knowledgehunt.presentation.components.AppDrawer
@@ -100,7 +98,6 @@ fun Navigation(
                     viewModel.getTopBarProfileImage()
                 }
             }
-
             HomeScreen(
                 navController
             )
@@ -141,55 +138,11 @@ fun Navigation(
                 navController = navController
             )
         }
-//        /{title}/{reactions}
-        composable(
-            "${Screens.ArticleDetails.route}/{userId}/{content}/{date}/{description}/{title}/{reactions}/{author}",
-            arguments = listOf(
-                navArgument("userId") {
-                    defaultValue = "userId"
-                    type = NavType.StringType
-
-                },
-                navArgument("content") {
-                    defaultValue = "article"
-                    type = NavType.StringType
-                },
-                navArgument("date") {
-                    defaultValue = "date"
-                    type = NavType.StringType
-                },
-                navArgument("description") {
-                    defaultValue = "description"
-                    type = NavType.StringType
-                },
-//                navArgument("imageUrl") {
-//                    defaultValue = "imageUrl"
-//                    type = NavType.IntType
-//                },
-                navArgument("title") {
-                    defaultValue = "title"
-                    type = NavType.StringType
-                },
-                navArgument("reactions") {
-                    defaultValue = "0"
-                    type = NavType.StringType
-                },
-                navArgument("author") {
-                    defaultValue = "0"
-                    type = NavType.StringType
-                },
-            )
-        ) {
+        composable(Screens.ArticleDetails.route)
+        {
             ArticleDetailsScreen(
-                navController,
-                it.arguments?.getString("userId"),
-                it.arguments?.getString("content"),
-                it.arguments?.getString("date"),
-                it.arguments?.getString("description"),
-//                it.arguments?.getString("imageUrl"),
-                it.arguments?.getString("title"),
-                it.arguments?.getString("reactions"),
-                it.arguments?.getString("author"),
+                navController
+
             )
         }
 
