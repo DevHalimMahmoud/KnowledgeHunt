@@ -28,6 +28,12 @@ fun Articles(navController: NavHostController) {
 //    var shimmerInstance = rememberShimmer(shimmerBounds = ShimmerBounds.Custom)
     val viewModel: ArticleScreenViewModel = hiltViewModel()
     val isRefreshing by viewModel.isRefreshing.collectAsState()
+
+//    DisposableEffect(key1 = true) {
+//        onDispose {
+//            ArticleArguments.instance?.destroy()
+//        }
+//    }
     Scaffold(
         floatingActionButton = {
 

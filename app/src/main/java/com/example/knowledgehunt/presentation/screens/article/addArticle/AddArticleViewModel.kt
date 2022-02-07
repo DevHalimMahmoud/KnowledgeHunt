@@ -88,8 +88,7 @@ class AddArticleViewModel @Inject constructor(
                     "article",
                     task1.result.id
                 ).addOnCompleteListener { task2 ->
-                    publishArticleProgressIndicator.value = true
-                    publishStates.value = true
+
                     getStorageImageUrl(task2, task1)
                 }
             }
@@ -115,9 +114,13 @@ class AddArticleViewModel @Inject constructor(
                         firestoreUseCases.addImageUrlToArticleDocument(
                             "articles", task1.result.id,
                             hashMapOf("imageUrl" to it.toString())
-                        )
-                        publishError.value =
-                            "Article Published Successfully!"
+                        ).addOnCompleteListener {
+                            publishArticleProgressIndicator.value = true
+                            publishStates.value = true
+                            publishError.value =
+                                "Article Published Successfully!"
+                        }
+
                     }
                 }
             }
