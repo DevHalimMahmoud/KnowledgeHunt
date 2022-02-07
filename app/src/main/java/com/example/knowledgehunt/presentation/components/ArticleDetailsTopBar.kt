@@ -60,6 +60,7 @@ fun ArticleTopBar(
                     modifier = Modifier
                         .padding(start = 10.dp)
                         .weight(1.5f)
+                        .align(CenterVertically),
                 )
             }
         },
