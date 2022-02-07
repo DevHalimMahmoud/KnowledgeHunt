@@ -54,7 +54,7 @@ fun ArticleTopBar(
                     circularReveal = CircularReveal(800),
                 )
                 Text(
-                    text = "Published By: \n$title" ?: "Publisher Name",
+                    text = "Published By: \n${title ?: "Publisher Name"}",
                     style = MaterialTheme.typography.subtitle2,
                     color = LocalContentColor.current,
                     modifier = Modifier

@@ -96,7 +96,7 @@ dependencies {
     implementation 'com.valentinilk.shimmer:compose-shimmer:1.0.0'
 
     implementation "com.google.accompanist:accompanist-swiperefresh:0.24.1-alpha"
-
+    implementation 'io.github.amrdeveloper:reactbutton:2.0.3'
 }
 // Allow references to generated code
 kapt {

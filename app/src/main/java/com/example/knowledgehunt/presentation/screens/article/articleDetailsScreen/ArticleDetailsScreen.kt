@@ -22,7 +22,10 @@ import androidx.core.text.HtmlCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.palette.graphics.Palette
+import com.amrdeveloper.reactbutton.ReactButton
+import com.amrdeveloper.reactbutton.ReactButton.OnReactionDialogStateListener
 import com.example.knowledgehunt.domain.utils.ArticleArguments
+import com.example.knowledgehunt.domain.utils.FbReactions
 import com.example.knowledgehunt.presentation.components.ArticleTopBar
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.ShimmerParams
@@ -46,7 +49,39 @@ fun ArticleDetailsScreen(
                 back = ({ navController.popBackStack() }),
 
                 )
-        }) {
+        },
+        floatingActionButton = {
+
+            AndroidView(
+                modifier = Modifier
+                    .wrapContentSize()
+                    .wrapContentSize(),
+                factory = { context -> ReactButton(context) }
+            ) {
+                it.setDimAmount(0.5f)
+                it.setBackgroundColor(Color.Transparent.toArgb())
+
+                it.setReactions(*FbReactions.reactions)
+                it.defaultReaction = FbReactions.defaultReact
+                it.setEnableReactionTooltip(true)
+
+                it.setOnReactionChangeListener { reaction ->
+
+                }
+
+                it.setOnReactionDialogStateListener(object :
+                    OnReactionDialogStateListener {
+                    override fun onDialogOpened() {
+
+                    }
+
+                    override fun onDialogDismiss() {
+
+                    }
+                })
+            }
+        },
+    ) {
         Column(
             modifier = Modifier
                 .wrapContentSize()

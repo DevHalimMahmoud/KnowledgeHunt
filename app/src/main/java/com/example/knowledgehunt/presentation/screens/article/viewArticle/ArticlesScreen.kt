@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -59,7 +60,7 @@ fun Articles(navController: NavHostController) {
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            LazyColumn {
+            LazyColumn(state = rememberLazyListState()) {
 
                 items(
                     viewModel.articleState.value,
