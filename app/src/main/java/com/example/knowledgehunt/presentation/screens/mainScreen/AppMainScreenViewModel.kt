@@ -20,6 +20,8 @@ class AppMainScreenViewModel @Inject constructor(
     var profileImageUrl: MutableState<Uri> =
         mutableStateOf(Uri.parse("https://storage.googleapis.com/glaze-ecom.appspot.com/images/P2uSA0D_6/thumbs/232.png"))
 
+    var showProfileDialog: MutableState<Boolean> = mutableStateOf(false)
+
     suspend fun loggedIn(): Boolean {
         return authUseCases.getCurrentUser() != null
     }

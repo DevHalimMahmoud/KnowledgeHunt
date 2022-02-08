@@ -2,6 +2,7 @@ package com.example.knowledgehunt.presentation.screens.mainScreen
 
 import SplashScreen
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -19,6 +20,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.knowledgehunt.R
 import com.example.knowledgehunt.domain.models.Screens
 import com.example.knowledgehunt.presentation.components.AppDrawer
+import com.example.knowledgehunt.presentation.components.ProfileDialog
 import com.example.knowledgehunt.presentation.components.TopBar
 import com.example.knowledgehunt.presentation.screens.about.About
 import com.example.knowledgehunt.presentation.screens.article.addArticle.AddArticleScreen
@@ -56,7 +58,8 @@ fun AppMainScreen() {
                     buttonIcon = painterResource(id = R.drawable.logo_no_text),
                     modifier = Modifier
                         .border(1.dp, color = MaterialTheme.colors.onError, CircleShape)
-                        .clip(CircleShape),
+                        .clip(CircleShape)
+                        .clickable { viewModel.showProfileDialog.value = true },
                     Logout = {
                         scope.launch(Dispatchers.IO, CoroutineStart.DEFAULT) {
                             viewModel.logoutResults()
@@ -82,6 +85,7 @@ fun AppMainScreen() {
             )
         },
     ) {
+        ProfileDialog(viewModel.showProfileDialog, viewModel.profileImageUrl.value)
         Navigation(navController = navController, viewModel)
     }
 }

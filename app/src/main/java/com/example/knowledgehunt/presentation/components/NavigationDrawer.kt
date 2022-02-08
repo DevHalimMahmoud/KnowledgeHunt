@@ -86,21 +86,21 @@ fun AppDrawer(
 
 
 @Composable
-private fun HuntLogo(modifier: Modifier = Modifier) {
-    Row(modifier = modifier) {
-        HuntIcon()
-        Spacer(Modifier.width(8.dp))
+fun HuntLogo(modifier: Modifier) {
+
         Image(
+            modifier = modifier,
             painter = painterResource(id = R.drawable.logo_no_text),
             contentDescription = null, // decorative element
         )
-    }
+
 }
 
 @Composable
-fun HuntIcon(modifier: Modifier = Modifier) {
+fun HuntIcon(modifier: Modifier) {
     Image(
-        painter = painterResource(id = R.drawable.logo_no_text),
+        modifier = modifier,
+        painter = painterResource(id = R.drawable.logo_with_title),
         contentDescription = null, // decorative element
     )
 }

@@ -28,7 +28,6 @@ class ArticleDetailsScreenViewModel @Inject constructor(
     private var _reactionsList: MutableList<Int> = mutableListOf()
     private var _articleId: MutableState<String?> = mutableStateOf(null)
 
-
     init {
         getAuthorImageUrl()
         getReactionsList()
@@ -45,7 +44,7 @@ class ArticleDetailsScreenViewModel @Inject constructor(
         }
     }
 
-    fun updateReactionsList() {
+    private fun updateReactionsList() {
         if (_articleId.value != null) {
             val mutableMap: MutableMap<String, Any?> = mutableMapOf()
 
