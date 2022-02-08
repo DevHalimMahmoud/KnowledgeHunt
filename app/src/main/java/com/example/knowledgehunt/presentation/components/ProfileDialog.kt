@@ -32,7 +32,6 @@ import com.skydoves.landscapist.glide.GlideImage
 @Composable
 fun ProfileDialog(showUserDialog: MutableState<Boolean>, profileImageUrl: Uri) {
 
-
     if (showUserDialog.value) {
         Dialog(
             onDismissRequest = {
@@ -72,7 +71,6 @@ fun ProfileDialog(showUserDialog: MutableState<Boolean>, profileImageUrl: Uri) {
 
                     }
                     Row(Modifier.padding(12.dp)) {
-
 
                         GlideImage(
                             // CoilImage, FrescoImage
@@ -201,15 +199,12 @@ fun ProfileDialog(showUserDialog: MutableState<Boolean>, profileImageUrl: Uri) {
                             modifier = Modifier
                                 .clip(RoundedCornerShape(8.dp))
                                 .clickable(onClick = {})
-                                .padding(8.dp)
+                                .padding(8.dp),
 
-                        )
+                            )
                     }
-
                 }
             }
         }
-
     }
-
 }
