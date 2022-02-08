@@ -111,7 +111,7 @@ fun ArticleCardItem(
                     style = TextStyle(Color(palette?.mutedSwatch?.rgb ?: rgb(0, 0, 0))),
                 )
                 Text(
-                    text = "${articleItemData.reactions?.sum().toString()} Reactions",
+                    text = "${articleItemData.reactions?.sum().toString()} Views",
                     style = TextStyle(Color(palette?.mutedSwatch?.rgb ?: rgb(0, 0, 0))),
                 )
                 Text(

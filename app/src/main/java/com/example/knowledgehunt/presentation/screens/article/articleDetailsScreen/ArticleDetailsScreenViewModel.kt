@@ -26,7 +26,7 @@ class ArticleDetailsScreenViewModel @Inject constructor(
     val authorImageUrl: State<Uri> = _authorImageUrl
 
     private var _reactionsList: MutableList<Int> = mutableListOf()
-    private var _articleId: MutableState<String>? = null
+    private var _articleId: MutableState<String?> = mutableStateOf(null)
 
 
     init {
@@ -46,16 +46,26 @@ class ArticleDetailsScreenViewModel @Inject constructor(
     }
 
     fun updateReactionsList() {
+        if (_articleId.value != null) {
+            val mutableMap: MutableMap<String, Any?> = mutableMapOf()
 
-        _reactionsList[0] = _reactionsList[0] + 1
-
-        Log.d(TAG, "updateReactions: $_reactionsList")
+            _reactionsList[0] = _reactionsList[0] + 1
+            mutableMap["reactions"] = _reactionsList.toList()
+            viewModelScope.launch {
+                firestoreUseCases.updateArticleViewsCount(
+                    "articles",
+                    _articleId.value!!,
+                    mutableMap
+                )
+            }
+            Log.d(TAG, "updateReactions: $_reactionsList")
+        }
     }
 
     private fun getReactionsList() {
 
         viewModelScope.launch {
-            firestoreUseCases.getArticleReactionsCount(
+            firestoreUseCases.getArticleViewsCount(
                 "articles",
                 ArticleArguments.instance?.articleItemData?.user_id!!,
                 "user_id",
@@ -64,8 +74,9 @@ class ArticleDetailsScreenViewModel @Inject constructor(
             ).addOnCompleteListener {
 
                 _reactionsList = it.result.documents[0].get("reactions") as MutableList<Int>
-                _articleId?.value = it.result.documents[0].id
-
+                _articleId.value = it.result.documents[0].id
+                Log.d(TAG, "updateReactions: ${_articleId.value}")
+                updateReactionsList()
             }
         }
     }
