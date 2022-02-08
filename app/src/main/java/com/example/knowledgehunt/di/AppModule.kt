@@ -70,6 +70,7 @@ object AppModule {
         GetArticles(firebaseFirestoreRepository),
         AddImageUrlToArticleDocument(firebaseFirestoreRepository),
         GetArticleAuthorNameById(firebaseFirestoreRepository),
+        GetArticleReactionsCount(firebaseFirestoreRepository),
     )
 
     @Provides

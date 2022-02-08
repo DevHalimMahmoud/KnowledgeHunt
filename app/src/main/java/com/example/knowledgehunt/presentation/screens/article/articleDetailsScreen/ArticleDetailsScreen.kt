@@ -23,7 +23,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.palette.graphics.Palette
 import com.amrdeveloper.reactbutton.ReactButton
-import com.amrdeveloper.reactbutton.ReactButton.OnReactionDialogStateListener
 import com.example.knowledgehunt.domain.utils.ArticleArguments
 import com.example.knowledgehunt.domain.utils.FbReactions
 import com.example.knowledgehunt.presentation.components.ArticleTopBar
@@ -36,8 +35,10 @@ import com.skydoves.landscapist.palette.BitmapPalette
 fun ArticleDetailsScreen(
     navController: NavHostController,
 ) {
+    var i = 0
     val viewModel: ArticleDetailsScreenViewModel = hiltViewModel()
     var palette by remember { mutableStateOf<Palette?>(null) }
+
     Scaffold(
         topBar = {
             ArticleTopBar(
@@ -47,8 +48,7 @@ fun ArticleDetailsScreen(
                     .border(1.dp, color = MaterialTheme.colors.onError, CircleShape)
                     .clip(CircleShape),
                 back = ({ navController.popBackStack() }),
-
-                )
+            )
         },
         floatingActionButton = {
 
@@ -56,30 +56,22 @@ fun ArticleDetailsScreen(
                 modifier = Modifier
                     .wrapContentSize()
                     .wrapContentSize(),
-                factory = { context -> ReactButton(context) }
+                factory = { context -> ReactButton(context) },
             ) {
+
                 it.setDimAmount(0.5f)
                 it.setBackgroundColor(Color.Transparent.toArgb())
 
                 it.setReactions(*FbReactions.reactions)
                 it.defaultReaction = FbReactions.defaultReact
                 it.setEnableReactionTooltip(true)
-
                 it.setOnReactionChangeListener { reaction ->
 
+                    viewModel.updateReactionsList()
+
                 }
-
-                it.setOnReactionDialogStateListener(object :
-                    OnReactionDialogStateListener {
-                    override fun onDialogOpened() {
-
-                    }
-
-                    override fun onDialogDismiss() {
-
-                    }
-                })
             }
+
         },
     ) {
         Column(
@@ -133,4 +125,5 @@ fun ArticleDetailsScreen(
 
         }
     }
+
 }

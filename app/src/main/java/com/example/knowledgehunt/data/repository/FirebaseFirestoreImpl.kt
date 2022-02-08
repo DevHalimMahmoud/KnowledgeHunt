@@ -3,6 +3,7 @@ package com.example.knowledgehunt.data.repository
 import androidx.lifecycle.MutableLiveData
 import com.example.knowledgehunt.domain.repository.IFirebaseFirestore
 import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 
@@ -44,8 +45,6 @@ class FirebaseFirestoreImpl : IFirebaseFirestore {
     override suspend fun getCollectionFromFirestore(collectionPath: String): CollectionReference {
 
         return FirebaseFirestore.getInstance().collection(collectionPath)
-
-
     }
 
     override suspend fun addDataToDocument(
@@ -61,5 +60,15 @@ class FirebaseFirestoreImpl : IFirebaseFirestore {
         return FirebaseFirestore.getInstance().collection(collection).document(id).get()
     }
 
-
+    override suspend fun getDocumentByStringFieldAndTimestampField(
+        collection: String,
+        field1Value: String,
+        filed1Name: String,
+        field2Name: String,
+        Field2Value: Timestamp?
+    ): Task<QuerySnapshot> {
+        return FirebaseFirestore.getInstance().collection(collection)
+            .whereEqualTo(filed1Name, field1Value).whereEqualTo(field2Name, Field2Value).limit(1)
+            .get()
+    }
 }

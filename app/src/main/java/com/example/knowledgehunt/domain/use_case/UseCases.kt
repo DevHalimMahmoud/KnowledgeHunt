@@ -15,7 +15,8 @@ data class FirestoreUseCases(
     val addArticleDataToFirestore: AddArticleDataToFirestore,
     val getArticles: GetArticles,
     val addImageUrlToArticleDocument: AddImageUrlToArticleDocument,
-    val getArticleAuthorNameById: GetArticleAuthorNameById
+    val getArticleAuthorNameById: GetArticleAuthorNameById,
+    val getArticleReactionsCount: GetArticleReactionsCount,
 )
 
 data class StorageUseCases(

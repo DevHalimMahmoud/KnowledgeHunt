@@ -60,7 +60,7 @@ class AddArticleViewModel @Inject constructor(
         mutableMap["content"] = contentState.value.text
         mutableMap["date"] = java.sql.Timestamp(System.currentTimeMillis())
         mutableMap["description"] = descriptionState.value.text
-        mutableMap["reactions"] = listOf(0, 0, 0, 0, 0)
+        mutableMap["reactions"] = listOf(0, 0, 0, 0, 0, 0)
         mutableMap["title"] = titleState.value.text
         mutableMap["user_id"] = FirebaseAuth.getInstance().currentUser?.uid!!
 
