@@ -65,7 +65,7 @@ fun ArticleDetailsScreen(
                 it.setReactions(*FbReactions.reactions)
                 it.defaultReaction = FbReactions.defaultReact
                 it.setEnableReactionTooltip(true)
-
+                it.setOnReactionChangeListener { viewModel }
             }
 
         },
