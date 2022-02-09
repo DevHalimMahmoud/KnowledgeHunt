@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -30,7 +31,12 @@ import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
-fun ProfileDialog(showUserDialog: MutableState<Boolean>, profileImageUrl: Uri) {
+fun ProfileDialog(
+    showUserDialog: MutableState<Boolean>,
+    profileImageUrl: State<Uri>,
+    name: State<String?>,
+    email: State<String?>,
+) {
 
     if (showUserDialog.value) {
         Dialog(
@@ -74,7 +80,7 @@ fun ProfileDialog(showUserDialog: MutableState<Boolean>, profileImageUrl: Uri) {
 
                         GlideImage(
                             // CoilImage, FrescoImage
-                            imageModel = profileImageUrl,
+                            imageModel = profileImageUrl.value,
                             modifier = Modifier
                                 .size(55.dp)
                                 .padding(2.dp)
@@ -91,14 +97,14 @@ fun ProfileDialog(showUserDialog: MutableState<Boolean>, profileImageUrl: Uri) {
                         )
                         Column(Modifier.padding(4.dp)) {
                             Text(
-                                text = "AbdelHalim Mahmoud",
+                                text = name.value!!,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 14.sp,
                                 color = MaterialTheme.colors.onSurface,
                                 modifier = Modifier.padding(start = 8.dp, bottom = 3.dp)
                             )
                             Text(
-                                text = "abdomahmoud20070@gmail.com",
+                                text = email.value!!,
                                 fontFamily = FontFamily.Default,
                                 fontSize = 12.sp,
                                 color = MaterialTheme.colors.onSurface,

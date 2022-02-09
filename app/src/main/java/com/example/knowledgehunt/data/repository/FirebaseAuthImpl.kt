@@ -38,7 +38,7 @@ class FirebaseAuthImpl : IFirebaseAuth {
         return FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
     }
 
-    override fun getUserEmail(): String? {
+    override suspend fun getUserEmail(): String? {
 
         return FirebaseAuth.getInstance().currentUser?.email
     }

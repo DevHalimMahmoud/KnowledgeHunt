@@ -1,6 +1,5 @@
 package com.example.knowledgehunt.domain.repository
 
-import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.CollectionReference
@@ -9,7 +8,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 
 interface IFirebaseFirestore {
-    suspend fun getUserName(): MutableLiveData<String>
+    suspend fun getCurrentUserData(): Task<DocumentSnapshot>
 
     suspend fun addUserDataToFirestore(data: MutableMap<String, Any?>): Task<Void>
 

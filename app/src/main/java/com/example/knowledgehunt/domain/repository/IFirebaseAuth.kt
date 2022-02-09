@@ -17,7 +17,7 @@ interface IFirebaseAuth {
 
     suspend fun createUserWithEmailAndPassword(email: String, password: String): Task<AuthResult>
 
-    fun getUserEmail(): String?
+    suspend fun getUserEmail(): String?
 
     suspend fun login(email: String, password: String): Task<AuthResult>
 

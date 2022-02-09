@@ -32,7 +32,6 @@ import com.example.knowledgehunt.presentation.screens.login.LoginScreen
 import com.example.knowledgehunt.presentation.screens.registration.RegisterScreen
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @Composable
 fun AppMainScreen() {
@@ -50,6 +49,13 @@ fun AppMainScreen() {
         scaffoldState = scaffoldState,
         topBar = {
             if (currentRoute == Screens.Articles.route || currentRoute == Screens.Home.route || currentRoute == Screens.About.route) {
+                LaunchedEffect(Dispatchers.Default, CoroutineStart.DEFAULT) {
+                    if (viewModel.loggedIn()) {
+                        viewModel.getTopBarProfileImage()
+                        viewModel.getUserName()
+                        viewModel.getUserEmail()
+                    }
+                }
                 TopBar(
 
                     title = currentRoute.toString().uppercase(),
@@ -61,9 +67,8 @@ fun AppMainScreen() {
                         .clip(CircleShape)
                         .clickable { viewModel.showProfileDialog.value = true },
                     Logout = {
-                        scope.launch(Dispatchers.IO, CoroutineStart.DEFAULT) {
-                            viewModel.logoutResults()
-                        }
+
+                        viewModel.logoutResults()
                         navController.navigate(Screens.Login.route) {
                             popUpTo(0)
                             launchSingleTop = true
@@ -85,7 +90,12 @@ fun AppMainScreen() {
             )
         },
     ) {
-        ProfileDialog(viewModel.showProfileDialog, viewModel.profileImageUrl.value)
+        ProfileDialog(
+            viewModel.showProfileDialog,
+            viewModel.profileImageUrl,
+            viewModel.username,
+            viewModel.email
+        )
         Navigation(navController = navController, viewModel)
     }
 }
@@ -97,11 +107,7 @@ fun Navigation(
 ) {
     NavHost(navController, startDestination = Screens.Splash.route) {
         composable(Screens.Home.route) {
-            LaunchedEffect(Dispatchers.Default, CoroutineStart.DEFAULT) {
-                if (viewModel.loggedIn()) {
-                    viewModel.getTopBarProfileImage()
-                }
-            }
+
             HomeScreen(
                 navController
             )

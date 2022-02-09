@@ -1,6 +1,5 @@
 package com.example.knowledgehunt.data.repository
 
-import androidx.lifecycle.MutableLiveData
 import com.example.knowledgehunt.domain.repository.IFirebaseFirestore
 import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
@@ -11,21 +10,11 @@ import com.google.firebase.firestore.*
 class FirebaseFirestoreImpl : IFirebaseFirestore {
 
 
-    override suspend fun getUserName(): MutableLiveData<String> {
+    override suspend fun getCurrentUserData(): Task<DocumentSnapshot> {
 
-        return MutableLiveData<String>().apply {
+        return FirebaseFirestore.getInstance().collection("user")
+            .document(FirebaseAuth.getInstance().uid!!).get()
 
-            val db = FirebaseFirestore.getInstance()
-            FirebaseAuth.getInstance().uid.let {
-                db.collection("user").document(
-                    it!!
-                )
-            }.addSnapshotListener { value, e ->
-
-                setValue(value?.get("name").toString())
-
-            }
-        }
     }
 
 

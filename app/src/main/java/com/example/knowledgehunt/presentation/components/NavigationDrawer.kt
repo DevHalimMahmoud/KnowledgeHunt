@@ -88,11 +88,11 @@ fun AppDrawer(
 @Composable
 fun HuntLogo(modifier: Modifier) {
 
-        Image(
-            modifier = modifier,
-            painter = painterResource(id = R.drawable.logo_no_text),
-            contentDescription = null, // decorative element
-        )
+    Image(
+        modifier = modifier,
+        painter = painterResource(id = R.drawable.logo_no_text),
+        contentDescription = null, // decorative element
+    )
 
 }
 

@@ -51,6 +51,7 @@ object AppModule {
         GetCurrentUserID(firebaseAuthRepository),
         Login(firebaseAuthRepository),
         ResetPassword(firebaseAuthRepository),
+        GetCurrentUserEmail(firebaseAuthRepository)
     )
 
     @Provides
@@ -72,6 +73,7 @@ object AppModule {
         GetArticleAuthorNameById(firebaseFirestoreRepository),
         GetArticleViewsCount(firebaseFirestoreRepository),
         UpdateArticleViewsCount(firebaseFirestoreRepository),
+        GetCurrentUserData(firebaseFirestoreRepository)
     )
 
     @Provides

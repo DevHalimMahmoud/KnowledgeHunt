@@ -8,6 +8,7 @@ data class AuthUseCases(
     val getCurrentUserID: GetCurrentUserID,
     val login: Login,
     val resetPassword: ResetPassword,
+    val getCurrentUserEmail: GetCurrentUserEmail,
 )
 
 data class FirestoreUseCases(
@@ -17,7 +18,8 @@ data class FirestoreUseCases(
     val addImageUrlToArticleDocument: AddImageUrlToArticleDocument,
     val getArticleAuthorNameById: GetArticleAuthorNameById,
     val getArticleViewsCount: GetArticleViewsCount,
-    val updateArticleViewsCount: UpdateArticleViewsCount
+    val updateArticleViewsCount: UpdateArticleViewsCount,
+    val getCurrentUserData: GetCurrentUserData,
 )
 
 data class StorageUseCases(
