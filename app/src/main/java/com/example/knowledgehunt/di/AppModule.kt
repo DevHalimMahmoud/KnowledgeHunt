@@ -73,7 +73,8 @@ object AppModule {
         GetArticleAuthorNameById(firebaseFirestoreRepository),
         GetArticleViewsCount(firebaseFirestoreRepository),
         UpdateArticleViewsCount(firebaseFirestoreRepository),
-        GetCurrentUserData(firebaseFirestoreRepository)
+        GetCurrentUserData(firebaseFirestoreRepository),
+        GetMyArticles(firebaseFirestoreRepository),
     )
 
     @Provides

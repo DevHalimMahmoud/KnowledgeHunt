@@ -24,6 +24,7 @@ import com.example.knowledgehunt.presentation.components.TopBar
 import com.example.knowledgehunt.presentation.screens.about.About
 import com.example.knowledgehunt.presentation.screens.article.addArticle.AddArticleScreen
 import com.example.knowledgehunt.presentation.screens.article.articleDetailsScreen.ArticleDetailsScreen
+import com.example.knowledgehunt.presentation.screens.article.myArticles.MyArticles
 import com.example.knowledgehunt.presentation.screens.article.viewArticle.Articles
 import com.example.knowledgehunt.presentation.screens.help.Screen
 import com.example.knowledgehunt.presentation.screens.home.HomeScreen
@@ -93,7 +94,8 @@ fun AppMainScreen() {
             viewModel.showProfileDialog,
             viewModel.profileImageUrl,
             viewModel.username,
-            viewModel.email
+            viewModel.email,
+            navController
         )
         Navigation(navController = navController, viewModel)
     }
@@ -150,6 +152,14 @@ fun Navigation(
         composable(Screens.ArticleDetails.route)
         {
             ArticleDetailsScreen(
+                navController
+
+            )
+        }
+
+        composable(Screens.MyArticles.route)
+        {
+            MyArticles(
                 navController
 
             )

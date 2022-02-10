@@ -25,6 +25,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.navigation.NavHostController
+import com.example.knowledgehunt.domain.models.Screens
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
@@ -37,6 +39,7 @@ fun ProfileDialog(
     profileImageUrl: State<Uri>,
     name: State<String?>,
     email: State<String?>,
+    navController: NavHostController
 ) {
 
     if (showUserDialog.value) {
@@ -136,7 +139,11 @@ fun ProfileDialog(
                         verticalAlignment = CenterVertically,
                         modifier = Modifier
                             .padding(horizontal = 16.dp, vertical = 8.dp)
-                            .clickable { }.fillMaxWidth()
+                            .clickable {
+                                navController.navigate(Screens.MyArticles.route)
+                                showUserDialog.value = false
+                            }
+                            .fillMaxWidth()
                     ) {
                         Icon(
                             imageVector = TablerIcons.WritingSign,
@@ -144,7 +151,6 @@ fun ProfileDialog(
                             modifier = Modifier.padding(8.dp),
                             contentDescription = null
                         )
-
                         Text(
                             text = "My Articles",
                             fontSize = 14.sp,

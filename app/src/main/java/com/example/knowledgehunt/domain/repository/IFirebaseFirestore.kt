@@ -34,4 +34,5 @@ interface IFirebaseFirestore {
         field2Name: String,
         Field2Value: Timestamp?
     ): Task<QuerySnapshot>
+
 }

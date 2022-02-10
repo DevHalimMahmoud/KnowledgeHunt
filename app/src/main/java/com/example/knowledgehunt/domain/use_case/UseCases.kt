@@ -20,6 +20,7 @@ data class FirestoreUseCases(
     val getArticleViewsCount: GetArticleViewsCount,
     val updateArticleViewsCount: UpdateArticleViewsCount,
     val getCurrentUserData: GetCurrentUserData,
+    val getMyArticles: GetMyArticles,
 )
 
 data class StorageUseCases(
