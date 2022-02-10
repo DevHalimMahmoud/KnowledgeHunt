@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.knowledgehunt.domain.models.Screens
+import com.example.knowledgehunt.domain.utils.ArticleArguments
 import com.example.knowledgehunt.presentation.components.ArticleCardItem
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -80,6 +81,11 @@ fun Articles(navController: NavHostController) {
                         article,
                         author.value,
                         navController = navController,
+                        click = {
+                            ArticleArguments.instance?.author = author.value
+                            ArticleArguments.instance?.articleItemData = article
+                            navController.navigate(Screens.ArticleDetails.route)
+                        }
                     )
                 }
             }

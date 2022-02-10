@@ -19,8 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.palette.graphics.Palette
 import com.example.knowledgehunt.domain.models.ArticleItemData
-import com.example.knowledgehunt.domain.models.Screens
-import com.example.knowledgehunt.domain.utils.ArticleArguments
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
@@ -32,7 +30,8 @@ fun ArticleCardItem(
     articleItemData: ArticleItemData,
     author: String,
     modifier: Modifier = Modifier,
-    navController: NavController
+    navController: NavController,
+    click: () -> Unit,
 ) {
     var palette by remember { mutableStateOf<Palette?>(null) }
 
@@ -42,9 +41,7 @@ fun ArticleCardItem(
         shape = RoundedCornerShape(16.dp),
         modifier = modifier
             .clickable {
-                ArticleArguments.instance?.author = author
-                ArticleArguments.instance?.articleItemData = articleItemData
-                navController.navigate(Screens.ArticleDetails.route)
+                click()
             }
             .fillMaxWidth()
             .wrapContentHeight()

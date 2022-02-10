@@ -24,6 +24,7 @@ import com.example.knowledgehunt.presentation.components.TopBar
 import com.example.knowledgehunt.presentation.screens.about.About
 import com.example.knowledgehunt.presentation.screens.article.addArticle.AddArticleScreen
 import com.example.knowledgehunt.presentation.screens.article.articleDetailsScreen.ArticleDetailsScreen
+import com.example.knowledgehunt.presentation.screens.article.myArticleDetails.MyArticleDetailsScreen
 import com.example.knowledgehunt.presentation.screens.article.myArticles.MyArticles
 import com.example.knowledgehunt.presentation.screens.article.viewArticle.Articles
 import com.example.knowledgehunt.presentation.screens.help.Screen
@@ -108,7 +109,6 @@ fun Navigation(
 ) {
     NavHost(navController, startDestination = Screens.Splash.route) {
         composable(Screens.Home.route) {
-
             HomeScreen(
                 navController
             )
@@ -153,21 +153,23 @@ fun Navigation(
         {
             ArticleDetailsScreen(
                 navController
-
             )
         }
-
         composable(Screens.MyArticles.route)
         {
             MyArticles(
                 navController
-
+            )
+        }
+        composable(Screens.MyArticlesDetails.route)
+        {
+            MyArticleDetailsScreen(
+                navController
             )
         }
 
     }
 }
-
 
 @Preview
 @Composable

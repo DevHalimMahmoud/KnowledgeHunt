@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.knowledgehunt.domain.models.Screens
+import com.example.knowledgehunt.domain.utils.ArticleArguments
 import com.example.knowledgehunt.presentation.components.ArticleCardItem
 import com.example.knowledgehunt.presentation.components.BackTopBar
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -71,10 +72,7 @@ fun MyArticles(navController: NavHostController) {
         ) {
             LazyColumn(state = rememberLazyListState()) {
 
-                items(
-                    viewModel.articleState.value,
-
-                    ) { article ->
+                items(viewModel.articleState.value) { article ->
                     val author: MutableState<String> = remember {
                         mutableStateOf("Author")
                     }
@@ -89,6 +87,11 @@ fun MyArticles(navController: NavHostController) {
                         article,
                         author.value,
                         navController = navController,
+                        click = {
+                            ArticleArguments.instance?.author = author.value
+                            ArticleArguments.instance?.articleItemData = article
+                            navController.navigate(Screens.MyArticlesDetails.route)
+                        }
                     )
                 }
             }
