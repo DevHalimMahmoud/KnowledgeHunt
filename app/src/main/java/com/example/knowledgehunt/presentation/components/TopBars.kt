@@ -1,6 +1,7 @@
 package com.example.knowledgehunt.presentation.components
 
 import android.net.Uri
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -29,7 +30,8 @@ fun TopBar(
     buttonIcon: Painter,
     modifier: Modifier,
     Logout: () -> Unit,
-    profileImageUrl: Uri
+    profileImageUrl: Uri,
+    ShowDialog: () -> Unit,
 ) {
     TopAppBar(
         modifier = modifier,
@@ -67,7 +69,8 @@ fun TopBar(
                 modifier = modifier
                     .size(40.dp)
                     .padding(2.dp)
-                    .clip(CircleShape),
+                    .clip(CircleShape)
+                    .clickable { ShowDialog() },
                 // shows a shimmering effect when loading an image.
                 shimmerParams = ShimmerParams(
                     baseColor = MaterialTheme.colors.background,

@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
     id "kotlin-kapt"
     id "dagger.hilt.android.plugin"
@@ -96,7 +95,10 @@ dependencies {
     implementation 'com.valentinilk.shimmer:compose-shimmer:1.0.2'
 
     implementation "com.google.accompanist:accompanist-swiperefresh:0.24.1-alpha"
-    implementation 'io.github.amrdeveloper:reactbutton:2.0.3'
+    implementation 'io.github.amrdeveloper:reactbutton:2.1.0'
+
+    // debugImplementation because LeakCanary should only run in debug builds.
+//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8.1'
 }
 // Allow references to generated code
 kapt {

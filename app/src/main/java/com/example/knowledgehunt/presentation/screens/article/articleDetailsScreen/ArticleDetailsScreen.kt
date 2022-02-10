@@ -1,5 +1,7 @@
 package com.example.knowledgehunt.presentation.screens.article.articleDetailsScreen
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import android.widget.TextView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -65,7 +67,10 @@ fun ArticleDetailsScreen(
                 it.setReactions(*FbReactions.reactions)
                 it.defaultReaction = FbReactions.defaultReact
                 it.setEnableReactionTooltip(true)
-                it.setOnReactionChangeListener { viewModel }
+                it.setOnReactionChangeListener {
+                    Log.d(TAG, "ArticleDetailsScreen: run")
+                    viewModel
+                }
             }
 
         },

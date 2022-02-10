@@ -2,7 +2,6 @@ package com.example.knowledgehunt.presentation.screens.mainScreen
 
 import SplashScreen
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -64,8 +63,7 @@ fun AppMainScreen() {
                     buttonIcon = painterResource(id = R.drawable.logo_no_text),
                     modifier = Modifier
                         .border(1.dp, color = MaterialTheme.colors.onError, CircleShape)
-                        .clip(CircleShape)
-                        .clickable { viewModel.showProfileDialog.value = true },
+                        .clip(CircleShape),
                     Logout = {
 
                         viewModel.logoutResults()
@@ -74,7 +72,8 @@ fun AppMainScreen() {
                             launchSingleTop = true
                         }
                     },
-                    profileImageUrl = viewModel.profileImageUrl.value
+                    profileImageUrl = viewModel.profileImageUrl.value,
+                    ShowDialog = { viewModel.showProfileDialog.value = true },
                 )
                 drawerGesturesEnabled.value = true
             }

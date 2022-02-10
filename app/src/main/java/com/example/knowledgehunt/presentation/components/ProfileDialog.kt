@@ -11,7 +11,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -29,6 +28,8 @@ import androidx.compose.ui.window.Dialog
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
+import compose.icons.TablerIcons
+import compose.icons.tablericons.WritingSign
 
 @Composable
 fun ProfileDialog(
@@ -135,16 +136,17 @@ fun ProfileDialog(
                         verticalAlignment = CenterVertically,
                         modifier = Modifier
                             .padding(horizontal = 16.dp, vertical = 8.dp)
+                            .clickable { }.fillMaxWidth()
                     ) {
                         Icon(
-                            imageVector = Icons.Default.PersonAdd,
+                            imageVector = TablerIcons.WritingSign,
                             tint = MaterialTheme.colors.onSurface,
                             modifier = Modifier.padding(8.dp),
                             contentDescription = null
                         )
 
                         Text(
-                            text = "Add another account",
+                            text = "My Articles",
                             fontSize = 14.sp,
                             color = MaterialTheme.colors.onSurface,
                             modifier = Modifier.padding(start = 8.dp)
