@@ -37,7 +37,7 @@ import com.skydoves.landscapist.palette.BitmapPalette
 fun ArticleDetailsScreen(
     navController: NavHostController,
 ) {
-    var i = 0
+
     val viewModel: ArticleDetailsScreenViewModel = hiltViewModel()
     var palette by remember { mutableStateOf<Palette?>(null) }
 

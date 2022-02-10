@@ -1,29 +1,20 @@
 package com.example.knowledgehunt.presentation.screens.article.myArticleDetails
 
-import android.content.Context
-import android.net.Uri
 import android.widget.Toast
-import androidx.activity.compose.ManagedActivityResultLauncher
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddPhotoAlternate
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Check
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
@@ -33,10 +24,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.knowledgehunt.domain.models.Screens
 import com.example.knowledgehunt.presentation.components.BackTopBar
-import com.example.knowledgehunt.presentation.components.OutlinedButtonItem
 import com.example.knowledgehunt.presentation.components.TextFieldUnit
-import com.example.knowledgehunt.presentation.screens.article.addArticle.AddArticleViewModel
-import kotlinx.coroutines.CoroutineScope
+import compose.icons.TablerIcons
+import compose.icons.tablericons.ArrowBack
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -45,7 +35,7 @@ import kotlinx.coroutines.launch
 fun MyArticleDetailsScreen(
     navController: NavHostController,
 ) {
-    val viewModel: AddArticleViewModel = hiltViewModel()
+    val viewModel: MyArticleDetailsViewModel = hiltViewModel()
     val coroutineScope = rememberCoroutineScope()
 
     val context = LocalContext.current
@@ -63,7 +53,7 @@ fun MyArticleDetailsScreen(
                     Toast.LENGTH_LONG
                 )
                 .show()
-            if (viewModel.publishError.value == "Article Published Successfully!") {
+            if (viewModel.publishError.value == "Article Updated Successfully!") {
                 navController.popBackStack()
             }
             viewModel.publishStates.value = false
@@ -74,8 +64,8 @@ fun MyArticleDetailsScreen(
 
         topBar = {
             BackTopBar(
-                title = Screens.AddArticle.title,
-                buttonIcon = Icons.Default.ArrowBack,
+                title = Screens.MyArticlesDetails.title,
+                buttonIcon = TablerIcons.ArrowBack,
                 modifier = Modifier,
                 onClick = { navController.popBackStack() }
             )
@@ -96,7 +86,7 @@ fun MyArticleDetailsScreen(
                                 viewModel.publishArticleProgressIndicator.value = false
                                 coroutineScope
                                     .launch {
-                                        viewModel.publishArticle()
+                                        viewModel.updateArticle()
                                     }
                             },
                     )
@@ -117,7 +107,7 @@ fun MyArticleDetailsScreen(
                 .verticalScroll(rememberScrollState())
         ) {
 
-            ArticleImage(viewModel, coroutineScope, context)
+//            ArticleImage(viewModel, coroutineScope, context)
 
             TextFieldUnit(
                 hint = "Title",
@@ -154,104 +144,14 @@ fun MyArticleDetailsScreen(
                         viewModel.contentState.value.text.isEmpty()
                 },
                 modifier = Modifier
-                    .height(300.dp)
-
+                    .wrapContentHeight()
                     .padding(8.dp),
                 imeAction = ImeAction.Next,
                 errorState = viewModel.contentErrorState,
                 textState = viewModel.contentState,
                 errorText = "Required!",
                 KeyboardType = KeyboardType.Text,
-
-                )
-        }
-    }
-}
-
-@Composable
-fun ArticleImage(
-    viewModel: AddArticleViewModel,
-    coroutineScope: CoroutineScope,
-    context: Context
-) {
-
-    val launcher: ManagedActivityResultLauncher<String, Uri?> =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
-            viewModel.imageUri.value = uri
-
-            if (viewModel.imageUri.value != null) {
-                viewModel.imageCompressionProgressIndicator.value = true
-                Toast.makeText(
-                    context,
-                    "Compressing Image...",
-                    Toast.LENGTH_SHORT
-                ).show()
-                handelArticleImage(viewModel = viewModel, coroutineScope, context)
-            }
-
-        }
-
-    Column(Modifier.fillMaxWidth()) {
-        if (viewModel.bitmap.value == null) {
-            Image(
-                Icons.Default.AddPhotoAlternate,
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .size(250.dp),
-                colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface)
-            )
-        } else {
-            Image(
-                bitmap = viewModel.bitmap.value!!.asImageBitmap(),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .fillMaxWidth()
-                    .height(250.dp)
             )
         }
-        if (viewModel.imageCompressionProgressIndicator.value) {
-
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .size(100.dp)
-                    .background(Color.Transparent, shape = RoundedCornerShape(8.dp))
-                    .align(Alignment.CenterHorizontally)
-            ) {
-                CircularProgressIndicator()
-            }
-
-        }
-    }
-
-    Spacer(modifier = Modifier.height(12.dp))
-
-    OutlinedButtonItem(
-        onClick = {
-
-            launcher.launch("image/*")
-        },
-        text = "Add Article Image",
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 18.dp, vertical = 8.dp),
-        enableState = remember { mutableStateOf(true) },
-    )
-}
-
-fun handelArticleImage(
-    viewModel: AddArticleViewModel,
-    coroutineScope: CoroutineScope,
-    context: Context,
-) {
-    coroutineScope.launch(Dispatchers.Default, CoroutineStart.DEFAULT) {
-        viewModel.compressProfileImage(context = context)
-
-    }.invokeOnCompletion {
-        viewModel.imageCompressionProgressIndicator.value = false
     }
 }

@@ -75,6 +75,7 @@ object AppModule {
         UpdateArticleViewsCount(firebaseFirestoreRepository),
         GetCurrentUserData(firebaseFirestoreRepository),
         GetMyArticles(firebaseFirestoreRepository),
+        GetMyArticleId(firebaseFirestoreRepository)
     )
 
     @Provides
