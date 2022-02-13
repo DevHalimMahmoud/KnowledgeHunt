@@ -42,4 +42,11 @@ class FirebaseStorageImpl : IFirebaseStorage {
     ): Task<Uri> {
         return FirebaseStorage.getInstance().reference.child("$bath/${name}.JPEG").downloadUrl
     }
+
+    override suspend fun deleteStorageImageUrl(
+        bath: String,
+        name: String
+    ): Task<Void> {
+        return FirebaseStorage.getInstance().reference.child("$bath/${name}.JPEG").delete()
+    }
 }

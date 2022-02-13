@@ -25,4 +25,9 @@ interface IFirebaseStorage {
         name: String
     ): Task<Uri>
 
+    suspend fun deleteStorageImageUrl(
+        bath: String,
+        name: String
+    ): Task<Void>
+
 }

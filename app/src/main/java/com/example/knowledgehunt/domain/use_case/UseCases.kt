@@ -22,11 +22,13 @@ data class FirestoreUseCases(
     val getCurrentUserData: GetCurrentUserData,
     val getMyArticles: GetMyArticles,
     val getMyArticleId: GetMyArticleId,
+    val deleteArticleFirestoreDocument: DeleteArticleFirestoreDocument
 )
 
 data class StorageUseCases(
     val uploadStorageImage: UploadStorageImage,
     val getStorageImageUrl: GetStorageImageUrl,
+    val deleteArticleStorageImage: DeleteArticleStorageImage,
 )
 
 data class ImageUseCases(

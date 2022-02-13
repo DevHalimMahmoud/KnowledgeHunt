@@ -35,4 +35,5 @@ interface IFirebaseFirestore {
         Field2Value: Timestamp?
     ): Task<QuerySnapshot>
 
+    suspend fun deleteDocument(collection: String, id: String): Task<Void>
 }

@@ -3,13 +3,17 @@ package com.example.knowledgehunt.presentation.screens.article.myArticleDetails
 import android.content.ContentValues
 import android.util.Log
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.example.knowledgehunt.domain.use_case.FirestoreUseCases
+import com.example.knowledgehunt.domain.use_case.StorageUseCases
 import com.example.knowledgehunt.domain.utils.ArticleArguments
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,7 +21,9 @@ import javax.inject.Inject
 class MyArticleDetailsViewModel @Inject constructor(
 
     private val firestoreUseCases: FirestoreUseCases,
+    private val storageUseCases: StorageUseCases,
 ) : ViewModel() {
+
 
     val publishArticleProgressIndicator: MutableState<Boolean> = mutableStateOf(true)
     var publishError: MutableState<String> = mutableStateOf("Article Updated Successfully!")
@@ -45,8 +51,48 @@ class MyArticleDetailsViewModel @Inject constructor(
 
     private var _articleId: MutableState<String?> = mutableStateOf(null)
 
+
+    private var _deleteImageState: MutableState<Boolean> = mutableStateOf(false)
+    var deleteImageState: State<Boolean> = _deleteImageState
+
+    private var _deleteDocumentState: MutableState<Boolean> = mutableStateOf(false)
+    var deleteDocumentState: State<Boolean> = _deleteDocumentState
+
+
     init {
         getArticleId()
+    }
+
+    fun deleteArticle(navController: NavController) {
+
+        _deleteDocumentState.value = true
+        _deleteImageState.value = true
+        viewModelScope.launch {
+            deleteFirestoreArticleDocument()
+            deleteStorageDocumentImage()
+            delay(1000)
+            navController.popBackStack()
+        }
+    }
+
+    private fun deleteFirestoreArticleDocument() {
+        viewModelScope.launch {
+            firestoreUseCases.deleteArticleFirestoreDocument(
+                "articles",
+                _articleId.value.toString()
+            ).addOnCompleteListener {
+                _deleteDocumentState.value = false
+            }
+        }
+    }
+
+    private fun deleteStorageDocumentImage() {
+        viewModelScope.launch {
+            storageUseCases.deleteArticleStorageImage("article", _articleId.value.toString())
+                .addOnCompleteListener {
+                    _deleteImageState.value = false
+                }
+        }
     }
 
     fun notEmpty(): Boolean {
@@ -59,7 +105,6 @@ class MyArticleDetailsViewModel @Inject constructor(
         mutableMap["title"] = titleState.value.text
         return mutableMap
     }
-
 
     fun updateArticle() {
 

@@ -61,5 +61,8 @@ class FirebaseFirestoreImpl : IFirebaseFirestore {
             .get()
     }
 
-
+    override suspend fun deleteDocument(collection: String, id: String): Task<Void> {
+        return FirebaseFirestore.getInstance().collection(collection).document(id)
+            .delete()
+    }
 }

@@ -60,6 +60,7 @@ object AppModule {
     ) = StorageUseCases(
         UploadStorageImage(firebaseStorageRepository),
         GetStorageImageUrl(firebaseStorageRepository),
+        DeleteArticleStorageImage(firebaseStorageRepository)
     )
 
     @Provides
@@ -75,7 +76,8 @@ object AppModule {
         UpdateArticleViewsCount(firebaseFirestoreRepository),
         GetCurrentUserData(firebaseFirestoreRepository),
         GetMyArticles(firebaseFirestoreRepository),
-        GetMyArticleId(firebaseFirestoreRepository)
+        GetMyArticleId(firebaseFirestoreRepository),
+        DeleteArticleFirestoreDocument(firebaseFirestoreRepository),
     )
 
     @Provides
