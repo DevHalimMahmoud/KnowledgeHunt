@@ -118,7 +118,11 @@ fun RegisterScreen(navController: NavHostController) {
                 .verticalScroll(rememberScrollState())
         ) {
 
-            ProfileImage(viewModel, coroutineScope, context)
+            ProfileImage(
+                viewModel,
+                coroutineScope,
+                context
+            )
 
             TextFieldUnit(
                 hint = "Email",
@@ -286,7 +290,11 @@ fun ProfileImage(
                     "Compressing Image...",
                     Toast.LENGTH_SHORT
                 ).show()
-                handelImage(viewModel = viewModel, coroutineScope, context)
+                handelImage(
+                    viewModel = viewModel,
+                    coroutineScope,
+                    context
+                )
             }
 
         }

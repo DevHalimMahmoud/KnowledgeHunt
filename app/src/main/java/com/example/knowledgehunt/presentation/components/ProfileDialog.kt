@@ -78,7 +78,6 @@ fun ProfileDialog(
                                 .padding(top = 8.dp),
                             color = MaterialTheme.colors.primaryVariant,
                         )
-
                     }
                     Row(Modifier.padding(12.dp)) {
 
@@ -125,7 +124,10 @@ fun ProfileDialog(
                             .padding(8.dp)
                             .border(1.dp, Color.Gray.copy(alpha = 0.6f), RoundedCornerShape(16.dp))
                             .clip(RoundedCornerShape(16.dp))
-                            .clickable(onClick = {})
+                            .clickable(onClick = {
+                                navController.navigate(Screens.EditProfile.route)
+                                showUserDialog.value = false
+                            })
                             .padding(horizontal = 12.dp, vertical = 8.dp)
                             .align(Alignment.CenterHorizontally)
                     )

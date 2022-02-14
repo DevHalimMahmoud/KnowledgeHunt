@@ -30,7 +30,7 @@ import com.example.knowledgehunt.presentation.screens.article.viewArticle.Articl
 import com.example.knowledgehunt.presentation.screens.help.Screen
 import com.example.knowledgehunt.presentation.screens.home.HomeScreen
 import com.example.knowledgehunt.presentation.screens.login.LoginScreen
-import com.example.knowledgehunt.presentation.screens.registration.RegisterScreen
+import com.example.knowledgehunt.presentation.screens.profile.EditProfileScreen
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 
@@ -140,7 +140,7 @@ fun Navigation(
             )
         }
         composable(Screens.Register.route) {
-            RegisterScreen(
+            EditProfileScreen(
                 navController = navController
             )
         }
@@ -167,7 +167,12 @@ fun Navigation(
                 navController
             )
         }
-
+        composable(Screens.EditProfile.route)
+        {
+            EditProfileScreen(
+                navController
+            )
+        }
     }
 }
 
