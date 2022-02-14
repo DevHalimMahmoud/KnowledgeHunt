@@ -1,11 +1,15 @@
 package com.example.knowledgehunt.presentation.screens.article.myArticleDetails
 
 import android.widget.Toast
-import androidx.compose.foundation.*
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
@@ -14,7 +18,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -22,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.knowledgehunt.domain.models.Screens
 import com.example.knowledgehunt.presentation.components.BackTopBar
 import com.example.knowledgehunt.presentation.components.OutlinedButtonItem
 import com.example.knowledgehunt.presentation.components.TextFieldUnit
@@ -59,25 +61,22 @@ fun MyArticleDetailsScreen(
             viewModel.publishStates.value = false
         }
     }
-
     Scaffold(
-
         topBar = {
             BackTopBar(
-                title = Screens.MyArticlesDetails.title,
+                title = "Edit Article",
                 buttonIcon = TablerIcons.ArrowBack,
                 modifier = Modifier,
                 onClick = { navController.popBackStack() }
             )
         },
         floatingActionButton = {
-
             if (viewModel.publishArticleProgressIndicator.value) {
                 if (viewModel.notEmpty()) {
-                    Image(
+                    Icon(
                         imageVector = Icons.Outlined.Check,
                         contentDescription = null,
-                        contentScale = ContentScale.Crop,
+                        tint = MaterialTheme.colors.primary,
                         modifier = Modifier
                             .size(55.dp)
                             .clip(CircleShape)
@@ -98,10 +97,7 @@ fun MyArticleDetailsScreen(
                         .clip(CircleShape)
                 )
             }
-        },
-
-        ) {
-
+        }) {
         if (viewModel.deleteDocumentState.value && viewModel.deleteImageState.value) {
             Dialog(onDismissRequest = { }) {
                 CircularProgressIndicator(
@@ -111,13 +107,11 @@ fun MyArticleDetailsScreen(
                 )
             }
         }
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-
             OutlinedButtonItem(
                 onClick = {
                     viewModel.deleteArticle(navController)
@@ -129,7 +123,6 @@ fun MyArticleDetailsScreen(
                     .border(1.dp, Color.Red, RoundedCornerShape(16.dp)),
                 enableState = remember { mutableStateOf(true) },
             )
-
             TextFieldUnit(
                 hint = "Title",
                 onImeAction = {
