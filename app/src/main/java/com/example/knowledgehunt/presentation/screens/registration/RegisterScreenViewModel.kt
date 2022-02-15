@@ -184,7 +184,7 @@ class RegisterScreenViewModel @Inject constructor(
         mutableMap["score"] = 0
         mutableMap["user_name"] = userNameState.value.text
         mutableMap["user_token"] = ""
-
+        mutableMap["gender"] = genderItems[genderSelectedIndex.value]
         return mutableMap
     }
 

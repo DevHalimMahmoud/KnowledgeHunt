@@ -43,7 +43,7 @@ import kotlinx.coroutines.Dispatchers
 
 @Composable
 fun EditProfileScreen(navController: NavHostController) {
-    val viewModel: EditPofileViewModel = hiltViewModel()
+    val viewModel: EditProfileViewModel = hiltViewModel()
     val context = LocalContext.current
 
 
@@ -303,7 +303,7 @@ fun EditProfileScreen(navController: NavHostController) {
 
 @Composable
 fun ReAuthenticateDialog(
-    viewModel: EditPofileViewModel,
+    viewModel: EditProfileViewModel,
     context: Context
 ) {
     if (viewModel.dialogState.value) {

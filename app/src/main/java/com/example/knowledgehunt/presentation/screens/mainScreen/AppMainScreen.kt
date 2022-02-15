@@ -99,14 +99,13 @@ fun AppMainScreen() {
             viewModel.email,
             navController
         )
-        Navigation(navController = navController, viewModel)
+        Navigation(navController = navController)
     }
 }
 
 @Composable
 fun Navigation(
-    navController: NavHostController,
-    viewModel: AppMainScreenViewModel,
+    navController: NavHostController
 ) {
     NavHost(navController, startDestination = Screens.Splash.route) {
         composable(Screens.Home.route) {

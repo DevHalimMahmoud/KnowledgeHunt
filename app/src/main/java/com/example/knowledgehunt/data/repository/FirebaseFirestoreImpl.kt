@@ -17,7 +17,6 @@ class FirebaseFirestoreImpl : IFirebaseFirestore {
 
     }
 
-
     override suspend fun addUserDataToFirestore(data: MutableMap<String, Any?>): Task<Void> {
 
         return FirebaseFirestore.getInstance().collection("user")

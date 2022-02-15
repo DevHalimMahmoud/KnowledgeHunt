@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class EditPofileViewModel @Inject constructor(
+class EditProfileViewModel @Inject constructor(
     private val authUseCases: AuthUseCases,
     private val storageUseCases: StorageUseCases,
     private val firestoreUseCases: FirestoreUseCases,
@@ -65,6 +65,7 @@ class EditPofileViewModel @Inject constructor(
 
     init {
         getTopBarProfileImage()
+        getUserData()
     }
 
     fun notEmpty(): Boolean {
@@ -101,7 +102,6 @@ class EditPofileViewModel @Inject constructor(
                     }
                 }
         }
-
     }
 
     private fun getTopBarProfileImage() {
@@ -173,5 +173,30 @@ class EditPofileViewModel @Inject constructor(
         }
     }
 
+    private fun getUserData() {
+        viewModelScope.launch {
+            firestoreUseCases.getCurrentUserData().addOnCompleteListener {
+                if (it.isSuccessful) {
+                    firstNameState.value = TextFieldValue(it.result.get("f_name").toString())
+                    lastNameState.value = TextFieldValue(it.result.get("l_name").toString())
+                    ageState.value = TextFieldValue(it.result.get("age").toString())
+                    phoneState.value = TextFieldValue(it.result.get("phone_num").toString())
+                    userNameState.value = TextFieldValue(it.result.get("user_name").toString())
 
+                    when {
+                        it.result.get("gender").toString() == genderItems[0] -> {
+                            genderSelectedIndex.value = 0
+                        }
+                        it.result.get("gender").toString() == genderItems[1] -> {
+                            genderSelectedIndex.value = 1
+                        }
+                        else -> {
+                            genderSelectedIndex.value = 2
+                        }
+                    }
+                }
+            }
+        }
+
+    }
 }
