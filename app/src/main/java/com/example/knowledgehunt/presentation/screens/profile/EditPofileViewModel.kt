@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
@@ -11,6 +12,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.knowledgehunt.domain.use_case.AuthUseCases
 import com.example.knowledgehunt.domain.use_case.FirestoreUseCases
 import com.example.knowledgehunt.domain.use_case.StorageUseCases
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,6 +28,10 @@ class EditPofileViewModel @Inject constructor(
 
     var authPasswordState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
     var authPasswordErrorState: MutableState<Boolean> = mutableStateOf(false)
+
+    private var _profileImageUrl: MutableState<Uri> =
+        mutableStateOf(Uri.parse("https://storage.googleapis.com/glaze-ecom.appspot.com/images/P2uSA0D_6/thumbs/232.png"))
+    val profileImageUrl: State<Uri> = _profileImageUrl
 
     var emailState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
     var emailErrorState: MutableState<Boolean> = mutableStateOf(false)
@@ -49,7 +55,6 @@ class EditPofileViewModel @Inject constructor(
     val genderItems: List<String> = listOf("Male", "Female", "Other")
     var genderSelectedIndex: MutableState<Int> = mutableStateOf(0)
 
-    val imageUri: MutableState<Uri?> = mutableStateOf(null)
 
     val signupProgressIndicator: MutableState<Boolean> = mutableStateOf(true)
     var signupError: MutableState<String> =
@@ -57,6 +62,10 @@ class EditPofileViewModel @Inject constructor(
     var signupStates: MutableState<Boolean> = mutableStateOf(false)
 
     var mutableMap: HashMap<String, Any?> = hashMapOf()
+
+    init {
+        getTopBarProfileImage()
+    }
 
     fun notEmpty(): Boolean {
         return firstNameState.value.text.isNotBlank() &&
@@ -71,6 +80,40 @@ class EditPofileViewModel @Inject constructor(
         mutableMap["phone_num"] = phoneState.value.text
         mutableMap["user_name"] = userNameState.value.text
         return mutableMap
+    }
+
+    fun resetPassword(context: Context) {
+        viewModelScope.launch {
+            authUseCases.resetPassword().addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Toast.makeText(
+                        context,
+                        "Check Your Email",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        context,
+                        it.exception?.localizedMessage,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
+
+    }
+
+    fun getTopBarProfileImage() {
+        viewModelScope.launch {
+            storageUseCases.getStorageImageUrl(
+                "user",
+                FirebaseAuth.getInstance().currentUser?.uid!!
+            )
+                .addOnCompleteListener { task ->
+                    _profileImageUrl.value =
+                        task.result.normalizeScheme()
+                }
+        }
     }
 
     fun reAuthenticate(context: Context) {
@@ -101,7 +144,6 @@ class EditPofileViewModel @Inject constructor(
     }
 
     private fun updateEmail(context: Context) {
-
         viewModelScope.launch {
             authUseCases.updateCurrentUserEmail(emailState.value.text.trim())
                 ?.addOnCompleteListener {
@@ -129,4 +171,6 @@ class EditPofileViewModel @Inject constructor(
                 }
         }
     }
+
+
 }

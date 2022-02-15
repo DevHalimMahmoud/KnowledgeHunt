@@ -7,5 +7,5 @@ class ReAuthenticateCurrentUser(
 ) {
     suspend operator fun invoke(
         password: String
-    ) = repository.reAuthenticate( password)
+    ) = repository.reAuthenticate(password)
 }

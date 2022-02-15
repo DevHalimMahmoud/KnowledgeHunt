@@ -8,7 +8,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PersonOutline
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,7 +18,6 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
@@ -113,7 +111,7 @@ fun EditProfileScreen(navController: NavHostController) {
                 .verticalScroll(rememberScrollState())
         ) {
             GlideImage(
-                Icons.Default.PersonOutline,
+                viewModel.profileImageUrl.value,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -121,7 +119,6 @@ fun EditProfileScreen(navController: NavHostController) {
                     .size(250.dp)
                     .clip(CircleShape)
                     .border(1.dp, MaterialTheme.colors.onSurface, CircleShape),
-                colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface),
                 shimmerParams = ShimmerParams(
                     baseColor = MaterialTheme.colors.background,
                     highlightColor = MaterialTheme.colors.secondary,
@@ -129,7 +126,7 @@ fun EditProfileScreen(navController: NavHostController) {
                     dropOff = 0.65f,
                     tilt = 20f
                 ),
-                circularReveal = CircularReveal(800),
+                circularReveal = CircularReveal(500),
             )
 
             TextFieldUnit(
@@ -174,7 +171,7 @@ fun EditProfileScreen(navController: NavHostController) {
 
             OutlinedButtonItem(
                 onClick = {
-
+                    viewModel.resetPassword(context)
                 },
                 text = "Reset Password",
                 modifier = Modifier
@@ -345,7 +342,6 @@ fun ReAuthenticateDialog(
                                 .align(CenterHorizontally)
                                 .padding(horizontal = 18.dp, vertical = 8.dp)
                         )
-
                     } else {
                         OutlinedButtonItem(
                             onClick = {
