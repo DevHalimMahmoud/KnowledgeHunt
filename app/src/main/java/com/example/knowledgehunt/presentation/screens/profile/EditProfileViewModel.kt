@@ -55,11 +55,7 @@ class EditProfileViewModel @Inject constructor(
     val genderItems: List<String> = listOf("Male", "Female", "Other")
     var genderSelectedIndex: MutableState<Int> = mutableStateOf(0)
 
-
     val signupProgressIndicator: MutableState<Boolean> = mutableStateOf(true)
-    var signupError: MutableState<String> =
-        mutableStateOf("User Created Successfully please verify your email")
-    var signupStates: MutableState<Boolean> = mutableStateOf(false)
 
     var mutableMap: HashMap<String, Any?> = hashMapOf()
 
@@ -80,6 +76,7 @@ class EditProfileViewModel @Inject constructor(
         mutableMap["l_name"] = lastNameState.value.text
         mutableMap["phone_num"] = phoneState.value.text
         mutableMap["user_name"] = userNameState.value.text
+        mutableMap["gender"] = genderItems[genderSelectedIndex.value]
         return mutableMap
     }
 
@@ -197,6 +194,31 @@ class EditProfileViewModel @Inject constructor(
                 }
             }
         }
+    }
 
+    fun updateProfileData(context: Context) {
+        signupProgressIndicator.value = false
+        viewModelScope.launch {
+            firestoreUseCases.updateProfileData(
+                "user",
+                FirebaseAuth.getInstance().currentUser?.uid.toString(),
+                dataMap()
+            ).addOnCompleteListener {
+                signupProgressIndicator.value = true
+                if (it.isSuccessful) {
+                    Toast.makeText(
+                        context,
+                        "Data Updated Successfully",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        context,
+                        it.exception?.localizedMessage,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
     }
 }

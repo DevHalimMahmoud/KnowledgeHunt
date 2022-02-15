@@ -10,7 +10,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.Center
@@ -37,8 +36,6 @@ import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
 import compose.icons.TablerIcons
 import compose.icons.tablericons.ArrowBack
-import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.Dispatchers
 
 
 @Composable
@@ -48,25 +45,6 @@ fun EditProfileScreen(navController: NavHostController) {
 
 
     ReAuthenticateDialog(viewModel, context)
-    if (viewModel.signupStates.value) {
-        LaunchedEffect(
-            Dispatchers.Main,
-            CoroutineStart.DEFAULT
-        ) {
-
-            Toast
-                .makeText(
-                    context,
-                    viewModel.signupError.value,
-                    Toast.LENGTH_LONG
-                )
-                .show()
-            if (viewModel.signupError.value == "User Created Successfully please verify your email") {
-                navController.popBackStack()
-            }
-            viewModel.signupStates.value = false
-        }
-    }
 
     Scaffold(
 
@@ -91,8 +69,7 @@ fun EditProfileScreen(navController: NavHostController) {
                             .clip(CircleShape)
                             .border(1.dp, MaterialTheme.colors.primary, CircleShape)
                             .clickable {
-                                viewModel.signupProgressIndicator.value = false
-
+                                viewModel.updateProfileData(context)
                             },
                     )
                 }
