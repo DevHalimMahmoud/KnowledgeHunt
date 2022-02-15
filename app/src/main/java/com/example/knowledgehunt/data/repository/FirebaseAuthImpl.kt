@@ -51,8 +51,8 @@ class FirebaseAuthImpl : IFirebaseAuth {
         )
     }
 
-    override suspend fun resetPassword(): Task<Void> {
-        return getAuthInstance().sendPasswordResetEmail(getUserEmail().toString())
+    override suspend fun resetPassword(email: String): Task<Void> {
+        return getAuthInstance().sendPasswordResetEmail(email)
     }
 
     override suspend fun logout() {

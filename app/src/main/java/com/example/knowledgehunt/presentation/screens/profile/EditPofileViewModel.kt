@@ -84,26 +84,27 @@ class EditPofileViewModel @Inject constructor(
 
     fun resetPassword(context: Context) {
         viewModelScope.launch {
-            authUseCases.resetPassword().addOnCompleteListener {
-                if (it.isSuccessful) {
-                    Toast.makeText(
-                        context,
-                        "Check Your Email",
-                        Toast.LENGTH_LONG
-                    ).show()
-                } else {
-                    Toast.makeText(
-                        context,
-                        it.exception?.localizedMessage,
-                        Toast.LENGTH_LONG
-                    ).show()
+            authUseCases.resetPassword(authUseCases.getCurrentUserEmail().toString())
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        Toast.makeText(
+                            context,
+                            "Check Your Email",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            context,
+                            it.exception?.localizedMessage,
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 }
-            }
         }
 
     }
 
-    fun getTopBarProfileImage() {
+    private fun getTopBarProfileImage() {
         viewModelScope.launch {
             storageUseCases.getStorageImageUrl(
                 "user",

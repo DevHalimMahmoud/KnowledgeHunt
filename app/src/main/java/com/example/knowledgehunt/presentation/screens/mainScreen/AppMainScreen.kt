@@ -31,6 +31,7 @@ import com.example.knowledgehunt.presentation.screens.help.Screen
 import com.example.knowledgehunt.presentation.screens.home.HomeScreen
 import com.example.knowledgehunt.presentation.screens.login.LoginScreen
 import com.example.knowledgehunt.presentation.screens.profile.EditProfileScreen
+import com.example.knowledgehunt.presentation.screens.registration.RegisterScreen
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 
@@ -124,7 +125,6 @@ fun Navigation(
             )
         }
         composable(Screens.Splash.route) {
-
             SplashScreen(
                 navController = navController
             )
@@ -140,7 +140,7 @@ fun Navigation(
             )
         }
         composable(Screens.Register.route) {
-            EditProfileScreen(
+            RegisterScreen(
                 navController = navController
             )
         }
