@@ -51,7 +51,9 @@ object AppModule {
         GetCurrentUserID(firebaseAuthRepository),
         Login(firebaseAuthRepository),
         ResetPassword(firebaseAuthRepository),
-        GetCurrentUserEmail(firebaseAuthRepository)
+        GetCurrentUserEmail(firebaseAuthRepository),
+        UpdateCurrentUserEmail(firebaseAuthRepository),
+        ReAuthenticateCurrentUser(firebaseAuthRepository),
     )
 
     @Provides

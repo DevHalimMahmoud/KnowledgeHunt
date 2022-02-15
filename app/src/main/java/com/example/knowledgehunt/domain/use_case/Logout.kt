@@ -7,5 +7,5 @@ class Logout(
 ) {
     suspend operator fun invoke(
 
-    ) = repository.Logout()
+    ) = repository.logout()
 }

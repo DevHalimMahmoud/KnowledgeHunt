@@ -1,5 +1,6 @@
 package com.example.knowledgehunt.presentation.screens.profile
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -25,11 +26,13 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.knowledgehunt.domain.models.Screens
 import com.example.knowledgehunt.presentation.components.BackTopBar
 import com.example.knowledgehunt.presentation.components.OutlinedButtonItem
+import com.example.knowledgehunt.presentation.components.PasswordFiledUnit
 import com.example.knowledgehunt.presentation.components.TextFieldUnit
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.ShimmerParams
@@ -45,6 +48,8 @@ fun EditProfileScreen(navController: NavHostController) {
     val viewModel: EditPofileViewModel = hiltViewModel()
     val context = LocalContext.current
 
+
+    ReAuthenticateDialog(viewModel, context)
     if (viewModel.signupStates.value) {
         LaunchedEffect(
             Dispatchers.Main,
@@ -141,11 +146,17 @@ fun EditProfileScreen(navController: NavHostController) {
                 errorText = "Required!",
                 KeyboardType = KeyboardType.Text
             )
-
-
             OutlinedButtonItem(
                 onClick = {
-
+                    if (viewModel.emailState.value.text.isNullOrBlank()) {
+                        Toast.makeText(
+                            context,
+                            "Please Enter A Valid Email",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        viewModel.dialogState.value = true
+                    }
                 },
                 text = "Change Email",
                 modifier = Modifier
@@ -289,6 +300,67 @@ fun EditProfileScreen(navController: NavHostController) {
                 }
             }
             Spacer(modifier = Modifier.height(60.dp))
+        }
+    }
+}
+
+@Composable
+fun ReAuthenticateDialog(
+    viewModel: EditPofileViewModel,
+    context: Context
+) {
+    if (viewModel.dialogState.value) {
+        Dialog(
+            onDismissRequest = {
+                viewModel.dialogState.value = false
+            }
+        ) {
+
+            Surface(
+                modifier = Modifier.padding(8.dp),
+                shape = RoundedCornerShape(12.dp),
+                color = MaterialTheme.colors.onPrimary,
+                contentColor = MaterialTheme.colors.onSurface
+            ) {
+
+                Column(Modifier.verticalScroll(rememberScrollState())) {
+
+                    PasswordFiledUnit(
+                        hint = "Password",
+                        onImeAction = {
+                            viewModel.authPasswordErrorState.value =
+                                viewModel.authPasswordState.value.text.isEmpty()
+                        },
+                        modifier = Modifier
+                            .padding(8.dp),
+                        imeAction = ImeAction.Next,
+                        errorState = viewModel.authPasswordErrorState,
+                        passwordState = viewModel.authPasswordState,
+                        errorText = "Required!",
+                        keyboardType = KeyboardType.Password
+                    )
+                    if (viewModel.updateEmailProgressState.value) {
+                        CircularProgressIndicator(
+                            Modifier
+                                .align(CenterHorizontally)
+                                .padding(horizontal = 18.dp, vertical = 8.dp)
+                        )
+
+                    } else {
+                        OutlinedButtonItem(
+                            onClick = {
+                                viewModel.reAuthenticate(context)
+                            },
+                            text = "Verify",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 18.dp, vertical = 8.dp)
+                                .border(1.dp, Color.Red, RoundedCornerShape(16.dp)),
+                            enableState = remember { mutableStateOf(true) },
+                        )
+                    }
+                }
+            }
         }
     }
 }

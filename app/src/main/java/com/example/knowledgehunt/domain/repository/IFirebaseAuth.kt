@@ -23,5 +23,7 @@ interface IFirebaseAuth {
 
     suspend fun resetPassword(email: String): Task<Void>
 
-    suspend fun Logout()
+    suspend fun logout()
+    suspend fun updateEmail(email: String): Task<Void>?
+    suspend fun reAuthenticate(password: String): Task<Void>?
 }

@@ -9,6 +9,8 @@ data class AuthUseCases(
     val login: Login,
     val resetPassword: ResetPassword,
     val getCurrentUserEmail: GetCurrentUserEmail,
+    val updateCurrentUserEmail: UpdateCurrentUserEmail,
+    val reAuthenticateCurrentUser: ReAuthenticateCurrentUser,
 )
 
 data class FirestoreUseCases(
