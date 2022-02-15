@@ -79,10 +79,10 @@ fun EditProfileScreen(navController: NavHostController) {
 
             if (viewModel.signupProgressIndicator.value) {
                 if (viewModel.notEmpty()) {
-                    Image(
+                    Icon(
                         imageVector = Icons.Rounded.Check,
                         contentDescription = null,
-                        contentScale = ContentScale.Crop,
+                        tint = MaterialTheme.colors.primary,
                         modifier = Modifier
                             .size(55.dp)
                             .clip(CircleShape)
@@ -107,7 +107,6 @@ fun EditProfileScreen(navController: NavHostController) {
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-
             GlideImage(
                 Icons.Default.PersonOutline,
                 contentDescription = null,

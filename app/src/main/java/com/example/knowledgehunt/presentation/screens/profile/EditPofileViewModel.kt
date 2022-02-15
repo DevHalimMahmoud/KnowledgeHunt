@@ -43,7 +43,7 @@ class EditPofileViewModel @Inject constructor(
     var genderSelectedIndex: MutableState<Int> = mutableStateOf(0)
 
     val imageUri: MutableState<Uri?> = mutableStateOf(null)
-    
+
     val signupProgressIndicator: MutableState<Boolean> = mutableStateOf(true)
     var signupError: MutableState<String> =
         mutableStateOf("User Created Successfully please verify your email")
