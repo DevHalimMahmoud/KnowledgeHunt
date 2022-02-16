@@ -58,7 +58,7 @@ fun EditProfileScreen(navController: NavHostController) {
         },
         floatingActionButton = {
 
-            if (viewModel.signupProgressIndicator.value) {
+            if (viewModel.updateDataProgressIndicator.value) {
                 if (viewModel.notEmpty()) {
                     Icon(
                         imageVector = Icons.Rounded.Check,

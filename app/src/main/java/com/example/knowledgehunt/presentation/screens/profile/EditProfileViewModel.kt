@@ -55,7 +55,7 @@ class EditProfileViewModel @Inject constructor(
     val genderItems: List<String> = listOf("Male", "Female", "Other")
     var genderSelectedIndex: MutableState<Int> = mutableStateOf(0)
 
-    val signupProgressIndicator: MutableState<Boolean> = mutableStateOf(true)
+    val updateDataProgressIndicator: MutableState<Boolean> = mutableStateOf(true)
 
     var mutableMap: HashMap<String, Any?> = hashMapOf()
 
@@ -197,14 +197,14 @@ class EditProfileViewModel @Inject constructor(
     }
 
     fun updateProfileData(context: Context) {
-        signupProgressIndicator.value = false
+        updateDataProgressIndicator.value = false
         viewModelScope.launch {
             firestoreUseCases.updateProfileData(
                 "user",
                 FirebaseAuth.getInstance().currentUser?.uid.toString(),
                 dataMap()
             ).addOnCompleteListener {
-                signupProgressIndicator.value = true
+                updateDataProgressIndicator.value = true
                 if (it.isSuccessful) {
                     Toast.makeText(
                         context,
