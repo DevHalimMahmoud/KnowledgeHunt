@@ -134,6 +134,7 @@ class MyArticleDetailsViewModel @Inject constructor(
 
                     val mutableMap: HashMap<String, Any?> = hashMapOf()
                     mutableMap["num_articles"] = it.result.get("num_articles") as Long - 1
+                    mutableMap["score"] = it.result.get("score") as Long - 10
                     viewModelScope.launch {
                         firestoreUseCases.updateNumberOfPublishedArticles(
                             "user",

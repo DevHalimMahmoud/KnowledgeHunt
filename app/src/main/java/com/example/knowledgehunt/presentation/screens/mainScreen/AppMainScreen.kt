@@ -85,10 +85,13 @@ fun AppMainScreen() {
 //        drawerScrimColor = Color.Red,  // Color for the fade background when you open/close the drawer
         drawerContent = {
             AppDrawer(
+                currentRoute = currentRoute.orEmpty(),
+                navController = navController,
                 scope = scope,
                 scaffoldState = scaffoldState,
-                navController = navController,
-                currentRoute = currentRoute.orEmpty()
+                userData = viewModel.userData,
+                profileImageUrl = viewModel.profileImageUrl,
+                email = viewModel.email
             )
         },
     ) {

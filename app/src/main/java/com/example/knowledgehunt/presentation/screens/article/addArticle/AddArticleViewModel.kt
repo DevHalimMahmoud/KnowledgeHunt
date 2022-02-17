@@ -77,16 +77,15 @@ class AddArticleViewModel @Inject constructor(
                     uploadImage(task1)
                 }
         }
-
     }
 
     private fun updateNumberOfPublishedArticles() {
         viewModelScope.launch {
             firestoreUseCases.getNumberOfPublishedArticles().addOnCompleteListener {
                 if (it.isSuccessful) {
-
                     val mutableMap: HashMap<String, Any?> = hashMapOf()
                     mutableMap["num_articles"] = it.result.get("num_articles") as Long + 1
+                    mutableMap["score"] = it.result.get("score") as Long + 10
                     viewModelScope.launch {
                         firestoreUseCases.updateNumberOfPublishedArticles(
                             "user",

@@ -35,6 +35,7 @@ class AppMainScreenViewModel @Inject constructor(
     val email: State<String?> = _email
 
     private var _userData: MutableState<DocumentSnapshot?> = mutableStateOf(null)
+    var userData: State<DocumentSnapshot?> = _userData
 
     init {
         viewModelScope.launch {

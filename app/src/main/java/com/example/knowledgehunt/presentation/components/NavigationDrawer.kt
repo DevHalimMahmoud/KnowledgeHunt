@@ -1,8 +1,10 @@
 package com.example.knowledgehunt.presentation.components
 
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -10,17 +12,25 @@ import androidx.compose.material.icons.filled.Article
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.knowledgehunt.R
 import com.example.knowledgehunt.domain.models.Screens
+import com.google.firebase.firestore.DocumentSnapshot
+import com.skydoves.landscapist.CircularReveal
+import com.skydoves.landscapist.ShimmerParams
+import com.skydoves.landscapist.glide.GlideImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -43,15 +53,177 @@ fun AppDrawer(
     navController: NavController,
     scope: CoroutineScope,
     scaffoldState: ScaffoldState,
+    userData: State<DocumentSnapshot?>,
+    profileImageUrl: State<Uri>,
+    email: State<String?>,
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(ScrollState(0))
     ) {
-        HuntLogo(Modifier.padding(16.dp))
+        Row(Modifier.padding(12.dp)) {
+
+            GlideImage(
+                // CoilImage, FrescoImage
+                imageModel = profileImageUrl.value,
+                modifier = Modifier
+                    .size(55.dp)
+                    .padding(2.dp)
+                    .clip(CircleShape),
+                // shows a shimmering effect when loading an image.
+                shimmerParams = ShimmerParams(
+                    baseColor = MaterialTheme.colors.background,
+                    highlightColor = MaterialTheme.colors.secondary,
+                    durationMillis = 350,
+                    dropOff = 0.65f,
+                    tilt = 20f
+                ),
+                circularReveal = CircularReveal(800),
+            )
+            Column(Modifier.padding(4.dp)) {
+                Text(
+                    text = userData.value?.get("f_name")
+                        .toString() + " " + userData.value?.get("l_name")
+                        .toString(),
+                    fontFamily = FontFamily.SansSerif,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colors.onSurface,
+                    modifier = Modifier.padding(start = 8.dp, bottom = 3.dp)
+                )
+                Text(
+                    text = email.value!!,
+                    fontFamily = FontFamily.Default,
+                    fontSize = 12.sp,
+                    color = MaterialTheme.colors.onSurface,
+                    modifier = Modifier.padding(start = 8.dp, top = 3.dp)
+                )
+            }
+        }
+//        Divider(color = MaterialTheme.colors.onSurface.copy(alpha = .2f))
+
+        Row(Modifier.padding(horizontal = 12.dp)) {
+            Text(
+                text = userData.value?.get("level")
+                    .toString() + "\nLevel",
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.onSurface,
+                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+            )
+            Text(
+                text = "\n~",
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.onSurface,
+                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+            )
+            Text(
+                text = userData.value?.get("score")
+                    .toString() + "\nScore",
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.onSurface,
+                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+            )
+            Text(
+                text = "\n~",
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.onSurface,
+                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+            )
+            Text(
+                text = userData.value?.get("num_mcq")
+                    .toString() + "\nMCQ Test Taken",
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.onSurface,
+                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+            )
+        }
+        Row(Modifier.padding(horizontal = 12.dp)) {
+            Text(
+                text = userData.value?.get("num_articles")
+                    .toString() + "\nArticles",
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.onSurface,
+                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+            )
+            Text(
+                text = "\n~",
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.onSurface,
+                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+            )
+            Text(
+                text = userData.value?.get("num_contests")
+                    .toString() + "\nContests",
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.onSurface,
+                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+            )
+            Text(
+                text = "\n~",
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.onSurface,
+                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+            )
+            Text(
+                text = userData.value?.get("num_answers")
+                    .toString() + "\nAnswers",
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.onSurface,
+                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+            )
+        }
+        Row(Modifier.padding(horizontal = 12.dp)) {
+            Text(
+                text = userData.value?.get("num_ask")
+                    .toString() + "\nQuestions",
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.onSurface,
+                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+            )
+            Text(
+                text = "\n~",
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.onSurface,
+                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+            )
+            Text(
+                text = userData.value?.get("num_upvote")
+                    .toString() + "\nUp Votes",
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.onSurface,
+                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+            )
+            Text(
+                text = "\n~",
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.onSurface,
+                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+            )
+            Text(
+                text = userData.value?.get("num_downvote")
+                    .toString() + "\nDown Votes",
+                fontFamily = FontFamily.SansSerif,
+                fontSize = 14.sp,
+                color = MaterialTheme.colors.onSurface,
+                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+            )
+        }
         Divider(color = MaterialTheme.colors.onSurface.copy(alpha = .2f))
-        Spacer(Modifier.height(24.dp))
+        Spacer(Modifier.height(12.dp))
         screens.forEachIndexed { index, screen ->
 
             DrawerButton(
