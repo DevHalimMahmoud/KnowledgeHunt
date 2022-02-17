@@ -69,15 +69,34 @@ class AddArticleViewModel @Inject constructor(
     }
 
     fun publishArticle() {
+        updateNumberOfPublishedArticles()
         viewModelScope.launch(Dispatchers.IO, CoroutineStart.DEFAULT) {
             mutableMap = dataMap()
             firestoreUseCases.addArticleDataToFirestore(mutableMap)
                 .addOnCompleteListener { task1 ->
                     uploadImage(task1)
-
                 }
         }
 
+    }
+
+    private fun updateNumberOfPublishedArticles() {
+        viewModelScope.launch {
+            firestoreUseCases.getNumberOfPublishedArticles().addOnCompleteListener {
+                if (it.isSuccessful) {
+
+                    val mutableMap: HashMap<String, Any?> = hashMapOf()
+                    mutableMap["num_articles"] = it.result.get("num_articles") as Long + 1
+                    viewModelScope.launch {
+                        firestoreUseCases.updateNumberOfPublishedArticles(
+                            "user",
+                            FirebaseAuth.getInstance().currentUser?.uid.toString(),
+                            mutableMap
+                        )
+                    }
+                }
+            }
+        }
     }
 
     private fun uploadImage(task1: Task<DocumentReference>) {

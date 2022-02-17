@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import com.example.knowledgehunt.domain.use_case.FirestoreUseCases
 import com.example.knowledgehunt.domain.use_case.StorageUseCases
 import com.example.knowledgehunt.domain.utils.ArticleArguments
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -70,8 +71,10 @@ class MyArticleDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             deleteFirestoreArticleDocument()
             deleteStorageDocumentImage()
+            updateNumberOfPublishedArticles()
             delay(1000)
             navController.popBackStack()
+
         }
     }
 
@@ -119,6 +122,25 @@ class MyArticleDetailsViewModel @Inject constructor(
                     publishStates.value = true
                     publishError.value =
                         "Article Updated Successfully!"
+                }
+            }
+        }
+    }
+
+    private fun updateNumberOfPublishedArticles() {
+        viewModelScope.launch {
+            firestoreUseCases.getNumberOfPublishedArticles().addOnCompleteListener {
+                if (it.isSuccessful) {
+
+                    val mutableMap: HashMap<String, Any?> = hashMapOf()
+                    mutableMap["num_articles"] = it.result.get("num_articles") as Long - 1
+                    viewModelScope.launch {
+                        firestoreUseCases.updateNumberOfPublishedArticles(
+                            "user",
+                            FirebaseAuth.getInstance().currentUser?.uid.toString(),
+                            mutableMap
+                        )
+                    }
                 }
             }
         }
