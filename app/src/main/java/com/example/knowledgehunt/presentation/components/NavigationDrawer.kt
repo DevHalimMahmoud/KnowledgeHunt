@@ -34,7 +34,6 @@ import com.skydoves.landscapist.glide.GlideImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-
 private val screens = listOf(
     Screens.Home,
     Screens.Articles,
@@ -256,16 +255,13 @@ fun AppDrawer(
     }
 }
 
-
 @Composable
 fun HuntLogo(modifier: Modifier) {
-
     Image(
         modifier = modifier,
         painter = painterResource(id = R.drawable.logo_no_text),
         contentDescription = null, // decorative element
     )
-
 }
 
 @Composable

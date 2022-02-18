@@ -18,9 +18,7 @@ private val LightThemeColors = lightColors(
     onBackground = Color.Black,
     onSurface = Color.DarkGray,
     onError = Color.LightGray,
-
-
-    )
+)
 
 private val DarkThemeColors = darkColors(
     primary = Red700,
@@ -32,8 +30,7 @@ private val DarkThemeColors = darkColors(
     onBackground = Color.White,
     onSurface = Color.LightGray,
     onError = Color.Transparent,
-
-    )
+)
 
 @Composable
 fun KnowledgeHuntTheme(

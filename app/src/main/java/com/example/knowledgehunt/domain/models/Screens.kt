@@ -13,5 +13,6 @@ sealed class Screens(val title: String, val route: String) {
     object Register : Screens("Create Account", "register")
     object EditProfile : Screens("Edit Profile", "edit_profile")
     object Help : Screens("Help", "help")
+    object Search : Screens("Search", "search")
 
 }

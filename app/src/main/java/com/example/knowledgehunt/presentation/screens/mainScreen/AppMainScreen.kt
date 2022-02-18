@@ -32,6 +32,7 @@ import com.example.knowledgehunt.presentation.screens.home.HomeScreen
 import com.example.knowledgehunt.presentation.screens.login.LoginScreen
 import com.example.knowledgehunt.presentation.screens.profile.EditProfileScreen
 import com.example.knowledgehunt.presentation.screens.registration.RegisterScreen
+import com.example.knowledgehunt.presentation.screens.search.SearchScreen
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 
@@ -77,6 +78,7 @@ fun AppMainScreen() {
                     },
                     profileImageUrl = viewModel.profileImageUrl.value,
                     ShowDialog = { viewModel.showProfileDialog.value = true },
+                    Search = { navController.navigate(Screens.Search.route) }
                 )
                 drawerGesturesEnabled.value = true
             }
@@ -175,8 +177,15 @@ fun Navigation(
                 navController
             )
         }
+        composable(Screens.Search.route)
+        {
+            SearchScreen(
+                navController
+            )
+        }
     }
 }
+
 
 @Preview
 @Composable

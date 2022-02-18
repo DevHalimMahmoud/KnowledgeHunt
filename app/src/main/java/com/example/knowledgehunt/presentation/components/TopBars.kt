@@ -32,6 +32,7 @@ fun TopBar(
     Logout: () -> Unit,
     profileImageUrl: Uri,
     ShowDialog: () -> Unit,
+    Search: () -> Unit,
 ) {
     TopAppBar(
         modifier = modifier,
@@ -52,7 +53,7 @@ fun TopBar(
         },
         actions = {
 
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { Search() }) {
                 Icon(
                     modifier = Modifier
                         .padding(4.dp)
