@@ -12,19 +12,15 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.text.HtmlCompat
 import androidx.navigation.NavHostController
 import com.example.knowledgehunt.domain.models.Screens
 
-
 @Composable
 fun About(navController: NavHostController) {
-    val context = LocalContext.current
     Column(modifier = Modifier.fillMaxSize()) {
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -33,7 +29,6 @@ fun About(navController: NavHostController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             AndroidView(
                 modifier = Modifier,
                 factory = { context -> TextView(context) },
