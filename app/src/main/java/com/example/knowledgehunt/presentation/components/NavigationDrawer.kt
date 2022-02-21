@@ -31,17 +31,21 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
+import compose.icons.TablerIcons
+import compose.icons.tablericons.QuestionMark
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 private val screens = listOf(
     Screens.Home,
     Screens.Articles,
+    Screens.Questions,
     Screens.About
 )
 private val icon = listOf(
     Icons.Filled.Home,
     Icons.Filled.Article,
+    TablerIcons.QuestionMark,
     Icons.Filled.Info
 )
 

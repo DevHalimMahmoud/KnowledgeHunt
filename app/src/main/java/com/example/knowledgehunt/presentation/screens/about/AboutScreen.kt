@@ -38,7 +38,7 @@ fun About(navController: NavHostController) {
             )
             Button(onClick = { navController.navigate(Screens.Help.route) }) {
 
-                Text(text = "click")
+                Text(text = "Help")
             }
         }
     }

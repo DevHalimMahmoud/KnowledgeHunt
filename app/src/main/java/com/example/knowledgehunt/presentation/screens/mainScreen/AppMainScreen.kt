@@ -32,6 +32,7 @@ import com.example.knowledgehunt.presentation.screens.help.Screen
 import com.example.knowledgehunt.presentation.screens.home.HomeScreen
 import com.example.knowledgehunt.presentation.screens.login.LoginScreen
 import com.example.knowledgehunt.presentation.screens.profile.EditProfileScreen
+import com.example.knowledgehunt.presentation.screens.questions.viewQuestions.ViewQuestionsScreen
 import com.example.knowledgehunt.presentation.screens.registration.RegisterScreen
 import com.example.knowledgehunt.presentation.screens.search.SearchScreen
 import kotlinx.coroutines.CoroutineStart
@@ -182,6 +183,12 @@ fun Navigation(
         composable(Screens.Search.route)
         {
             SearchScreen(
+                navController
+            )
+        }
+        composable(Screens.Questions.route)
+        {
+            ViewQuestionsScreen(
                 navController
             )
         }

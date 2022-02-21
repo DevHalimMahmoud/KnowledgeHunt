@@ -14,5 +14,6 @@ sealed class Screens(val title: String, val route: String) {
     object EditProfile : Screens("Edit Profile", "edit_profile")
     object Help : Screens("Help", "help")
     object Search : Screens("Search", "search")
+    object Questions : Screens("Questions", "questions")
 
 }
