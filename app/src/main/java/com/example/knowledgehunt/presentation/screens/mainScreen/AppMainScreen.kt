@@ -62,7 +62,6 @@ fun AppMainScreen() {
                     }
                 }
                 TopBar(
-
                     title = currentRoute.toString().uppercase(),
                     scope = scope,
                     scaffoldState = scaffoldState,
@@ -88,15 +87,19 @@ fun AppMainScreen() {
         drawerBackgroundColor = MaterialTheme.colors.onPrimary,
 //        drawerScrimColor = Color.Red,  // Color for the fade background when you open/close the drawer
         drawerContent = {
-            AppDrawer(
-                currentRoute = currentRoute.orEmpty(),
-                navController = navController,
-                scope = scope,
-                scaffoldState = scaffoldState,
-                userData = viewModel.userData,
-                profileImageUrl = viewModel.profileImageUrl,
-                email = viewModel.email
-            )
+            if (currentRoute == Screens.Articles.route || currentRoute == Screens.Home.route || currentRoute == Screens.About.route) {
+                AppDrawer(
+                    currentRoute = currentRoute.orEmpty(),
+                    navController = navController,
+                    scope = scope,
+                    scaffoldState = scaffoldState,
+                    userData = viewModel.userData,
+                    profileImageUrl = viewModel.profileImageUrl,
+                    email = viewModel.email
+                )
+            } else {
+                drawerGesturesEnabled.value = false
+            }
         },
     ) {
         ProfileDialog(
