@@ -7,10 +7,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Article
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
@@ -31,8 +27,15 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
-import compose.icons.TablerIcons
-import compose.icons.tablericons.QuestionMark
+import compose.icons.FontAwesomeIcons
+import compose.icons.fontawesomeicons.Brands
+import compose.icons.fontawesomeicons.Regular
+import compose.icons.fontawesomeicons.Solid
+import compose.icons.fontawesomeicons.brands.StackOverflow
+import compose.icons.fontawesomeicons.regular.FileCode
+import compose.icons.fontawesomeicons.solid.FileCode
+import compose.icons.fontawesomeicons.solid.HouseUser
+import compose.icons.fontawesomeicons.solid.Lightbulb
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -43,10 +46,10 @@ private val screens = listOf(
     Screens.About
 )
 private val icon = listOf(
-    Icons.Filled.Home,
-    Icons.Filled.Article,
-    TablerIcons.QuestionMark,
-    Icons.Filled.Info
+    FontAwesomeIcons.Solid.HouseUser,
+    FontAwesomeIcons.Solid.FileCode,
+    FontAwesomeIcons.Brands.StackOverflow,
+    FontAwesomeIcons.Solid.Lightbulb,
 )
 
 @Composable
@@ -352,7 +355,7 @@ fun NavigationIcon(
     }
 
     Image(
-        modifier = modifier,
+        modifier = modifier.size(25.dp),
         imageVector = icon,
         contentDescription = contentDescription,
         contentScale = ContentScale.Inside,

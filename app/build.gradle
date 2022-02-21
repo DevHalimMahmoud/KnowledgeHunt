@@ -90,6 +90,7 @@ dependencies {
     implementation 'androidx.activity:activity-ktx:1.4.0'
 
     implementation "br.com.devsrsouza.compose.icons.android:tabler-icons:1.0.0"
+    implementation "br.com.devsrsouza.compose.icons.android:font-awesome:1.0.0"
 
     implementation 'com.github.skydoves:landscapist-glide:1.4.7'
 

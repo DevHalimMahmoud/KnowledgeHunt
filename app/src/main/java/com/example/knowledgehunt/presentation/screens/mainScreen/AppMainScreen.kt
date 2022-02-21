@@ -38,6 +38,7 @@ import com.example.knowledgehunt.presentation.screens.search.SearchScreen
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 
+@ExperimentalComposeUiApi
 @Composable
 fun AppMainScreen() {
     val viewModel: AppMainScreenViewModel = hiltViewModel()
@@ -53,7 +54,7 @@ fun AppMainScreen() {
         drawerGesturesEnabled = drawerGesturesEnabled.value,
         scaffoldState = scaffoldState,
         topBar = {
-            if (currentRoute == Screens.Articles.route || currentRoute == Screens.Home.route || currentRoute == Screens.About.route) {
+            if (currentRoute == Screens.Articles.route || currentRoute == Screens.Home.route || currentRoute == Screens.About.route || currentRoute == Screens.Questions.route) {
                 LaunchedEffect(Dispatchers.Default, CoroutineStart.DEFAULT) {
                     if (viewModel.loggedIn()) {
                         viewModel.getTopBarProfileImage()
@@ -87,7 +88,7 @@ fun AppMainScreen() {
         drawerBackgroundColor = MaterialTheme.colors.onPrimary,
 //        drawerScrimColor = Color.Red,  // Color for the fade background when you open/close the drawer
         drawerContent = {
-            if (currentRoute == Screens.Articles.route || currentRoute == Screens.Home.route || currentRoute == Screens.About.route) {
+            if (currentRoute == Screens.Articles.route || currentRoute == Screens.Home.route || currentRoute == Screens.About.route || currentRoute == Screens.Questions.route) {
                 AppDrawer(
                     currentRoute = currentRoute.orEmpty(),
                     navController = navController,
@@ -113,7 +114,7 @@ fun AppMainScreen() {
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
+@ExperimentalComposeUiApi
 @Composable
 fun Navigation(
     navController: NavHostController
@@ -198,7 +199,7 @@ fun Navigation(
     }
 }
 
-
+@ExperimentalComposeUiApi
 @Preview
 @Composable
 fun DefaultPreview() {

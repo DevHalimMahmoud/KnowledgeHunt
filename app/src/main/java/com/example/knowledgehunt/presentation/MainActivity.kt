@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.ui.ExperimentalComposeUiApi
 import com.example.knowledgehunt.presentation.screens.mainScreen.AppMainScreen
 import com.example.knowledgehunt.presentation.theme.KnowledgeHuntTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalComposeUiApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
