@@ -33,7 +33,7 @@ fun About(navController: NavHostController) {
                 modifier = Modifier,
                 factory = { context -> TextView(context) },
                 update = {
-                    it.text = HtmlCompat.fromHtml("Test", HtmlCompat.FROM_HTML_MODE_COMPACT)
+                    it.text = HtmlCompat.fromHtml("hi", HtmlCompat.FROM_HTML_MODE_COMPACT)
                 }
             )
             Button(onClick = { navController.navigate(Screens.Help.route) }) {

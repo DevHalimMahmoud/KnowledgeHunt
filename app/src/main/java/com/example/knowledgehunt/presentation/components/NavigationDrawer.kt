@@ -29,10 +29,8 @@ import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
-import compose.icons.fontawesomeicons.Regular
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.brands.StackOverflow
-import compose.icons.fontawesomeicons.regular.FileCode
 import compose.icons.fontawesomeicons.solid.FileCode
 import compose.icons.fontawesomeicons.solid.HouseUser
 import compose.icons.fontawesomeicons.solid.Lightbulb

@@ -6,6 +6,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.knowledgehunt.presentation.components.SearchTopBar
+
 @ExperimentalComposeUiApi
 @Composable
 fun SearchScreen(navController: NavHostController) {

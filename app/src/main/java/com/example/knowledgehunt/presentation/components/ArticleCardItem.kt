@@ -50,7 +50,15 @@ fun ArticleCardItem(
         elevation = 8.dp
     ) {
         Column(
-//            Modifier.background(color = Color(palette?.lightMutedSwatch?.rgb ?: rgb(255, 255, 255)))
+//            Modifier.background(
+//                color = Color(
+//                    palette?.lightVibrantSwatch?.rgb ?: rgb(
+//                        255,
+//                        255,
+//                        255
+//                    )
+//                )
+//            )
         ) {
             GlideImage(
                 imageModel = articleItemData.imageUrl,
@@ -67,7 +75,7 @@ fun ArticleCardItem(
                 shimmerParams = ShimmerParams(
                     baseColor = MaterialTheme.colors.background,
                     highlightColor = Color(
-                        palette?.mutedSwatch?.rgb ?: MaterialTheme.colors.secondary.toArgb()
+                        palette?.darkVibrantSwatch?.rgb ?: MaterialTheme.colors.secondary.toArgb()
                     ),
                     durationMillis = 350,
                     dropOff = 0.65f,
@@ -78,16 +86,16 @@ fun ArticleCardItem(
             Spacer(Modifier.height(4.dp))
 
             Text(
-                color = Color(palette?.mutedSwatch?.rgb ?: rgb(0, 0, 0)),
+                color = Color(palette?.darkVibrantSwatch?.rgb ?: rgb(0, 0, 0)),
                 text = articleItemData.title!!,
-                style = MaterialTheme.typography.subtitle1,
+                style = MaterialTheme.typography.h6,
                 modifier = Modifier
                     .padding(bottom = 4.dp, end = 8.dp, start = 8.dp),
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                color = Color(palette?.mutedSwatch?.rgb ?: rgb(0, 0, 0)),
+                color = Color(palette?.darkVibrantSwatch?.rgb ?: rgb(0, 0, 0)),
                 text = articleItemData.description!!,
                 style = typography.subtitle2,
                 modifier = Modifier
@@ -101,23 +109,43 @@ fun ArticleCardItem(
             ) {
                 Text(
                     text = author,
-                    style = TextStyle(Color(palette?.mutedSwatch?.rgb ?: rgb(0, 0, 0))),
+                    style = TextStyle(
+                        Color(
+                            palette?.darkVibrantSwatch?.rgb
+                                ?: MaterialTheme.colors.onBackground.toArgb()
+                        )
+                    ),
                 )
                 Text(
                     text = " ・ ",
-                    style = TextStyle(Color(palette?.mutedSwatch?.rgb ?: rgb(0, 0, 0))),
+                    style = TextStyle(Color(palette?.darkVibrantSwatch?.rgb ?: rgb(0, 0, 0))),
                 )
                 Text(
                     text = "${articleItemData.reactions?.sum().toString()} Views",
-                    style = TextStyle(Color(palette?.mutedSwatch?.rgb ?: rgb(0, 0, 0))),
+                    style = TextStyle(
+                        Color(
+                            palette?.darkVibrantSwatch?.rgb
+                                ?: MaterialTheme.colors.onBackground.toArgb()
+                        )
+                    ),
                 )
                 Text(
                     text = " ・ ",
-                    style = TextStyle(Color(palette?.mutedSwatch?.rgb ?: rgb(0, 0, 0))),
+                    style = TextStyle(
+                        Color(
+                            palette?.darkVibrantSwatch?.rgb
+                                ?: MaterialTheme.colors.onBackground.toArgb()
+                        )
+                    ),
                 )
                 Text(
                     text = df.format(articleItemData.date?.toDate()?.time).toString(),
-                    style = TextStyle(Color(palette?.mutedSwatch?.rgb ?: rgb(0, 0, 0))),
+                    style = TextStyle(
+                        Color(
+                            palette?.darkVibrantSwatch?.rgb
+                                ?: MaterialTheme.colors.onBackground.toArgb()
+                        )
+                    ),
                 )
             }
         }
