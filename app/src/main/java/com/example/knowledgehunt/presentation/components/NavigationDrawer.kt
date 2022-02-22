@@ -1,11 +1,10 @@
 package com.example.knowledgehunt.presentation.components
 
 import android.net.Uri
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -23,6 +22,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.knowledgehunt.R
 import com.example.knowledgehunt.domain.models.Screens
+import com.example.knowledgehunt.presentation.utils.calculateIncrement1
+import com.example.knowledgehunt.presentation.utils.calculateIncrement10
+import com.example.knowledgehunt.presentation.utils.calculateIncrement5
 import com.google.firebase.firestore.DocumentSnapshot
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.ShimmerParams
@@ -107,124 +109,231 @@ fun AppDrawer(
 //        Divider(color = MaterialTheme.colors.onSurface.copy(alpha = .2f))
 
         Row(Modifier.padding(horizontal = 12.dp)) {
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 4.dp, vertical = 4.dp)
+                    .background(
+                        Color(calculateIncrement5(userData.value?.get("level") as Long?)).copy(alpha = 0.35f),
+                        RoundedCornerShape(4.dp)
+                    )
+                    .border(0.5.dp, Color.LightGray, RoundedCornerShape(4.dp))
+            ) {
+                Text(
+                    text = userData.value?.get("level")
+                        .toString() + "\nLevel",
+                    fontFamily = FontFamily.SansSerif,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colors.onSurface,
+                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+
+                )
+            }
             Text(
-                text = userData.value?.get("level")
-                    .toString() + "\nLevel",
+                text = "\n",
                 fontFamily = FontFamily.SansSerif,
                 fontSize = 14.sp,
                 color = MaterialTheme.colors.onSurface,
                 modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
             )
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 4.dp, vertical = 4.dp)
+                    .background(
+                        Color(calculateIncrement10(userData.value?.get("score") as Long?)).copy(
+                            alpha = 0.35f
+                        ),
+                        RoundedCornerShape(4.dp)
+                    )
+                    .border(0.5.dp, Color.LightGray, RoundedCornerShape(4.dp))
+            ) {
+                Text(
+                    text = userData.value?.get("score")
+                        .toString() + "\nScore",
+                    fontFamily = FontFamily.SansSerif,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colors.onSurface,
+                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+                )
+            }
             Text(
-                text = "\n~",
+                text = "\n",
                 fontFamily = FontFamily.SansSerif,
                 fontSize = 14.sp,
                 color = MaterialTheme.colors.onSurface,
                 modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
             )
-            Text(
-                text = userData.value?.get("score")
-                    .toString() + "\nScore",
-                fontFamily = FontFamily.SansSerif,
-                fontSize = 14.sp,
-                color = MaterialTheme.colors.onSurface,
-                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
-            )
-            Text(
-                text = "\n~",
-                fontFamily = FontFamily.SansSerif,
-                fontSize = 14.sp,
-                color = MaterialTheme.colors.onSurface,
-                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
-            )
-            Text(
-                text = userData.value?.get("num_mcq")
-                    .toString() + "\nMCQ Test Taken",
-                fontFamily = FontFamily.SansSerif,
-                fontSize = 14.sp,
-                color = MaterialTheme.colors.onSurface,
-                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
-            )
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 4.dp, vertical = 4.dp)
+                    .background(
+                        Color(calculateIncrement1(userData.value?.get("num_mcq") as Long?)).copy(
+                            alpha = 0.35f
+                        ),
+                        RoundedCornerShape(4.dp)
+                    )
+                    .border(0.5.dp, Color.LightGray, RoundedCornerShape(4.dp))
+            ) {
+                Text(
+                    text = userData.value?.get("num_mcq")
+                        .toString() + "\nMCQ Test Taken",
+                    fontFamily = FontFamily.SansSerif,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colors.onSurface,
+                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+                )
+            }
         }
         Row(Modifier.padding(horizontal = 12.dp)) {
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 4.dp, vertical = 4.dp)
+                    .background(
+                        Color(calculateIncrement1(userData.value?.get("num_articles") as Long?)).copy(
+                            alpha = 0.35f
+                        ),
+                        RoundedCornerShape(4.dp)
+                    )
+                    .border(0.5.dp, Color.LightGray, RoundedCornerShape(4.dp))
+            ) {
+                Text(
+                    text = userData.value?.get("num_articles")
+                        .toString() + "\nArticles",
+                    fontFamily = FontFamily.SansSerif,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colors.onSurface,
+                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+                )
+            }
             Text(
-                text = userData.value?.get("num_articles")
-                    .toString() + "\nArticles",
+                text = "\n",
                 fontFamily = FontFamily.SansSerif,
                 fontSize = 14.sp,
                 color = MaterialTheme.colors.onSurface,
                 modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
             )
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 4.dp, vertical = 4.dp)
+                    .background(
+                        Color(calculateIncrement1(userData.value?.get("num_contests") as Long?)).copy(
+                            alpha = 0.35f
+                        ),
+                        RoundedCornerShape(4.dp)
+                    )
+                    .border(0.5.dp, Color.LightGray, RoundedCornerShape(4.dp))
+            ) {
+                Text(
+                    text = userData.value?.get("num_contests")
+                        .toString() + "\nContests",
+                    fontFamily = FontFamily.SansSerif,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colors.onSurface,
+                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+                )
+            }
             Text(
-                text = "\n~",
+                text = "\n",
                 fontFamily = FontFamily.SansSerif,
                 fontSize = 14.sp,
                 color = MaterialTheme.colors.onSurface,
                 modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
             )
-            Text(
-                text = userData.value?.get("num_contests")
-                    .toString() + "\nContests",
-                fontFamily = FontFamily.SansSerif,
-                fontSize = 14.sp,
-                color = MaterialTheme.colors.onSurface,
-                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
-            )
-            Text(
-                text = "\n~",
-                fontFamily = FontFamily.SansSerif,
-                fontSize = 14.sp,
-                color = MaterialTheme.colors.onSurface,
-                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
-            )
-            Text(
-                text = userData.value?.get("num_answers")
-                    .toString() + "\nAnswers",
-                fontFamily = FontFamily.SansSerif,
-                fontSize = 14.sp,
-                color = MaterialTheme.colors.onSurface,
-                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
-            )
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 4.dp, vertical = 4.dp)
+                    .background(
+                        Color(calculateIncrement10(userData.value?.get("num_answers") as Long?)).copy(
+                            alpha = 0.35f
+                        ),
+                        RoundedCornerShape(4.dp)
+                    )
+                    .border(0.5.dp, Color.LightGray, RoundedCornerShape(4.dp))
+            ) {
+                Text(
+                    text = userData.value?.get("num_answers")
+                        .toString() + "\nAnswers",
+                    fontFamily = FontFamily.SansSerif,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colors.onSurface,
+                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+                )
+            }
         }
         Row(Modifier.padding(horizontal = 12.dp)) {
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 4.dp, vertical = 4.dp)
+                    .background(
+                        Color(calculateIncrement5(userData.value?.get("num_ask") as Long?)).copy(
+                            alpha = 0.35f
+                        ),
+                        RoundedCornerShape(4.dp)
+                    )
+                    .border(0.5.dp, Color.LightGray, RoundedCornerShape(4.dp))
+            ) {
+                Text(
+                    text = userData.value?.get("num_ask")
+                        .toString() + "\nQuestions",
+                    fontFamily = FontFamily.SansSerif,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colors.onSurface,
+                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+                )
+            }
             Text(
-                text = userData.value?.get("num_ask")
-                    .toString() + "\nQuestions",
+                text = "\n",
                 fontFamily = FontFamily.SansSerif,
                 fontSize = 14.sp,
                 color = MaterialTheme.colors.onSurface,
                 modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
             )
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 4.dp, vertical = 4.dp)
+                    .background(
+                        Color(calculateIncrement10(userData.value?.get("num_upvote") as Long?)).copy(
+                            alpha = 0.35f
+                        ),
+                        RoundedCornerShape(4.dp)
+                    )
+                    .border(0.5.dp, Color.LightGray, RoundedCornerShape(4.dp))
+            ) {
+                Text(
+                    text = userData.value?.get("num_upvote")
+                        .toString() + "\nUp Votes",
+                    fontFamily = FontFamily.SansSerif,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colors.onSurface,
+                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+                )
+            }
             Text(
-                text = "\n~",
+                text = "\n",
                 fontFamily = FontFamily.SansSerif,
                 fontSize = 14.sp,
                 color = MaterialTheme.colors.onSurface,
                 modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
             )
-            Text(
-                text = userData.value?.get("num_upvote")
-                    .toString() + "\nUp Votes",
-                fontFamily = FontFamily.SansSerif,
-                fontSize = 14.sp,
-                color = MaterialTheme.colors.onSurface,
-                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
-            )
-            Text(
-                text = "\n~",
-                fontFamily = FontFamily.SansSerif,
-                fontSize = 14.sp,
-                color = MaterialTheme.colors.onSurface,
-                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
-            )
-            Text(
-                text = userData.value?.get("num_downvote")
-                    .toString() + "\nDown Votes",
-                fontFamily = FontFamily.SansSerif,
-                fontSize = 14.sp,
-                color = MaterialTheme.colors.onSurface,
-                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
-            )
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 4.dp, vertical = 4.dp)
+                    .background(
+                        Color(calculateIncrement10(userData.value?.get("num_downvote") as Long?)).copy(
+                            alpha = 0.35f
+                        ),
+                        RoundedCornerShape(4.dp)
+                    )
+                    .border(0.5.dp, Color.LightGray, RoundedCornerShape(4.dp))
+            ) {
+                Text(
+                    text = userData.value?.get("num_downvote")
+                        .toString() + "\nDown Votes",
+                    fontFamily = FontFamily.SansSerif,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colors.onSurface,
+                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+                )
+            }
         }
         Divider(color = MaterialTheme.colors.onSurface.copy(alpha = .2f))
         Spacer(Modifier.height(12.dp))
@@ -259,6 +368,7 @@ fun AppDrawer(
         }
     }
 }
+
 
 @Composable
 fun HuntLogo(modifier: Modifier) {
