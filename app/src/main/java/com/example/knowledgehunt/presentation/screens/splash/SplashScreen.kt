@@ -50,7 +50,7 @@ fun SplashScreen(
                 }
             }
         } else {
-            navController.navigate(Screens.Home.route) {
+            navController.navigate(Screens.Questions.route) {
                 popUpTo(Screens.Splash.route) {
                     inclusive = true
                 }

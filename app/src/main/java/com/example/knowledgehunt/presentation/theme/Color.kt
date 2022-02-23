@@ -18,3 +18,7 @@ val lvl7 = Color(0Xff6c5ce7)
 val lvl8 = Color(0Xff130f40)
 val lvl9 = Color(0Xfff53b57)
 val lvl10 = Color(0xffc20029)
+
+
+val green = Color(0Xff27ae60)
+val blue = Color(0Xff2980b9)
