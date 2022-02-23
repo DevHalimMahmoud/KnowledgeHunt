@@ -128,13 +128,8 @@ fun AppDrawer(
 
                 )
             }
-            Text(
-                text = "\n",
-                fontFamily = FontFamily.SansSerif,
-                fontSize = 14.sp,
-                color = MaterialTheme.colors.onSurface,
-                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
-            )
+            Spacer(Modifier.height(4.dp))
+
             Box(
                 modifier = Modifier
                     .padding(horizontal = 4.dp, vertical = 4.dp)
@@ -155,13 +150,8 @@ fun AppDrawer(
                     modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
                 )
             }
-            Text(
-                text = "\n",
-                fontFamily = FontFamily.SansSerif,
-                fontSize = 14.sp,
-                color = MaterialTheme.colors.onSurface,
-                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
-            )
+            Spacer(Modifier.height(4.dp))
+
             Box(
                 modifier = Modifier
                     .padding(horizontal = 4.dp, vertical = 4.dp)
@@ -175,7 +165,7 @@ fun AppDrawer(
             ) {
                 Text(
                     text = userData.value?.get("num_mcq")
-                        .toString() + "\nMCQ Test Taken",
+                        .toString() + "\nMCQ Tests",
                     fontFamily = FontFamily.SansSerif,
                     fontSize = 14.sp,
                     color = MaterialTheme.colors.onSurface,
@@ -204,13 +194,8 @@ fun AppDrawer(
                     modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
                 )
             }
-            Text(
-                text = "\n",
-                fontFamily = FontFamily.SansSerif,
-                fontSize = 14.sp,
-                color = MaterialTheme.colors.onSurface,
-                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
-            )
+            Spacer(Modifier.height(4.dp))
+
             Box(
                 modifier = Modifier
                     .padding(horizontal = 4.dp, vertical = 4.dp)
@@ -231,13 +216,8 @@ fun AppDrawer(
                     modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
                 )
             }
-            Text(
-                text = "\n",
-                fontFamily = FontFamily.SansSerif,
-                fontSize = 14.sp,
-                color = MaterialTheme.colors.onSurface,
-                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
-            )
+            Spacer(Modifier.height(4.dp))
+
             Box(
                 modifier = Modifier
                     .padding(horizontal = 4.dp, vertical = 4.dp)
@@ -280,13 +260,8 @@ fun AppDrawer(
                     modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
                 )
             }
-            Text(
-                text = "\n",
-                fontFamily = FontFamily.SansSerif,
-                fontSize = 14.sp,
-                color = MaterialTheme.colors.onSurface,
-                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
-            )
+            Spacer(Modifier.height(4.dp))
+
             Box(
                 modifier = Modifier
                     .padding(horizontal = 4.dp, vertical = 4.dp)
@@ -307,13 +282,7 @@ fun AppDrawer(
                     modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
                 )
             }
-            Text(
-                text = "\n",
-                fontFamily = FontFamily.SansSerif,
-                fontSize = 14.sp,
-                color = MaterialTheme.colors.onSurface,
-                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
-            )
+            Spacer(Modifier.height(4.dp))
             Box(
                 modifier = Modifier
                     .padding(horizontal = 4.dp, vertical = 4.dp)
@@ -335,8 +304,9 @@ fun AppDrawer(
                 )
             }
         }
-        Divider(color = MaterialTheme.colors.onSurface.copy(alpha = .2f))
+
         Spacer(Modifier.height(12.dp))
+        Divider(color = MaterialTheme.colors.onSurface.copy(alpha = .2f))
         screens.forEachIndexed { index, screen ->
 
             DrawerButton(
@@ -471,20 +441,3 @@ fun NavigationIcon(
         alpha = imageAlpha
     )
 }
-
-//@Preview("Drawer contents")
-//@Preview("Drawer contents (dark)", uiMode = Configuration.UI_MODE_NIGHT_YES)
-//@Composable
-//fun PreviewAppDrawer() {
-//    KnowledgeHuntTheme {
-//        Surface {
-//            AppDrawer(
-//                currentRoute = screens[0].route,
-//                modifier = Modifier,
-//                navController =,
-//                CoroutineScope()
-//
-//            )
-//        }
-//    }
-//}

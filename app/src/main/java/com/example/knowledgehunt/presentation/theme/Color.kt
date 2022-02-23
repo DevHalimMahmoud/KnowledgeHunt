@@ -8,7 +8,6 @@ val Red700 = Color(0xffdd0d3c)
 val Red800 = Color(0xffd00036)
 val Red900 = Color(0xffc20029)
 
-
 val lvl1 = Color(0xffff9ff3)
 val lvl2 = Color(0Xfffeca57)
 val lvl3 = Color(0Xffff6b6b)
