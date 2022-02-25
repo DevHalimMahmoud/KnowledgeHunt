@@ -22,7 +22,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.palette.graphics.Palette
+import com.example.knowledgehunt.domain.models.QuestionItemData
 import com.example.knowledgehunt.presentation.theme.blue
 import com.example.knowledgehunt.presentation.theme.green
 import com.skydoves.landscapist.CircularReveal
@@ -37,31 +39,25 @@ import java.text.SimpleDateFormat
 
 @Composable
 fun QuestionCardItem(
-    modifier: Modifier = Modifier,
-
+    question: QuestionItemData,
+    click: () -> Unit,
+    navController: NavController,
     ) {
-    var palette by remember { mutableStateOf<Palette?>(null) }
 
-    val typography = MaterialTheme.typography
     val df = SimpleDateFormat("dd MMM yyyy")
     Card(
         shape = RoundedCornerShape(8.dp),
-        modifier = modifier
+        modifier = Modifier
             .clickable {
-//                click()
+                click()
             }
             .fillMaxWidth()
             .wrapContentHeight()
             .padding(8.dp),
-
         elevation = 4.dp
     ) {
-
-
         Row(modifier = Modifier.padding(4.dp)) {
             Column {
-
-
                 Box(
                     modifier = Modifier
                         .padding(vertical = 4.dp)
@@ -69,7 +65,11 @@ fun QuestionCardItem(
                         .align(End)
                 ) {
                     Text(
-                        text = "0 votes",
+                        text = (question.question_downvotes?.let {
+                            question.question_upvotes?.minus(
+                                it
+                            )
+                        }).toString() + " votes",
                         color = green,
                         fontFamily = FontFamily.SansSerif,
                         fontSize = 14.sp,
@@ -84,7 +84,7 @@ fun QuestionCardItem(
                         .align(End)
                 ) {
                     Text(
-                        text = "0 answers",
+                        text = question.answers?.size.toString() + " answers",
                         color = green,
                         fontFamily = FontFamily.SansSerif,
                         fontSize = 14.sp,
@@ -99,18 +99,17 @@ fun QuestionCardItem(
                         .align(End)
                 ) {
                     Text(
-                        text = "0 views",
+                        text = question.views.toString() + " views",
                         color = Color.Gray,
                         fontFamily = FontFamily.SansSerif,
                         fontSize = 14.sp,
                         modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
                     )
                 }
-
             }
             Column(modifier = Modifier.padding(start = 8.dp)) {
                 Text(
-                    text = "Why Sharing for audio file not working though for video file is working?",
+                    text = question.title.toString(),
                     style = TextStyle(
                         fontWeight = FontWeight.Medium,
                         fontSize = 16.sp,
@@ -121,17 +120,20 @@ fun QuestionCardItem(
                     overflow = TextOverflow.Ellipsis,
                     color = blue
                 )
-                Row() {
+                Row {
                     Box(
                         modifier = Modifier
                             .padding(4.dp)
                             .background(blue.copy(0.25f), RoundedCornerShape(4.dp))
+                            .weight(1f)
+                            .wrapContentWidth()
 
                     ) {
                         Row(
                             Modifier
                                 .padding(2.dp)
                                 .align(Center)
+                                .wrapContentWidth()
                         ) {
                             Icon(
                                 imageVector = FontAwesomeIcons.Solid.Wrench,
@@ -142,11 +144,12 @@ fun QuestionCardItem(
                                 tint = blue
                             )
                             Text(
-                                text = "Android",
+                                text = question.field.toString(),
                                 color = blue,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 14.sp,
-                                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+                                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
+                                maxLines = 1
                             )
                         }
                     }
@@ -154,12 +157,15 @@ fun QuestionCardItem(
                         modifier = Modifier
                             .padding(4.dp)
                             .background(blue.copy(0.25f), RoundedCornerShape(4.dp))
+                            .weight(1f)
+                            .wrapContentWidth()
 
                     ) {
                         Row(
                             Modifier
                                 .padding(2.dp)
                                 .align(Center)
+                                .wrapContentWidth()
                         ) {
                             Icon(
                                 imageVector = TablerIcons.Code,
@@ -170,52 +176,56 @@ fun QuestionCardItem(
                                 tint = blue
                             )
                             Text(
-                                text = "Java",
+                                text = question.prog_language.toString(),
                                 color = blue,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 14.sp,
-                                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+                                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
+                                maxLines = 1
                             )
                         }
-
                     }
-                    Column(Modifier.padding(2.dp)) {
-                        Text(
-                            text = "AbdelHalim",
-                            style = TextStyle(Color.Gray, 12.sp),
-                            overflow = TextOverflow.Ellipsis,
-                            maxLines = 1
-                        )
-
-                        Text(
-                            text = "05 Feb 2022",
-                            style = TextStyle(Color.Gray, 12.sp),
-                            overflow = TextOverflow.Ellipsis,
-                            maxLines = 1
-
-                        )
-                    }
-                    GlideImage(
-                        // CoilImage, FrescoImage
-                        imageModel = "https://firebasestorage.googleapis.com/v0/b/knowledge-hunt-4c809.appspot.com/o/user%2FOtvOVawKbtQVVUB9Jj16FtBmWha2.JPEG?alt=media&token=02bfe885-b448-4fd4-8e46-2737dd68b0d3",
+                    Row(
                         modifier = Modifier
-                            .size(35.dp)
-                            .align(CenterVertically)
-                            .padding(4.dp)
+                            .padding(2.dp)
 
-                            .clip(RoundedCornerShape(4.dp)),
-                        // shows a shimmering effect when loading an image.
-                        shimmerParams = ShimmerParams(
-                            baseColor = MaterialTheme.colors.background,
-                            highlightColor = MaterialTheme.colors.secondary,
-                            durationMillis = 350,
-                            dropOff = 0.65f,
-                            tilt = 20f
-                        ),
-                        circularReveal = CircularReveal(800),
-                    )
+                    ) {
+                        Column {
+                            Text(
+                                text = "AbdelHalim",
+                                style = TextStyle(Color.Gray, 12.sp),
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 1
+                            )
+
+                            Text(
+                                text = df.format(question.date?.toDate()?.time).toString(),
+                                style = TextStyle(Color.Gray, 12.sp),
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 1
+
+                            )
+                        }
+                        GlideImage(
+                            // CoilImage, FrescoImage
+                            imageModel = "https://firebasestorage.googleapis.com/v0/b/knowledge-hunt-4c809.appspot.com/o/user%2FOtvOVawKbtQVVUB9Jj16FtBmWha2.JPEG?alt=media&token=02bfe885-b448-4fd4-8e46-2737dd68b0d3",
+                            modifier = Modifier
+                                .size(35.dp)
+                                .padding(4.dp)
+
+                                .clip(RoundedCornerShape(4.dp)),
+                            // shows a shimmering effect when loading an image.
+                            shimmerParams = ShimmerParams(
+                                baseColor = MaterialTheme.colors.background,
+                                highlightColor = MaterialTheme.colors.secondary,
+                                durationMillis = 350,
+                                dropOff = 0.65f,
+                                tilt = 20f
+                            ),
+                            circularReveal = CircularReveal(800),
+                        )
+                    }
                 }
-
             }
         }
     }

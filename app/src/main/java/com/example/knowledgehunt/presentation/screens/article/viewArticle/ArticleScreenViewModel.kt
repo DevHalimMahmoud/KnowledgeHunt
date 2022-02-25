@@ -23,10 +23,9 @@ class ArticleScreenViewModel @Inject constructor(
     private val firestoreUseCases: FirestoreUseCases,
 ) : ViewModel() {
     private val _isRefreshing = MutableStateFlow(true)
-    var document: DocumentSnapshot? = null
     val isRefreshing: StateFlow<Boolean>
         get() = _isRefreshing.asStateFlow()
-
+    var document: DocumentSnapshot? = null
     private val _articleState = mutableStateOf<List<ArticleItemData>>(listOf())
     val articleState: State<List<ArticleItemData>> = _articleState
 

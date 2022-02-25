@@ -27,7 +27,8 @@ data class FirestoreUseCases(
     val deleteArticleFirestoreDocument: DeleteArticleFirestoreDocument,
     val updateProfileData: UpdateProfileData,
     val getNumberOfPublishedArticles: GetNumberOfPublishedArticles,
-    val updateNumberOfPublishedArticles: UpdateNumberOfPublishedArticles
+    val updateNumberOfPublishedArticles: UpdateNumberOfPublishedArticles,
+    val getQuestions: GetQuestions,
 )
 
 data class StorageUseCases(

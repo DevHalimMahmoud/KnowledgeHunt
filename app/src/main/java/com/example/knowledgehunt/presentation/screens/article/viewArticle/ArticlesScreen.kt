@@ -1,7 +1,7 @@
 package com.example.knowledgehunt.presentation.screens.article.viewArticle
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -37,6 +37,7 @@ fun Articles(navController: NavHostController) {
 //        }
 //    }
     Scaffold(
+        modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
 
             Icon(
@@ -59,14 +60,14 @@ fun Articles(navController: NavHostController) {
                 viewModel.refresh()
             },
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
         ) {
-            LazyColumn(state = rememberLazyListState()) {
+            LazyColumn(state = rememberLazyListState(), modifier = Modifier.fillMaxSize()) {
 
                 items(
-                    viewModel.articleState.value,
+                    viewModel.articleState.value
 
-                    ) { article ->
+                ) { article ->
                     val author: MutableState<String> = remember {
                         mutableStateOf("Author")
                     }
