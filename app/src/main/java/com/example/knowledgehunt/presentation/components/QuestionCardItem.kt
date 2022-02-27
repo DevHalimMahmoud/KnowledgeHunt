@@ -9,7 +9,8 @@ import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.End
@@ -23,10 +24,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.palette.graphics.Palette
 import com.example.knowledgehunt.domain.models.QuestionItemData
 import com.example.knowledgehunt.presentation.theme.blue
-import com.example.knowledgehunt.presentation.theme.green
+import com.example.knowledgehunt.presentation.utils.calculate0LessOrMore
+import com.example.knowledgehunt.presentation.utils.calculateIncrement0orMore
+import com.example.knowledgehunt.presentation.utils.calculateIncrement50
+import com.google.firebase.firestore.DocumentSnapshot
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
@@ -39,11 +42,11 @@ import java.text.SimpleDateFormat
 
 @Composable
 fun QuestionCardItem(
+    authorData: MutableState<DocumentSnapshot?>,
     question: QuestionItemData,
     click: () -> Unit,
     navController: NavController,
-    ) {
-
+) {
     val df = SimpleDateFormat("dd MMM yyyy")
     Card(
         shape = RoundedCornerShape(8.dp),
@@ -61,7 +64,11 @@ fun QuestionCardItem(
                 Box(
                     modifier = Modifier
                         .padding(vertical = 4.dp)
-                        .border(1.dp, green, RoundedCornerShape(4.dp))
+                        .border(1.dp, Color(calculate0LessOrMore((question.question_downvotes?.let {
+                            question.question_upvotes?.minus(
+                                it
+                            )
+                        })?.toLong())), RoundedCornerShape(4.dp))
                         .align(End)
                 ) {
                     Text(
@@ -70,7 +77,11 @@ fun QuestionCardItem(
                                 it
                             )
                         }).toString() + " votes",
-                        color = green,
+                        color = Color(calculate0LessOrMore((question.question_downvotes?.let {
+                            question.question_upvotes?.minus(
+                                it
+                            )
+                        })?.toLong())),
                         fontFamily = FontFamily.SansSerif,
                         fontSize = 14.sp,
                         modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
@@ -80,12 +91,16 @@ fun QuestionCardItem(
                 Box(
                     modifier = Modifier
                         .padding(vertical = 4.dp)
-                        .border(1.dp, green, RoundedCornerShape(4.dp))
+                        .border(
+                            1.dp,
+                            Color(calculateIncrement0orMore(question.answers?.size?.toLong())),
+                            RoundedCornerShape(4.dp)
+                        )
                         .align(End)
                 ) {
                     Text(
                         text = question.answers?.size.toString() + " answers",
-                        color = green,
+                        color = Color(calculateIncrement0orMore(question.answers?.size?.toLong())),
                         fontFamily = FontFamily.SansSerif,
                         fontSize = 14.sp,
                         modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
@@ -95,12 +110,16 @@ fun QuestionCardItem(
                 Box(
                     modifier = Modifier
                         .padding(vertical = 4.dp)
-                        .border(1.dp, Color.Gray, RoundedCornerShape(4.dp))
+                        .border(
+                            1.dp,
+                            Color(calculateIncrement50(question.views?.toLong())),
+                            RoundedCornerShape(4.dp)
+                        )
                         .align(End)
                 ) {
                     Text(
                         text = question.views.toString() + " views",
-                        color = Color.Gray,
+                        color = Color(calculateIncrement50(question.views?.toLong())),
                         fontFamily = FontFamily.SansSerif,
                         fontSize = 14.sp,
                         modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
@@ -192,7 +211,7 @@ fun QuestionCardItem(
                     ) {
                         Column {
                             Text(
-                                text = "AbdelHalim",
+                                text = authorData.value?.get("f_name").toString(),
                                 style = TextStyle(Color.Gray, 12.sp),
                                 overflow = TextOverflow.Ellipsis,
                                 maxLines = 1
@@ -208,11 +227,10 @@ fun QuestionCardItem(
                         }
                         GlideImage(
                             // CoilImage, FrescoImage
-                            imageModel = "https://firebasestorage.googleapis.com/v0/b/knowledge-hunt-4c809.appspot.com/o/user%2FOtvOVawKbtQVVUB9Jj16FtBmWha2.JPEG?alt=media&token=02bfe885-b448-4fd4-8e46-2737dd68b0d3",
+                            imageModel = "https://firebasestorage.googleapis.com/v0/b/knowledge-hunt-4c809.appspot.com/o/user%2F${authorData.value?.id}.JPEG?alt=media&token=69e2b92c-2e9b-460e-b79c-d7e300439234",
                             modifier = Modifier
                                 .size(35.dp)
                                 .padding(4.dp)
-
                                 .clip(RoundedCornerShape(4.dp)),
                             // shows a shimmering effect when loading an image.
                             shimmerParams = ShimmerParams(
@@ -229,6 +247,5 @@ fun QuestionCardItem(
             }
         }
     }
-
 }
 

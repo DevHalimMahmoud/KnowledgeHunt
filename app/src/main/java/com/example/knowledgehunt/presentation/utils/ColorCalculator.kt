@@ -126,3 +126,57 @@ fun calculateIncrement1(level: Long?): Int {
         }
     }
 }
+
+fun calculateIncrement0orMore(level: Long?): Int {
+    return when {
+        level == null -> {
+            Color.Gray.toArgb()
+        }
+        level <= 0 -> {
+            Color.Gray.toArgb()
+        }
+        else -> {
+            green.toArgb()
+        }
+    }
+}
+
+fun calculate0LessOrMore(level: Long?): Int {
+    return when {
+        level == null -> {
+            Color.Gray.toArgb()
+        }
+        level < 0 -> {
+            lvl9.toArgb()
+        }
+        level > 0 -> {
+            green.toArgb()
+        }
+        else -> {
+            Color.Gray.toArgb()
+        }
+    }
+}
+
+fun calculateIncrement50(level: Long?): Int {
+    return when {
+        level == null -> {
+            Color.Gray.toArgb()
+        }
+        level <= 0 -> {
+            Color.Gray.toArgb()
+        }
+        level <= 50 -> {
+            green.toArgb()
+        }
+        level <= 100 -> {
+            lvl6.toArgb()
+        }
+        level <= 150 -> {
+            lvl7.toArgb()
+        }
+        else -> {
+            lvl8.toArgb()
+        }
+    }
+}

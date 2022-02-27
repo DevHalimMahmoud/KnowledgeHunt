@@ -10,9 +10,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
@@ -21,6 +19,7 @@ import androidx.navigation.NavController
 import com.example.knowledgehunt.presentation.components.QuestionCardItem
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.google.firebase.firestore.DocumentSnapshot
 import compose.icons.TablerIcons
 import compose.icons.tablericons.CodePlus
 
@@ -28,7 +27,6 @@ import compose.icons.tablericons.CodePlus
 fun ViewQuestionsScreen(navController: NavController) {
     val viewModel: ViewQuestionsViewModel = hiltViewModel()
     val isRefreshing by viewModel.isRefreshing.collectAsState()
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
@@ -57,13 +55,22 @@ fun ViewQuestionsScreen(navController: NavController) {
 
                 items(viewModel.questionState.value) { question ->
 
-                    QuestionCardItem(
-                        question,
-                        navController = navController,
-                        click = {
+                    val authorData: MutableState<DocumentSnapshot?> = remember {
+                        mutableStateOf(null)
+                    }
 
-//                            navController.navigate(Screens.ArticleDetails.route)
+                    if (authorData.value == null) {
+                        LaunchedEffect(key1 = true) {
+                            viewModel.getAuthorName(question, authorData)
                         }
+                    }
+                    QuestionCardItem(
+                        authorData,
+                        question,
+                        click = {
+//                            navController.navigate(Screens.ArticleDetails.route)
+                        },
+                        navController = navController,
                     )
                 }
             }
