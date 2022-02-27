@@ -11,18 +11,17 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddPhotoAlternate
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -35,6 +34,8 @@ import com.example.knowledgehunt.domain.models.Screens
 import com.example.knowledgehunt.presentation.components.BackTopBar
 import com.example.knowledgehunt.presentation.components.OutlinedButtonItem
 import com.example.knowledgehunt.presentation.components.TextFieldUnit
+import compose.icons.TablerIcons
+import compose.icons.tablericons.ArrowBack
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
@@ -54,7 +55,6 @@ fun AddArticleScreen(
             Dispatchers.Main,
             CoroutineStart.DEFAULT
         ) {
-
             Toast
                 .makeText(
                     context,
@@ -67,15 +67,13 @@ fun AddArticleScreen(
             }
             viewModel.publishStates.value = false
         }
-
     }
 
     Scaffold(
-
         topBar = {
             BackTopBar(
                 title = Screens.AddArticle.title,
-                buttonIcon = Icons.Default.ArrowBack,
+                buttonIcon = TablerIcons.ArrowBack,
                 modifier = Modifier,
                 onClick = { navController.popBackStack() }
             )
@@ -84,10 +82,9 @@ fun AddArticleScreen(
 
             if (viewModel.publishArticleProgressIndicator.value) {
                 if (viewModel.notEmpty()) {
-                    Image(
+                    Icon(
                         imageVector = Icons.Outlined.Check,
                         contentDescription = null,
-                        contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .size(55.dp)
                             .clip(CircleShape)
@@ -99,6 +96,7 @@ fun AddArticleScreen(
                                         viewModel.publishArticle()
                                     }
                             },
+                        tint = MaterialTheme.colors.primary
                     )
                 }
             } else {
@@ -200,7 +198,6 @@ fun ArticleImage(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .size(250.dp),
-                colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface)
             )
         } else {
             Image(

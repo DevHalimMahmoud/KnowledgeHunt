@@ -16,12 +16,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.knowledgehunt.domain.models.Screens
 import com.example.knowledgehunt.presentation.components.QuestionCardItem
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.google.firebase.firestore.DocumentSnapshot
-import compose.icons.TablerIcons
-import compose.icons.tablericons.CodePlus
+import compose.icons.FontAwesomeIcons
+import compose.icons.fontawesomeicons.Solid
+import compose.icons.fontawesomeicons.solid.Code
 
 @Composable
 fun ViewQuestionsScreen(navController: NavController) {
@@ -31,14 +33,14 @@ fun ViewQuestionsScreen(navController: NavController) {
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
             Icon(
-                imageVector = TablerIcons.CodePlus,
-                tint = MaterialTheme.colors.primaryVariant,
+                imageVector = FontAwesomeIcons.Solid.Code,
+                tint = MaterialTheme.colors.primary,
                 contentDescription = null,
                 modifier = Modifier
                     .size(50.dp)
                     .clip(CircleShape)
                     .clickable {
-//                        navController.navigate(Screens.AddQuestion.route)
+                        navController.navigate(Screens.AddQuestion.route)
                     },
             )
         },

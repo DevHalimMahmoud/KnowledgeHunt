@@ -42,7 +42,7 @@ fun Articles(navController: NavHostController) {
 
             Icon(
                 imageVector = TablerIcons.CodePlus,
-                tint = MaterialTheme.colors.primaryVariant,
+                tint = MaterialTheme.colors.primary,
                 contentDescription = null,
                 modifier = Modifier
                     .size(50.dp)
