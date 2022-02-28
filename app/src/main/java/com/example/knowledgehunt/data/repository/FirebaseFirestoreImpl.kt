@@ -44,6 +44,14 @@ class FirebaseFirestoreImpl : IFirebaseFirestore {
             .set(data, SetOptions.merge())
     }
 
+    override suspend fun addData(
+        collection: String,
+        data: MutableMap<String, Any?>,
+        ): Task<DocumentReference> {
+        return FirebaseFirestore.getInstance().collection(collection)
+            .add(data)
+    }
+
     override suspend fun getDocumentById(collection: String, id: String): Task<DocumentSnapshot> {
         return FirebaseFirestore.getInstance().collection(collection).document(id).get()
     }

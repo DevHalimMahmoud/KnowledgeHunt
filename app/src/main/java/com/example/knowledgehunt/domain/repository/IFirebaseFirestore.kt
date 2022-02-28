@@ -36,4 +36,9 @@ interface IFirebaseFirestore {
     ): Task<QuerySnapshot>
 
     suspend fun deleteDocument(collection: String, id: String): Task<Void>
+
+    suspend fun addData(
+        collection: String,
+        data: MutableMap<String, Any?>,
+    ): Task<DocumentReference>
 }

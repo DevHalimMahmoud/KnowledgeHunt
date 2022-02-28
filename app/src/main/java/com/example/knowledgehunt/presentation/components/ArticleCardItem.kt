@@ -87,7 +87,7 @@ fun ArticleCardItem(
 
             Text(
                 color = Color(palette?.darkVibrantSwatch?.rgb ?: rgb(0, 0, 0)),
-                text = articleItemData.title!!,
+                text = articleItemData.title.toString(),
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier
                     .padding(bottom = 4.dp, end = 8.dp, start = 8.dp),
@@ -96,7 +96,7 @@ fun ArticleCardItem(
             )
             Text(
                 color = Color(palette?.darkVibrantSwatch?.rgb ?: rgb(0, 0, 0)),
-                text = articleItemData.description!!,
+                text = articleItemData.description.toString(),
                 style = typography.subtitle2,
                 modifier = Modifier
                     .padding(bottom = 4.dp, end = 8.dp, start = 8.dp),

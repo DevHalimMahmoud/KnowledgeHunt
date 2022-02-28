@@ -10,7 +10,6 @@ data class QuestionItemData(
     val question_upvotes: Long? = null,
     val question_downvotes: Long? = null,
     val prog_language: String? = null,
-    val imageUrl: String? = null,
     val field: String? = null,
     @ServerTimestamp
     val date: Timestamp? = null,

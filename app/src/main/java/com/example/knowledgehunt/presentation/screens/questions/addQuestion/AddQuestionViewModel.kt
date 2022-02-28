@@ -18,9 +18,8 @@ class AddQuestionViewModel @Inject constructor(
     private val firestoreUseCases: FirestoreUseCases,
 ) : ViewModel() {
 
-
     val publishArticleProgressIndicator: MutableState<Boolean> = mutableStateOf(true)
-    var publishError: MutableState<String> = mutableStateOf("Article Published Successfully!")
+    var publishError: MutableState<String> = mutableStateOf("Question Published Successfully!")
     var publishStates: MutableState<Boolean> = mutableStateOf(false)
 
     var titleState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
@@ -36,43 +35,44 @@ class AddQuestionViewModel @Inject constructor(
     var contentErrorState: MutableState<Boolean> = mutableStateOf(false)
     var mutableMap: HashMap<String, Any?> = hashMapOf()
 
+    fun notEmpty() = titleState.value.text.isNotBlank() && languageState.value.text.isNotBlank() && contentState.value.text.isNotBlank() && toolState.value.text.isNotBlank()
 
-    fun notEmpty(): Boolean {
-        return titleState.value.text.isNotBlank() && languageState.value.text.isNotBlank() && contentState.value.text.isNotBlank()
-    }
 
-    private fun dataMap(): HashMap<String, Any?> {
+    private suspend fun dataMap(): HashMap<String, Any?> {
         mutableMap["content"] = contentState.value.text
         mutableMap["date"] = java.sql.Timestamp(System.currentTimeMillis())
-        mutableMap["description"] = languageState.value.text
-        mutableMap["reactions"] = listOf(0, 0, 0, 0, 0, 0)
+        mutableMap["prog_language"] = languageState.value.text
+        mutableMap["views"] = 0
         mutableMap["title"] = titleState.value.text
         mutableMap["user_id"] = FirebaseAuth.getInstance().currentUser?.uid!!
+        mutableMap["question_upvotes"] = 0
+        mutableMap["question_downvotes"] = 0
+        mutableMap["field"] = toolState.value.text
+        mutableMap["answers"] = listOf<Any>()
         return mutableMap
     }
 
     fun publishQuestion() {
         updateNumberOfQuestions()
         viewModelScope.launch(Dispatchers.IO, CoroutineStart.DEFAULT) {
-            mutableMap = dataMap()
-            firestoreUseCases.addArticleDataToFirestore(mutableMap)
+            firestoreUseCases.addQuestion("questions", dataMap())
                 .addOnCompleteListener { task1 ->
                     publishStates.value = true
                     publishError.value =
-                        "Article Published Successfully!"
+                        "Question Published Successfully!"
                 }
         }
     }
 
     private fun updateNumberOfQuestions() {
         viewModelScope.launch {
-            firestoreUseCases.getNumberOfPublishedArticles().addOnCompleteListener {
+            firestoreUseCases.getUserDataStatistics().addOnCompleteListener {
                 if (it.isSuccessful) {
                     val mutableMap: HashMap<String, Any?> = hashMapOf()
-                    mutableMap["num_articles"] = it.result.get("num_articles") as Long + 1
-                    mutableMap["score"] = it.result.get("score") as Long + 10
+                    mutableMap["num_ask"] = it.result.get("num_ask") as Long + 1
+                    mutableMap["score"] = it.result.get("score") as Long + 5
                     viewModelScope.launch {
-                        firestoreUseCases.updateNumberOfPublishedArticles(
+                        firestoreUseCases.updateUserDataStatistics(
                             "user",
                             FirebaseAuth.getInstance().currentUser?.uid.toString(),
                             mutableMap
@@ -84,6 +84,5 @@ class AddQuestionViewModel @Inject constructor(
             }
         }
     }
-
 }
 

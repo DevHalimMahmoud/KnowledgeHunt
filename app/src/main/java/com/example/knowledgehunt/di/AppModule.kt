@@ -81,9 +81,10 @@ object AppModule {
         GetMyArticleId(firebaseFirestoreRepository),
         DeleteArticleFirestoreDocument(firebaseFirestoreRepository),
         UpdateProfileData(firebaseFirestoreRepository),
-        GetNumberOfPublishedArticles(firebaseFirestoreRepository),
-        UpdateNumberOfPublishedArticles(firebaseFirestoreRepository),
-        GetQuestions(firebaseFirestoreRepository)
+        GetUserDataStatistics(firebaseFirestoreRepository),
+        UpdateUserDataStatistics(firebaseFirestoreRepository),
+        GetQuestions(firebaseFirestoreRepository),
+        AddQuestion(firebaseFirestoreRepository),
     )
 
     @Provides

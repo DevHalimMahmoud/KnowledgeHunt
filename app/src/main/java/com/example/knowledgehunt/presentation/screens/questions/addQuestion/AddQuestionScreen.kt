@@ -58,7 +58,7 @@ fun AddQuestionScreen(
                     Toast.LENGTH_LONG
                 )
                 .show()
-            if (viewModel.publishError.value == "Article Published Successfully!") {
+            if (viewModel.publishError.value == "Question Published Successfully!") {
                 navController.popBackStack()
             }
             viewModel.publishStates.value = false
