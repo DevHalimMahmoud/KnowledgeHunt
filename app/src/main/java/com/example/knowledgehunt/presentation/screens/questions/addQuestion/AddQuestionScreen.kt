@@ -1,43 +1,38 @@
 package com.example.knowledgehunt.presentation.screens.questions.addQuestion
 
-import android.content.Context
-import android.net.Uri
 import android.widget.Toast
-import androidx.activity.compose.ManagedActivityResultLauncher
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.*
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddPhotoAlternate
 import androidx.compose.material.icons.outlined.Check
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.knowledgehunt.domain.models.Screens
 import com.example.knowledgehunt.presentation.components.BackTopBar
-import com.example.knowledgehunt.presentation.components.OutlinedButtonItem
 import com.example.knowledgehunt.presentation.components.TextFieldUnit
-import com.example.knowledgehunt.presentation.screens.article.addArticle.AddArticleViewModel
+import com.skydoves.landscapist.CircularReveal
+import com.skydoves.landscapist.ShimmerParams
+import com.skydoves.landscapist.glide.GlideImage
 import compose.icons.TablerIcons
 import compose.icons.tablericons.ArrowBack
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -46,7 +41,7 @@ import kotlinx.coroutines.launch
 fun AddQuestionScreen(
     navController: NavHostController,
 ) {
-    val viewModel: AddArticleViewModel = hiltViewModel()
+    val viewModel: AddQuestionViewModel = hiltViewModel()
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
 
@@ -73,7 +68,7 @@ fun AddQuestionScreen(
     Scaffold(
         topBar = {
             BackTopBar(
-                title = Screens.AddQuestion.title,
+                title = "Ask a public question",
                 buttonIcon = TablerIcons.ArrowBack,
                 modifier = Modifier,
                 onClick = { navController.popBackStack() }
@@ -95,7 +90,7 @@ fun AddQuestionScreen(
                                 viewModel.publishArticleProgressIndicator.value = false
                                 coroutineScope
                                     .launch {
-                                        viewModel.publishArticle()
+                                        viewModel.publishQuestion()
                                     }
                             },
                     )
@@ -108,18 +103,48 @@ fun AddQuestionScreen(
                 )
             }
         },
-
-        ) {
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-
-            ArticleImage(viewModel, coroutineScope, context)
-
+            GlideImage(
+                imageModel = "https://storage.googleapis.com/glaze-ecom.appspot.com/images/NbEGVQIpL/free/free.png",
+                contentDescription = null,
+                contentScale = ContentScale.FillWidth,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .fillMaxWidth()
+                    .padding(8.dp)
+                    .clip(RoundedCornerShape(8.dp)),
+                shimmerParams = ShimmerParams(
+                    baseColor = MaterialTheme.colors.background,
+                    highlightColor = MaterialTheme.colors.secondary,
+                    durationMillis = 350,
+                    dropOff = 0.65f,
+                    tilt = 20f
+                ),
+                circularReveal = CircularReveal(500),
+            )
+            Text(
+                text = "Title",
+                style = MaterialTheme.typography.h6,
+                modifier = Modifier
+                    .padding(bottom = 4.dp, end = 12.dp, start = 12.dp),
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                text = "Be specific and imagine you’re asking a question to another person",
+                style = typography.subtitle2,
+                modifier = Modifier
+                    .padding(end = 12.dp, start = 12.dp),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
             TextFieldUnit(
-                hint = "Title",
+                hint = "e.g. How to handle concurrency in Kotlin?",
                 onImeAction = {
                     viewModel.titleErrorState.value =
                         viewModel.titleState.value.text.isEmpty()
@@ -132,122 +157,88 @@ fun AddQuestionScreen(
                 errorText = "Required!",
                 KeyboardType = KeyboardType.Text
             )
-            TextFieldUnit(
-                hint = "Description",
-                onImeAction = {
-                    viewModel.descriptionErrorState.value =
-                        viewModel.descriptionState.value.text.isEmpty()
-                },
+            Text(
+                text = "Body",
+                style = typography.h6,
                 modifier = Modifier
-                    .padding(8.dp),
-                imeAction = ImeAction.Next,
-                errorState = viewModel.descriptionErrorState,
-                textState = viewModel.descriptionState,
-                errorText = "Required!",
-                KeyboardType = KeyboardType.Text
+                    .padding(bottom = 4.dp, end = 12.dp, start = 12.dp, top = 12.dp),
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                text = "Include all the information someone would need to answer your question",
+                style = typography.subtitle2,
+                modifier = Modifier
+                    .padding(end = 12.dp, start = 12.dp),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
             )
             TextFieldUnit(
-                hint = "Article Content",
+                hint = "Question Details",
                 onImeAction = {
                     viewModel.contentErrorState.value =
                         viewModel.contentState.value.text.isEmpty()
                 },
                 modifier = Modifier
-                    .height(300.dp)
-
+                    .height(200.dp)
                     .padding(8.dp),
                 imeAction = ImeAction.Next,
                 errorState = viewModel.contentErrorState,
                 textState = viewModel.contentState,
                 errorText = "Required!",
                 KeyboardType = KeyboardType.Text,
+            )
 
+            Text(
+                text = "Tags",
+                style = typography.h6,
+                modifier = Modifier
+                    .padding(bottom = 4.dp, end = 12.dp, start = 12.dp, top = 12.dp),
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                text = "Adding programming language and framework helps others find and answer your question faster",
+                style = typography.subtitle2,
+                modifier = Modifier
+                    .padding(end = 12.dp, start = 12.dp),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
+
+            Row(modifier = Modifier) {
+                TextFieldUnit(
+                    hint = "Language",
+                    onImeAction = {
+                        viewModel.languageErrorState.value =
+                            viewModel.languageState.value.text.isEmpty()
+                    },
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .weight(0.35f),
+                    imeAction = ImeAction.Next,
+                    errorState = viewModel.languageErrorState,
+                    textState = viewModel.languageState,
+                    errorText = "Required!",
+                    KeyboardType = KeyboardType.Text
                 )
-        }
-    }
-}
-
-@Composable
-fun ArticleImage(
-    viewModel: AddArticleViewModel,
-    coroutineScope: CoroutineScope,
-    context: Context
-) {
-
-    val launcher: ManagedActivityResultLauncher<String, Uri?> =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
-            viewModel.imageUri.value = uri
-
-            if (viewModel.imageUri.value != null) {
-                viewModel.imageCompressionProgressIndicator.value = true
-                Toast.makeText(
-                    context,
-                    "Compressing Image...",
-                    Toast.LENGTH_SHORT
-                ).show()
-                handelArticleImage(viewModel = viewModel, coroutineScope, context)
-            }
-
-        }
-
-    Column(Modifier.fillMaxWidth()) {
-        if (viewModel.bitmap.value == null) {
-            Image(
-                Icons.Default.AddPhotoAlternate,
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .size(250.dp),
-            )
-        } else {
-            Image(
-                bitmap = viewModel.bitmap.value!!.asImageBitmap(),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .fillMaxWidth()
-                    .height(250.dp)
-            )
-        }
-        if (viewModel.imageCompressionProgressIndicator.value) {
-
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .size(100.dp)
-                    .background(Color.Transparent, shape = RoundedCornerShape(8.dp))
-                    .align(Alignment.CenterHorizontally)
-            ) {
-                CircularProgressIndicator()
+                TextFieldUnit(
+                    hint = "Framework or Tool",
+                    onImeAction = {
+                        viewModel.toolErrorState.value =
+                            viewModel.toolState.value.text.isEmpty()
+                    },
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .weight(0.65f),
+                    imeAction = ImeAction.Next,
+                    errorState = viewModel.toolErrorState,
+                    textState = viewModel.toolState,
+                    errorText = "Required!",
+                    KeyboardType = KeyboardType.Text
+                )
             }
         }
     }
-
-    Spacer(modifier = Modifier.height(12.dp))
-
-    OutlinedButtonItem(
-        onClick = {
-            launcher.launch("image/*")
-        },
-        text = "Add Image To Your Question",
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 18.dp, vertical = 8.dp),
-        enableState = remember { mutableStateOf(true) },
-    )
 }
 
-fun handelArticleImage(
-    viewModel: AddArticleViewModel,
-    coroutineScope: CoroutineScope,
-    context: Context,
-) {
-    coroutineScope.launch(Dispatchers.Default, CoroutineStart.DEFAULT) {
-        viewModel.compressProfileImage(context = context)
-
-    }.invokeOnCompletion {
-        viewModel.imageCompressionProgressIndicator.value = false
-    }
-}
