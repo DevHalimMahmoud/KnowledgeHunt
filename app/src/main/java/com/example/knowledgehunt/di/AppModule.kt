@@ -85,6 +85,7 @@ object AppModule {
         UpdateUserDataStatistics(firebaseFirestoreRepository),
         GetQuestions(firebaseFirestoreRepository),
         AddQuestion(firebaseFirestoreRepository),
+        GetMyQuestions(firebaseFirestoreRepository),
     )
 
     @Provides

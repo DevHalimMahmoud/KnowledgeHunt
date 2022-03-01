@@ -5,8 +5,10 @@ import com.example.knowledgehunt.domain.repository.IFirebaseFirestore
 class AddQuestion(
     private val repository: IFirebaseFirestore
 ) {
-    suspend operator fun invoke(collection: String,
+    suspend operator fun invoke(
+        collection: String,
 
-                                data: MutableMap<String, Any?>) =
-        repository.addData(collection,data)
+        data: MutableMap<String, Any?>
+    ) =
+        repository.addData(collection, data)
 }

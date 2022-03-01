@@ -30,6 +30,7 @@ data class FirestoreUseCases(
     val updateUserDataStatistics: UpdateUserDataStatistics,
     val getQuestions: GetQuestions,
     val addQuestion: AddQuestion,
+    val getMyQuestions: GetMyQuestions,
 )
 
 data class StorageUseCases(

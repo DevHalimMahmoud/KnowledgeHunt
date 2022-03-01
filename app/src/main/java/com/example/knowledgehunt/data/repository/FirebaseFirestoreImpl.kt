@@ -47,7 +47,7 @@ class FirebaseFirestoreImpl : IFirebaseFirestore {
     override suspend fun addData(
         collection: String,
         data: MutableMap<String, Any?>,
-        ): Task<DocumentReference> {
+    ): Task<DocumentReference> {
         return FirebaseFirestore.getInstance().collection(collection)
             .add(data)
     }

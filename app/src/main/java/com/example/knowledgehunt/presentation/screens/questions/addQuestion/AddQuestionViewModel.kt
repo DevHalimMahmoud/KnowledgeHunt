@@ -35,7 +35,8 @@ class AddQuestionViewModel @Inject constructor(
     var contentErrorState: MutableState<Boolean> = mutableStateOf(false)
     var mutableMap: HashMap<String, Any?> = hashMapOf()
 
-    fun notEmpty() = titleState.value.text.isNotBlank() && languageState.value.text.isNotBlank() && contentState.value.text.isNotBlank() && toolState.value.text.isNotBlank()
+    fun notEmpty() =
+        titleState.value.text.isNotBlank() && languageState.value.text.isNotBlank() && contentState.value.text.isNotBlank() && toolState.value.text.isNotBlank()
 
 
     private suspend fun dataMap(): HashMap<String, Any?> {

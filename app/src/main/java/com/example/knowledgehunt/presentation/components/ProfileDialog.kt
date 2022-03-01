@@ -10,7 +10,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -31,6 +30,7 @@ import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
 import compose.icons.TablerIcons
+import compose.icons.tablericons.Messages
 import compose.icons.tablericons.WritingSign
 
 @Composable
@@ -140,7 +140,7 @@ fun ProfileDialog(
                     Row(
                         verticalAlignment = CenterVertically,
                         modifier = Modifier
-                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                            .padding(horizontal = 16.dp, vertical = 4.dp)
                             .clickable {
                                 navController.navigate(Screens.MyArticles.route)
                                 showUserDialog.value = false
@@ -165,15 +165,20 @@ fun ProfileDialog(
                         verticalAlignment = CenterVertically,
                         modifier = Modifier
                             .padding(horizontal = 16.dp, vertical = 4.dp)
+                            .clickable {
+                                navController.navigate(Screens.MyQuestions.route)
+                                showUserDialog.value = false
+                            }
+                            .fillMaxWidth()
                     ) {
                         Icon(
-                            imageVector = Icons.Default.AccountCircle,
+                            imageVector = TablerIcons.Messages,
                             tint = MaterialTheme.colors.onSurface,
                             modifier = Modifier.padding(8.dp),
                             contentDescription = null
                         )
                         Text(
-                            text = "Manage accounts on this device",
+                            text = "My Questions",
                             fontSize = 14.sp,
                             color = MaterialTheme.colors.onSurface,
                             modifier = Modifier.padding(start = 8.dp)
