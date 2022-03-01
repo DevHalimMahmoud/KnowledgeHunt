@@ -14,11 +14,14 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.knowledgehunt.R
 import com.example.knowledgehunt.domain.models.Screens
 import com.example.knowledgehunt.presentation.components.BackTopBar
+import com.example.knowledgehunt.presentation.components.NoDataDesign
 import com.example.knowledgehunt.presentation.components.QuestionCardItem
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -64,27 +67,34 @@ fun MyQuestionsScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            LazyColumn(state = rememberLazyListState(), modifier = Modifier.fillMaxSize()) {
+            if (viewModel.questionState.value.isEmpty()) {
+                NoDataDesign(
+                    title = "You don't have any questions yet",
+                    image = painterResource(R.drawable.ic_empty),
+                )
+            } else {
+                LazyColumn(state = rememberLazyListState(), modifier = Modifier.fillMaxSize()) {
 
-                items(viewModel.questionState.value) { question ->
+                    items(viewModel.questionState.value) { question ->
 
-                    val authorData: MutableState<DocumentSnapshot?> = remember {
-                        mutableStateOf(null)
-                    }
-
-                    if (authorData.value == null) {
-                        LaunchedEffect(key1 = true) {
-                            viewModel.getAuthorName(question, authorData)
+                        val authorData: MutableState<DocumentSnapshot?> = remember {
+                            mutableStateOf(null)
                         }
-                    }
-                    QuestionCardItem(
-                        authorData,
-                        question,
-                        click = {
+
+                        if (authorData.value == null) {
+                            LaunchedEffect(key1 = true) {
+                                viewModel.getAuthorName(question, authorData)
+                            }
+                        }
+                        QuestionCardItem(
+                            authorData,
+                            question,
+                            click = {
 //                            navController.navigate(Screens.ArticleDetails.route)
-                        },
-                        navController = navController,
-                    )
+                            },
+                            navController = navController,
+                        )
+                    }
                 }
             }
         }

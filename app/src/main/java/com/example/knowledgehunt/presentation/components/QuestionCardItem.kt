@@ -11,6 +11,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterStart
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.End
@@ -20,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -167,8 +169,9 @@ fun QuestionCardItem(
                                 color = blue,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 14.sp,
-                                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
-                                maxLines = 1
+                                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp).weight(1f),
+                                maxLines = 1,
+                                textAlign = TextAlign.Center
                             )
                         }
                     }
@@ -199,8 +202,9 @@ fun QuestionCardItem(
                                 color = blue,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 14.sp,
-                                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
-                                maxLines = 1
+                                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp).weight(1f).align(CenterVertically),
+                                maxLines = 1,
+                                textAlign = TextAlign.Center
                             )
                         }
                     }

@@ -13,13 +13,16 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.knowledgehunt.R
 import com.example.knowledgehunt.domain.models.Screens
 import com.example.knowledgehunt.domain.utils.ArticleArguments
 import com.example.knowledgehunt.presentation.components.ArticleCardItem
 import com.example.knowledgehunt.presentation.components.BackTopBar
+import com.example.knowledgehunt.presentation.components.NoDataDesign
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import compose.icons.TablerIcons
@@ -70,29 +73,37 @@ fun MyArticles(navController: NavHostController) {
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            LazyColumn(state = rememberLazyListState()) {
 
-                items(viewModel.articleState.value) { article ->
-                    val author: MutableState<String> = remember {
-                        mutableStateOf("Author")
-                    }
-                    if (author.value == "Author") {
-                        LaunchedEffect(key1 = true) {
-                            viewModel.getAuthorName(article, author)
+            if (viewModel.articleState.value.isEmpty()) {
+                NoDataDesign(
+                    title = "You don't have any published articles yet",
+                    image = painterResource(R.drawable.ic_empty),
+                )
+            } else {
+                LazyColumn(state = rememberLazyListState()) {
+
+                    items(viewModel.articleState.value) { article ->
+                        val author: MutableState<String> = remember {
+                            mutableStateOf("Author")
+                        }
+                        if (author.value == "Author") {
+                            LaunchedEffect(key1 = true) {
+                                viewModel.getAuthorName(article, author)
 //                            Log.d(TAG, "Articles: ${author.value}")
+                            }
                         }
-                    }
 
-                    ArticleCardItem(
-                        article,
-                        author.value,
-                        navController = navController,
-                        click = {
-                            ArticleArguments.instance?.author = author.value
-                            ArticleArguments.instance?.articleItemData = article
-                            navController.navigate(Screens.MyArticlesDetails.route)
-                        }
-                    )
+                        ArticleCardItem(
+                            article,
+                            author.value,
+                            navController = navController,
+                            click = {
+                                ArticleArguments.instance?.author = author.value
+                                ArticleArguments.instance?.articleItemData = article
+                                navController.navigate(Screens.MyArticlesDetails.route)
+                            }
+                        )
+                    }
                 }
             }
         }
