@@ -38,12 +38,12 @@ import kotlinx.coroutines.launch
 fun MyArticleDetailsScreen(
     navController: NavHostController,
 ) {
-    val viewModel: MyArticleDetailsViewModel = hiltViewModel()
+    val screenViewModel: MyArticleDetailsScreenViewModel = hiltViewModel()
     val coroutineScope = rememberCoroutineScope()
 
     val context = LocalContext.current
 
-    if (viewModel.publishStates.value) {
+    if (screenViewModel.publishStates.value) {
         LaunchedEffect(
             Dispatchers.Main,
             CoroutineStart.DEFAULT
@@ -51,14 +51,14 @@ fun MyArticleDetailsScreen(
             Toast
                 .makeText(
                     context,
-                    viewModel.publishError.value,
+                    screenViewModel.publishError.value,
                     Toast.LENGTH_LONG
                 )
                 .show()
-            if (viewModel.publishError.value == "Article Updated Successfully!") {
+            if (screenViewModel.publishError.value == "Article Updated Successfully!") {
                 navController.popBackStack()
             }
-            viewModel.publishStates.value = false
+            screenViewModel.publishStates.value = false
         }
     }
     Scaffold(
@@ -71,8 +71,8 @@ fun MyArticleDetailsScreen(
             )
         },
         floatingActionButton = {
-            if (viewModel.publishArticleProgressIndicator.value) {
-                if (viewModel.notEmpty()) {
+            if (screenViewModel.publishArticleProgressIndicator.value) {
+                if (screenViewModel.notEmpty()) {
                     Icon(
                         imageVector = Icons.Outlined.Check,
                         contentDescription = null,
@@ -82,10 +82,10 @@ fun MyArticleDetailsScreen(
                             .clip(CircleShape)
                             .border(1.dp, MaterialTheme.colors.primary, CircleShape)
                             .clickable {
-                                viewModel.publishArticleProgressIndicator.value = false
+                                screenViewModel.publishArticleProgressIndicator.value = false
                                 coroutineScope
                                     .launch {
-                                        viewModel.updateArticle()
+                                        screenViewModel.updateArticle()
                                     }
                             },
                     )
@@ -98,7 +98,7 @@ fun MyArticleDetailsScreen(
                 )
             }
         }) {
-        if (viewModel.deleteDocumentState.value && viewModel.deleteImageState.value) {
+        if (screenViewModel.deleteDocumentState.value && screenViewModel.deleteImageState.value) {
             Dialog(onDismissRequest = { }) {
                 CircularProgressIndicator(
                     modifier = Modifier
@@ -114,7 +114,7 @@ fun MyArticleDetailsScreen(
         ) {
             OutlinedButtonItem(
                 onClick = {
-                    viewModel.deleteArticle(navController)
+                    screenViewModel.deleteArticle(navController)
                 },
                 text = "Delete Article",
                 modifier = Modifier
@@ -126,43 +126,43 @@ fun MyArticleDetailsScreen(
             TextFieldUnit(
                 hint = "Title",
                 onImeAction = {
-                    viewModel.titleErrorState.value =
-                        viewModel.titleState.value.text.isEmpty()
+                    screenViewModel.titleErrorState.value =
+                        screenViewModel.titleState.value.text.isEmpty()
                 },
                 modifier = Modifier
                     .padding(8.dp),
                 imeAction = ImeAction.Next,
-                errorState = viewModel.titleErrorState,
-                textState = viewModel.titleState,
+                errorState = screenViewModel.titleErrorState,
+                textState = screenViewModel.titleState,
                 errorText = "Required!",
                 KeyboardType = KeyboardType.Text
             )
             TextFieldUnit(
                 hint = "Description",
                 onImeAction = {
-                    viewModel.descriptionErrorState.value =
-                        viewModel.descriptionState.value.text.isEmpty()
+                    screenViewModel.descriptionErrorState.value =
+                        screenViewModel.descriptionState.value.text.isEmpty()
                 },
                 modifier = Modifier
                     .padding(8.dp),
                 imeAction = ImeAction.Next,
-                errorState = viewModel.descriptionErrorState,
-                textState = viewModel.descriptionState,
+                errorState = screenViewModel.descriptionErrorState,
+                textState = screenViewModel.descriptionState,
                 errorText = "Required!",
                 KeyboardType = KeyboardType.Text
             )
             TextFieldUnit(
                 hint = "Article Content",
                 onImeAction = {
-                    viewModel.contentErrorState.value =
-                        viewModel.contentState.value.text.isEmpty()
+                    screenViewModel.contentErrorState.value =
+                        screenViewModel.contentState.value.text.isEmpty()
                 },
                 modifier = Modifier
                     .wrapContentHeight()
                     .padding(8.dp),
                 imeAction = ImeAction.Next,
-                errorState = viewModel.contentErrorState,
-                textState = viewModel.contentState,
+                errorState = screenViewModel.contentErrorState,
+                textState = screenViewModel.contentState,
                 errorText = "Required!",
                 KeyboardType = KeyboardType.Text,
             )
