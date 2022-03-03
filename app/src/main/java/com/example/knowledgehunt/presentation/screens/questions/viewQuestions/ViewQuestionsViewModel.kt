@@ -40,7 +40,7 @@ class ViewQuestionsViewModel @Inject constructor(
             firestoreUseCases.getQuestions("questions").orderBy("date", Query.Direction.DESCENDING)
                 .addSnapshotListener { snapshot, e ->
                     _questionState.value =
-                        snapshot?.toObjects(QuestionItemData::class.java) as List<QuestionItemData>
+                        (snapshot?.toObjects(QuestionItemData::class.java) as List<QuestionItemData>)
 
 
                 }

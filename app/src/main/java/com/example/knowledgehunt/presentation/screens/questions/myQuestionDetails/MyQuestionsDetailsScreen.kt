@@ -22,6 +22,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.knowledgehunt.domain.models.Screens
@@ -58,7 +59,7 @@ fun MyQuestionsDetailsScreen(
                     Toast.LENGTH_LONG
                 )
                 .show()
-            if (screenViewModel.publishError.value == "Question Published Successfully!") {
+            if (screenViewModel.publishError.value == "Question Updated Successfully!") {
                 navController.popBackStack()
             }
             screenViewModel.publishStates.value = false
@@ -90,7 +91,7 @@ fun MyQuestionsDetailsScreen(
                                 screenViewModel.publishArticleProgressIndicator.value = false
                                 coroutineScope
                                     .launch {
-                                        screenViewModel.publishQuestion()
+                                        screenViewModel.updateArticle()
                                     }
                             },
                     )
@@ -104,6 +105,16 @@ fun MyQuestionsDetailsScreen(
             }
         },
     ) {
+        if (screenViewModel.deleteDocumentState.value) {
+            Dialog(onDismissRequest = { }) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .size(55.dp)
+                        .clip(CircleShape)
+                )
+            }
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -131,7 +142,7 @@ fun MyQuestionsDetailsScreen(
 
             OutlinedButtonItem(
                 onClick = {
-//                    screenViewModel.deleteArticle(navController)
+                    screenViewModel.deleteArticle(navController)
                 },
                 text = "Delete Article",
                 modifier = Modifier
