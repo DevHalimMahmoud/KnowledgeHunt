@@ -11,7 +11,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterStart
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.End
@@ -169,7 +168,9 @@ fun QuestionCardItem(
                                 color = blue,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 14.sp,
-                                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp).weight(1f),
+                                modifier = Modifier
+                                    .padding(horizontal = 4.dp, vertical = 4.dp)
+                                    .weight(1f),
                                 maxLines = 1,
                                 textAlign = TextAlign.Center
                             )
@@ -202,7 +203,10 @@ fun QuestionCardItem(
                                 color = blue,
                                 fontFamily = FontFamily.SansSerif,
                                 fontSize = 14.sp,
-                                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp).weight(1f).align(CenterVertically),
+                                modifier = Modifier
+                                    .padding(horizontal = 4.dp, vertical = 4.dp)
+                                    .weight(1f)
+                                    .align(CenterVertically),
                                 maxLines = 1,
                                 textAlign = TextAlign.Center
                             )

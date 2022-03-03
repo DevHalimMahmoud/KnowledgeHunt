@@ -75,7 +75,7 @@ class MyQuestionDetailsScreenViewModel @Inject constructor(
 
     private fun deleteFirestoreQuestionDocument() {
         viewModelScope.launch {
-            firestoreUseCases.deleteArticleFirestoreDocument(
+            firestoreUseCases.deleteQuestionFirestoreDocument(
                 "questions",
                 _articleId.value.toString()
             ).addOnCompleteListener {
@@ -100,7 +100,7 @@ class MyQuestionDetailsScreenViewModel @Inject constructor(
 
         if (_articleId.value != null) {
             viewModelScope.launch {
-                firestoreUseCases.updateArticleViewsCount(
+                firestoreUseCases.updateQuestionData(
                     "questions",
                     _articleId.value!!,
                     dataMap()

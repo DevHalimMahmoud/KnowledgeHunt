@@ -86,6 +86,8 @@ object AppModule {
         GetQuestions(firebaseFirestoreRepository),
         AddQuestion(firebaseFirestoreRepository),
         GetMyQuestions(firebaseFirestoreRepository),
+        DeleteQuestionFirestoreDocument(firebaseFirestoreRepository),
+        UpdateQuestionData(firebaseFirestoreRepository),
     )
 
     @Provides
