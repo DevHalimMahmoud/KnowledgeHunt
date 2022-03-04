@@ -19,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.knowledgehunt.R
 import com.example.knowledgehunt.domain.models.Screens
+import com.example.knowledgehunt.domain.utils.QuestionArguments
 import com.example.knowledgehunt.presentation.components.NoDataDesign
 import com.example.knowledgehunt.presentation.components.QuestionCardItem
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -80,7 +81,9 @@ fun ViewQuestionsScreen(navController: NavController) {
                             authorData,
                             question,
                             click = {
-//                            navController.navigate(Screens.ArticleDetails.route)
+                                QuestionArguments.instance?.questionItemData = question
+                                QuestionArguments.instance?.authorData = authorData
+                                navController.navigate(Screens.QuestionDetails.route)
                             },
                             navController = navController,
                         )

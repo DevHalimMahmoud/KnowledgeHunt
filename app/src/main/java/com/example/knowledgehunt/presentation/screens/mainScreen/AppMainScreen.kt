@@ -35,6 +35,7 @@ import com.example.knowledgehunt.presentation.screens.profile.EditProfileScreen
 import com.example.knowledgehunt.presentation.screens.questions.addQuestion.AddQuestionScreen
 import com.example.knowledgehunt.presentation.screens.questions.myQuestionDetails.MyQuestionsDetailsScreen
 import com.example.knowledgehunt.presentation.screens.questions.myQuestions.MyQuestionsScreen
+import com.example.knowledgehunt.presentation.screens.questions.viewQuestionDetails.ViewQuestionDetailsScreen
 import com.example.knowledgehunt.presentation.screens.questions.viewQuestions.ViewQuestionsScreen
 import com.example.knowledgehunt.presentation.screens.registration.RegisterScreen
 import com.example.knowledgehunt.presentation.screens.search.SearchScreen
@@ -214,6 +215,12 @@ fun Navigation(
         composable(Screens.MyQuestionsDetails.route)
         {
             MyQuestionsDetailsScreen(
+                navController
+            )
+        }
+        composable(Screens.QuestionDetails.route)
+        {
+            ViewQuestionDetailsScreen(
                 navController
             )
         }

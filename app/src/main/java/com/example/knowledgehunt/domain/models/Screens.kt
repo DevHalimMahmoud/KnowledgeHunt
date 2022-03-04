@@ -15,6 +15,7 @@ sealed class Screens(val title: String, val route: String) {
     object Help : Screens("Help", "help")
     object Search : Screens("Search", "search")
     object Questions : Screens("Questions", "questions")
+    object QuestionDetails : Screens("Questions Detail", "question_detail")
     object AddQuestion : Screens("Ask Questions", "add_questions")
     object MyQuestions : Screens("My Questions", "my_questions")
     object MyQuestionsDetails : Screens("Edit Your Question", "my_questions_details")
