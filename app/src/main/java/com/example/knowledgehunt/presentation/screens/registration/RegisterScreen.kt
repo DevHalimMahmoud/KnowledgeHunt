@@ -116,6 +116,7 @@ fun RegisterScreen(navController: NavHostController) {
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
+                .padding(top = 8.dp)
         ) {
 
             ProfileImage(

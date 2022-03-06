@@ -44,7 +44,8 @@ fun ArticleDetailsScreen(
     Scaffold(
         topBar = {
             ArticleTopBar(
-                title = ArticleArguments.instance?.author,
+
+                title = "Published By: \n${ArticleArguments.instance?.author}",
                 profileImageUrl = viewModel.authorImageUrl.value,
                 modifier = Modifier
                     .border(1.dp, color = MaterialTheme.colors.onError, CircleShape)

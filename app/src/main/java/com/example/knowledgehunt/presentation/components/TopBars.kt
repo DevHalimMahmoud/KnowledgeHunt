@@ -1,6 +1,7 @@
 package com.example.knowledgehunt.presentation.components
 
 import android.net.Uri
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -106,7 +107,9 @@ fun BackTopBar(
     onClick: () -> Unit,
 ) {
     TopAppBar(
-        modifier = modifier,
+        modifier = modifier
+            .border(1.dp, color = MaterialTheme.colors.onError, CircleShape)
+            .clip(CircleShape),
         title = {
             Text(text = title, color = MaterialTheme.colors.onSurface)
         },

@@ -86,6 +86,7 @@ fun EditProfileScreen(navController: NavHostController) {
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
+                .padding(top = 8.dp)
         ) {
             GlideImage(
                 viewModel.profileImageUrl.value,
