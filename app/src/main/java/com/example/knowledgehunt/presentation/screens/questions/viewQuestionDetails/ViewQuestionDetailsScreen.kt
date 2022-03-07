@@ -1,11 +1,14 @@
 package com.example.knowledgehunt.presentation.screens.questions.viewQuestionDetails
 
 import android.net.Uri
+import android.widget.TextView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
@@ -27,11 +30,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.text.HtmlCompat
 import androidx.navigation.NavController
 import com.example.knowledgehunt.domain.utils.QuestionArguments
 import com.example.knowledgehunt.presentation.components.ArticleTopBar
 import com.example.knowledgehunt.presentation.components.TextFieldUnit
 import com.example.knowledgehunt.presentation.theme.blue
+import com.example.knowledgehunt.presentation.theme.green
+import com.example.knowledgehunt.presentation.theme.lvl9
 import com.google.firebase.auth.FirebaseAuth
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.ShimmerParams
@@ -39,8 +46,12 @@ import com.skydoves.landscapist.glide.GlideImage
 import compose.icons.FontAwesomeIcons
 import compose.icons.TablerIcons
 import compose.icons.fontawesomeicons.Solid
+import compose.icons.fontawesomeicons.solid.Eye
 import compose.icons.fontawesomeicons.solid.Wrench
+import compose.icons.tablericons.ChevronsDown
+import compose.icons.tablericons.ChevronsUp
 import compose.icons.tablericons.Code
+import compose.icons.tablericons.Message
 import java.text.SimpleDateFormat
 
 @Composable
@@ -48,7 +59,7 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
     val df = SimpleDateFormat("dd MMM yyyy")
     Scaffold(bottomBar = {
 
-        Column(modifier = Modifier) {
+        Column(modifier = Modifier.background(MaterialTheme.colors.onPrimary)) {
             Divider(color = MaterialTheme.colors.onSurface.copy(alpha = .2f))
 
             Row(
@@ -124,7 +135,7 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
             )
         }) {
 
-        Column(modifier = Modifier) {
+        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
 
 
             Row(
@@ -212,9 +223,119 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
                         }
                     }
 
-                }
+                    AndroidView(
+                        modifier = Modifier
+                            .wrapContentSize()
+                            .padding(horizontal = 8.dp),
+                        factory = { context -> TextView(context) },
+                        update = {
 
+                            it.text = HtmlCompat.fromHtml(
+                                QuestionArguments.instance?.questionItemData?.content.toString(),
+                                HtmlCompat.FROM_HTML_OPTION_USE_CSS_COLORS
+                            )
+                        }
+                    )
+                    Row(modifier = Modifier) {
+                        Row(Modifier.weight(1f)) {
+                            IconButton(modifier = Modifier, onClick = {}) {
+                                Icon(
+                                    imageVector = TablerIcons.ChevronsUp,
+                                    contentDescription = "",
+                                    modifier = Modifier
+                                        .size(45.dp)
+                                        .align(CenterVertically),
+                                    tint = green
+                                )
+                            }
+                            Text(
+                                text = (QuestionArguments.instance?.questionItemData?.question_downvotes?.let {
+                                    QuestionArguments.instance?.questionItemData?.question_upvotes?.minus(
+                                        it
+                                    )
+                                }).toString(),
+                                fontFamily = FontFamily.SansSerif,
+                                fontSize = 18.sp,
+                                modifier = Modifier
+                                    .align(CenterVertically),
+                                maxLines = 1,
+                                textAlign = TextAlign.Center
+                            )
+                            IconButton(modifier = Modifier, onClick = {}) {
+                                Icon(
+                                    imageVector = TablerIcons.ChevronsDown,
+                                    contentDescription = "",
+                                    modifier = Modifier
+                                        .size(45.dp)
+                                        .align(CenterVertically),
+                                    tint = lvl9
+                                )
+                            }
+                        }
+                        Row(Modifier.weight(0.75f)) {
+                            IconButton(modifier = Modifier, onClick = {}) {
+                                Icon(
+                                    imageVector = TablerIcons.Message,
+                                    contentDescription = "",
+                                    modifier = Modifier
+                                        .size(45.dp)
+                                        .align(CenterVertically),
+                                    tint = Color.Gray
+                                )
+                            }
+                            Text(
+                                text = QuestionArguments.instance?.questionItemData?.answers?.size.toString(),
+                                fontFamily = FontFamily.SansSerif,
+                                fontSize = 18.sp,
+                                modifier = Modifier
+                                    .align(CenterVertically)
+                                    .padding(start = 4.dp),
+                                maxLines = 1,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                        Row(Modifier.weight(0.75f)) {
+                            IconButton(modifier = Modifier, onClick = {}) {
+                                Icon(
+                                    imageVector = FontAwesomeIcons.Solid.Eye,
+                                    contentDescription = "",
+                                    modifier = Modifier
+                                        .size(45.dp)
+                                        .align(CenterVertically),
+                                    tint = Color.Gray
+                                )
+                            }
+                            Text(
+                                text = QuestionArguments.instance?.questionItemData?.views.toString(),
+                                fontFamily = FontFamily.SansSerif,
+                                fontSize = 18.sp,
+                                modifier = Modifier
+                                    .align(CenterVertically)
+                                    .padding(start = 4.dp),
+                                maxLines = 1,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
+
+                }
             }
+            Divider(
+                color = MaterialTheme.colors.onSurface.copy(alpha = .08f),
+                modifier = Modifier
+                    .height(35.dp)
+                    .padding(vertical = 4.dp)
+            )
+
+
+
+
+            Divider(
+                color = Color.Transparent,
+                modifier = Modifier
+                    .height(100.dp)
+                    .padding(vertical = 4.dp)
+            )
 
         }
     }

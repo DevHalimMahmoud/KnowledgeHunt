@@ -119,7 +119,7 @@ fun ArticleDetailsScreen(
                 factory = { context -> TextView(context) },
                 update = {
                     it.text = HtmlCompat.fromHtml(
-                        ArticleArguments.instance?.articleItemData?.content!!,
+                        ArticleArguments.instance?.articleItemData?.content.toString(),
                         HtmlCompat.FROM_HTML_MODE_COMPACT
                     )
                 }
