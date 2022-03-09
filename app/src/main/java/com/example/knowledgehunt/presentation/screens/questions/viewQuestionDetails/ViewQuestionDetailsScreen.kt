@@ -67,7 +67,6 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
                     .wrapContentSize()
                     .padding(start = 6.dp)
             ) {
-
                 GlideImage(
                     // CoilImage, FrescoImage
                     imageModel = Uri.parse("https://firebasestorage.googleapis.com/v0/b/knowledge-hunt-4c809.appspot.com/o/user%2F${FirebaseAuth.getInstance().currentUser?.uid}.JPEG?alt=media&token=69e2b92c-2e9b-460e-b79c-d7e300439234"),
@@ -85,7 +84,6 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
                     ),
                     circularReveal = CircularReveal(800),
                 )
-
                 TextFieldUnit(
                     hint = "Add an answer",
                     onImeAction = {
@@ -115,7 +113,6 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
                         tint = MaterialTheme.colors.primary,
                     )
                 }
-
             }
         }
     },
@@ -229,7 +226,6 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
                             .padding(horizontal = 8.dp),
                         factory = { context -> TextView(context) },
                         update = {
-
                             it.text = HtmlCompat.fromHtml(
                                 QuestionArguments.instance?.questionItemData?.content.toString(),
                                 HtmlCompat.FROM_HTML_OPTION_USE_CSS_COLORS
@@ -317,7 +313,6 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
                             )
                         }
                     }
-
                 }
             }
             Divider(
@@ -326,10 +321,6 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
                     .height(35.dp)
                     .padding(vertical = 4.dp)
             )
-
-
-
-
             Divider(
                 color = Color.Transparent,
                 modifier = Modifier
