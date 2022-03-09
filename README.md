@@ -41,7 +41,7 @@ Below you can find the docs for each technology that is used in this app:
 ## Android Architecture Components:
 
 * [LiveData][4]
-  *[MutableState][17]
+  [MutableState][17]
 * [ViewModel][5]
 
 ## Dependency Injection:
