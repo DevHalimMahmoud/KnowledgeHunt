@@ -14,5 +14,5 @@ data class QuestionItemData(
     @ServerTimestamp
     val date: Timestamp? = null,
     val content: String? = null,
-    val answers: List<HashMap<String, Any>?>? = null,
+    var answers: MutableList<HashMap<String, Any>?>? = null,
 )

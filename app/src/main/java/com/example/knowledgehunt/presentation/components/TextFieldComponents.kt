@@ -36,7 +36,6 @@ fun TextFieldUnit(
                 value = textState.value,
                 onValueChange = {
                     textState.value = it
-
                 },
                 label = {
                     CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
@@ -59,7 +58,7 @@ fun TextFieldUnit(
                 ),
 
                 keyboardActions = KeyboardActions(
-                    onAny = {
+                    onSend = {
                         onImeAction()
                     }
 

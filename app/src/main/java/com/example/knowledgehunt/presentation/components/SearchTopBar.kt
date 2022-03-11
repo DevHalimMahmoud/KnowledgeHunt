@@ -60,7 +60,7 @@ fun SearchTopBar(
                     keyboardActions = KeyboardActions(
                         onDone = {
                             onExecuteSearch()
-                            keyboardController?.hideSoftwareKeyboard()
+                            keyboardController?.hide()
                         },
                     ),
 //                    leadingIcon = { Icon(TablerIcons.Search, contentDescription = "Search Icon") },

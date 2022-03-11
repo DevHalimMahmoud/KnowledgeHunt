@@ -141,6 +141,17 @@ fun calculateIncrement0orMore(level: Long?): Int {
     }
 }
 
+fun calculateEmptyText(text: String): Int {
+    return when {
+        text.isBlank() -> {
+            Color.Gray.toArgb()
+        }
+        else -> {
+            blue.toArgb()
+        }
+    }
+}
+
 fun calculate0LessOrMore(level: Long?): Int {
     return when {
         level == null -> {
