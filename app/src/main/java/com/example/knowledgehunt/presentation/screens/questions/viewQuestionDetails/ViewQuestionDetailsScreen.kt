@@ -272,7 +272,7 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
                                             viewModel.vote()
                                             viewModel.updateVoteCount(
                                                 QuestionArguments.instance?.questionItemData?.user_id.toString(),
-                                                "upvotes"
+                                                "num_upvote"
                                             )
                                         }) {
                                         Icon(
@@ -305,7 +305,7 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
                                             viewModel.vote()
                                             viewModel.updateVoteCount(
                                                 QuestionArguments.instance?.questionItemData?.user_id.toString(),
-                                                "downvotes"
+                                                "num_downvote"
                                             )
                                         }) {
                                         Icon(
@@ -491,7 +491,7 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
                                         viewModel.vote()
                                         viewModel.updateVoteCount(
                                             question["user_id"].toString(),
-                                            "upvotes"
+                                            "num_upvote"
                                         )
                                     }) {
                                     Icon(
@@ -519,7 +519,7 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
                                     viewModel.vote()
                                     viewModel.updateVoteCount(
                                         question["user_id"].toString(),
-                                        "downvotes"
+                                        "num_downvote"
                                     )
                                 }) {
                                     Icon(
@@ -533,8 +533,6 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
                                 }
                             }
                         }
-
-
                     }
 
                 }
