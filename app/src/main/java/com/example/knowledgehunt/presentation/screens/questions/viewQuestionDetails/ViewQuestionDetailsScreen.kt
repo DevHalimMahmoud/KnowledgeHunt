@@ -266,7 +266,15 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
                                 Row(Modifier.weight(1f)) {
                                     IconButton(
                                         modifier = Modifier,
-                                        onClick = { viewModel.upVote() }) {
+                                        onClick = {
+                                            QuestionArguments.instance?.questionItemData?.question_upvotes =
+                                                QuestionArguments.instance?.questionItemData?.question_upvotes as Long + 1
+                                            viewModel.vote()
+                                            viewModel.updateVoteCount(
+                                                QuestionArguments.instance?.questionItemData?.user_id.toString(),
+                                                "upvotes"
+                                            )
+                                        }) {
                                         Icon(
                                             imageVector = TablerIcons.ChevronsUp,
                                             contentDescription = "",
@@ -291,7 +299,15 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
                                     )
                                     IconButton(
                                         modifier = Modifier,
-                                        onClick = { viewModel.downVote() }) {
+                                        onClick = {
+                                            QuestionArguments.instance?.questionItemData?.question_downvotes =
+                                                QuestionArguments.instance?.questionItemData?.question_downvotes as Long + 1
+                                            viewModel.vote()
+                                            viewModel.updateVoteCount(
+                                                QuestionArguments.instance?.questionItemData?.user_id.toString(),
+                                                "downvotes"
+                                            )
+                                        }) {
                                         Icon(
                                             imageVector = TablerIcons.ChevronsDown,
                                             contentDescription = "",
@@ -330,7 +346,7 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
                                             imageVector = FontAwesomeIcons.Solid.Eye,
                                             contentDescription = "",
                                             modifier = Modifier
-                                                .size(45.dp)
+                                                .size(40.dp)
                                                 .align(CenterVertically),
                                             tint = Color.Gray
                                         )
@@ -468,7 +484,16 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
                                     .align(Start),
                             )
                             Row(Modifier.align(Start)) {
-                                IconButton(modifier = Modifier, onClick = {}) {
+                                IconButton(
+                                    modifier = Modifier,
+                                    onClick = {
+                                        question!!["upvotes"] = (question["upvotes"] as Long) + 1
+                                        viewModel.vote()
+                                        viewModel.updateVoteCount(
+                                            question["user_id"].toString(),
+                                            "upvotes"
+                                        )
+                                    }) {
                                     Icon(
                                         imageVector = TablerIcons.ChevronsUp,
                                         contentDescription = "",
@@ -489,7 +514,14 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
                                     maxLines = 1,
                                     textAlign = TextAlign.Center
                                 )
-                                IconButton(modifier = Modifier, onClick = {}) {
+                                IconButton(modifier = Modifier, onClick = {
+                                    question["downvotes"] = (question["downvotes"] as Long) + 1
+                                    viewModel.vote()
+                                    viewModel.updateVoteCount(
+                                        question["user_id"].toString(),
+                                        "downvotes"
+                                    )
+                                }) {
                                     Icon(
                                         imageVector = TablerIcons.ChevronsDown,
                                         contentDescription = "",
