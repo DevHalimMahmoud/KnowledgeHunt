@@ -197,7 +197,6 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
                                 Row(
                                     Modifier
                                         .padding(8.dp)
-
                                         .wrapContentWidth()
                                         .background(blue.copy(0.25f), RoundedCornerShape(4.dp)),
                                 ) {
@@ -265,7 +264,9 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
                             )
                             Row(modifier = Modifier) {
                                 Row(Modifier.weight(1f)) {
-                                    IconButton(modifier = Modifier, onClick = {}) {
+                                    IconButton(
+                                        modifier = Modifier,
+                                        onClick = { viewModel.upVote() }) {
                                         Icon(
                                             imageVector = TablerIcons.ChevronsUp,
                                             contentDescription = "",
@@ -288,7 +289,9 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
                                         maxLines = 1,
                                         textAlign = TextAlign.Center
                                     )
-                                    IconButton(modifier = Modifier, onClick = {}) {
+                                    IconButton(
+                                        modifier = Modifier,
+                                        onClick = { viewModel.downVote() }) {
                                         Icon(
                                             imageVector = TablerIcons.ChevronsDown,
                                             contentDescription = "",
@@ -364,7 +367,7 @@ fun ViewQuestionDetailsScreen(navController: NavController) {
                     }
                 } else {
 
-                    items(QuestionArguments.instance?.questionItemData?.answers!!) { question ->
+                    items(QuestionArguments.instance?.questionItemData?.answers!!.reversed()) { question ->
 
                         val userData: MutableState<DocumentSnapshot?> = remember {
                             mutableStateOf(null)

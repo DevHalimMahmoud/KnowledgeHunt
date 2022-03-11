@@ -7,8 +7,8 @@ data class QuestionItemData(
     val views: Long? = null,
     val user_id: String? = null,
     val title: String? = null,
-    val question_upvotes: Long? = null,
-    val question_downvotes: Long? = null,
+    var question_upvotes: Long? = null,
+    var question_downvotes: Long? = null,
     val prog_language: String? = null,
     val field: String? = null,
     @ServerTimestamp

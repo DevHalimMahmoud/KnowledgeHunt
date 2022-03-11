@@ -146,4 +146,56 @@ class ViewQuestionDetailsScreenViewModel @Inject constructor(
             }
         }
     }
+
+    fun upVote() {
+        QuestionArguments.instance?.questionItemData?.question_upvotes =
+            QuestionArguments.instance?.questionItemData?.question_upvotes as Long + 1
+        val mutableMap: HashMap<String, Any?> = hashMapOf()
+        mutableMap["content"] = QuestionArguments.instance?.questionItemData?.content
+        mutableMap["date"] = QuestionArguments.instance?.questionItemData?.date
+        mutableMap["prog_language"] = QuestionArguments.instance?.questionItemData?.prog_language
+        mutableMap["views"] = QuestionArguments.instance?.questionItemData?.views
+        mutableMap["title"] = QuestionArguments.instance?.questionItemData?.title
+        mutableMap["user_id"] = QuestionArguments.instance?.questionItemData?.user_id
+        mutableMap["question_upvotes"] =
+            QuestionArguments.instance?.questionItemData?.question_upvotes as Long
+        mutableMap["question_downvotes"] =
+            QuestionArguments.instance?.questionItemData?.question_downvotes
+        mutableMap["field"] = QuestionArguments.instance?.questionItemData?.field
+        mutableMap["answers"] = QuestionArguments.instance?.questionItemData?.answers
+        viewModelScope.launch {
+            firestoreUseCases.updateArticleViewsCount(
+                "questions",
+                _questionId.value!!,
+                mutableMap
+            )
+        }
+        refresh()
+    }
+
+    fun downVote() {
+        QuestionArguments.instance?.questionItemData?.question_downvotes =
+            QuestionArguments.instance?.questionItemData?.question_downvotes as Long + 1
+        val mutableMap: HashMap<String, Any?> = hashMapOf()
+        mutableMap["content"] = QuestionArguments.instance?.questionItemData?.content
+        mutableMap["date"] = QuestionArguments.instance?.questionItemData?.date
+        mutableMap["prog_language"] = QuestionArguments.instance?.questionItemData?.prog_language
+        mutableMap["views"] = QuestionArguments.instance?.questionItemData?.views
+        mutableMap["title"] = QuestionArguments.instance?.questionItemData?.title
+        mutableMap["user_id"] = QuestionArguments.instance?.questionItemData?.user_id
+        mutableMap["question_upvotes"] =
+            QuestionArguments.instance?.questionItemData?.question_upvotes
+        mutableMap["question_downvotes"] =
+            QuestionArguments.instance?.questionItemData?.question_downvotes
+        mutableMap["field"] = QuestionArguments.instance?.questionItemData?.field
+        mutableMap["answers"] = QuestionArguments.instance?.questionItemData?.answers
+        viewModelScope.launch {
+            firestoreUseCases.updateArticleViewsCount(
+                "questions",
+                _questionId.value!!,
+                mutableMap
+            )
+        }
+        refresh()
+    }
 }
