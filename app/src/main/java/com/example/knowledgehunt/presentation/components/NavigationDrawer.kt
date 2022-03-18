@@ -30,12 +30,14 @@ import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
 import compose.icons.FontAwesomeIcons
+import compose.icons.TablerIcons
 import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.brands.StackOverflow
 import compose.icons.fontawesomeicons.solid.FileCode
 import compose.icons.fontawesomeicons.solid.HouseUser
 import compose.icons.fontawesomeicons.solid.Lightbulb
+import compose.icons.tablericons.Binary
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -43,12 +45,14 @@ private val screens = listOf(
     Screens.Home,
     Screens.Articles,
     Screens.Questions,
+    Screens.MCQ,
     Screens.About
 )
 private val icon = listOf(
     FontAwesomeIcons.Solid.HouseUser,
     FontAwesomeIcons.Solid.FileCode,
     FontAwesomeIcons.Brands.StackOverflow,
+    TablerIcons.Binary,
     FontAwesomeIcons.Solid.Lightbulb,
 )
 

@@ -31,6 +31,7 @@ import com.example.knowledgehunt.presentation.screens.article.viewArticle.Articl
 import com.example.knowledgehunt.presentation.screens.help.Screen
 import com.example.knowledgehunt.presentation.screens.home.HomeScreen
 import com.example.knowledgehunt.presentation.screens.login.LoginScreen
+import com.example.knowledgehunt.presentation.screens.mcq.viewMCQ.ViewMCQScreen
 import com.example.knowledgehunt.presentation.screens.profile.EditProfileScreen
 import com.example.knowledgehunt.presentation.screens.questions.addQuestion.AddQuestionScreen
 import com.example.knowledgehunt.presentation.screens.questions.myQuestionDetails.MyQuestionsDetailsScreen
@@ -58,7 +59,7 @@ fun AppMainScreen() {
         drawerGesturesEnabled = drawerGesturesEnabled.value,
         scaffoldState = scaffoldState,
         topBar = {
-            if (currentRoute == Screens.Articles.route || currentRoute == Screens.Home.route || currentRoute == Screens.About.route || currentRoute == Screens.Questions.route) {
+            if (currentRoute == Screens.Articles.route || currentRoute == Screens.Home.route || currentRoute == Screens.About.route || currentRoute == Screens.Questions.route || currentRoute == Screens.MCQ.route) {
                 LaunchedEffect(Dispatchers.Default, CoroutineStart.DEFAULT) {
                     if (viewModel.loggedIn()) {
                         viewModel.getTopBarProfileImage()
@@ -92,7 +93,7 @@ fun AppMainScreen() {
         drawerBackgroundColor = MaterialTheme.colors.onPrimary,
 //        drawerScrimColor = Color.Red,  // Color for the fade background when you open/close the drawer
         drawerContent = {
-            if (currentRoute == Screens.Articles.route || currentRoute == Screens.Home.route || currentRoute == Screens.About.route || currentRoute == Screens.Questions.route) {
+            if (currentRoute == Screens.Articles.route || currentRoute == Screens.Home.route || currentRoute == Screens.About.route || currentRoute == Screens.Questions.route || currentRoute == Screens.MCQ.route) {
                 AppDrawer(
                     currentRoute = currentRoute.orEmpty(),
                     navController = navController,
@@ -221,6 +222,12 @@ fun Navigation(
         composable(Screens.QuestionDetails.route)
         {
             ViewQuestionDetailsScreen(
+                navController
+            )
+        }
+        composable(Screens.MCQ.route)
+        {
+            ViewMCQScreen(
                 navController
             )
         }
