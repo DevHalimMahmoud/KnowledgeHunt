@@ -11,10 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.knowledgehunt.presentation.screens.mainScreen.AppMainScreenViewModel
 
 @Composable
 fun ViewMCQScreen(navController: NavHostController) {
+    val viewModel: AppMainScreenViewModel = hiltViewModel()
     Column(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -24,7 +27,6 @@ fun ViewMCQScreen(navController: NavHostController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Text(text = "MCQ Section")
         }
     }
