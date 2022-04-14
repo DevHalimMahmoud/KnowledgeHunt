@@ -12,6 +12,6 @@ class ViewMCQScreenViewModel @Inject constructor(
     private val authUseCases: AuthUseCases,
     private val storageUseCases: StorageUseCases,
     private val firestoreUseCases: FirestoreUseCases,
-
     ) : ViewModel() {
+
 }
