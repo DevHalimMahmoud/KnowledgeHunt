@@ -1,6 +1,7 @@
 package com.example.knowledgehunt.presentation.screens.questions.myQuestions
 
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -33,6 +34,7 @@ import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.Code
 import compose.icons.tablericons.ArrowBack
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MyQuestionsScreen(navController: NavController) {
     val viewModel: MyQuestionsScreenViewModel = hiltViewModel()

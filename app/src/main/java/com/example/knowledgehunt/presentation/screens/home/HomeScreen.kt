@@ -1,5 +1,6 @@
 package com.example.knowledgehunt.presentation.screens.home
 
+import android.annotation.SuppressLint
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
@@ -8,6 +9,7 @@ import com.example.knowledgehunt.R
 import com.example.knowledgehunt.presentation.components.NoDataDesign
 
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(navController: NavHostController) {
 

@@ -1,5 +1,6 @@
 package com.example.knowledgehunt.presentation.screens.article.addArticle
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.widget.Toast
@@ -41,6 +42,7 @@ import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun AddArticleScreen(
     navController: NavHostController,

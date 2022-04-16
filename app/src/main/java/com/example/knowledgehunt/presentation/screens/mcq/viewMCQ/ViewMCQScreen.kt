@@ -27,7 +27,7 @@ fun ViewMCQScreen(navController: NavHostController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "MCQ Section")
+
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.knowledgehunt.presentation.screens.mainScreen
 
 import SplashScreen
+import android.annotation.SuppressLint
 import androidx.compose.foundation.border
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
@@ -43,6 +44,7 @@ import com.example.knowledgehunt.presentation.screens.search.SearchScreen
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @ExperimentalComposeUiApi
 @Composable
 fun AppMainScreen() {

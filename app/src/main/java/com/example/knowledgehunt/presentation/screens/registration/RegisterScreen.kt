@@ -1,5 +1,6 @@
 package com.example.knowledgehunt.presentation.screens.registration
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.widget.Toast
@@ -44,6 +45,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun RegisterScreen(navController: NavHostController) {
     val viewModel: RegisterScreenViewModel = hiltViewModel()

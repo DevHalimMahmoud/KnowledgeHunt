@@ -1,3 +1,4 @@
+import android.annotation.SuppressLint
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
@@ -21,6 +22,7 @@ import com.example.knowledgehunt.domain.models.Screens
 import com.example.knowledgehunt.presentation.screens.splash.SplashScreenViewModel
 import kotlinx.coroutines.delay
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun SplashScreen(
     navController: NavController,

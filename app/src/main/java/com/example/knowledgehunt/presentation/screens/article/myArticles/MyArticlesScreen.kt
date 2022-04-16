@@ -1,5 +1,6 @@
 package com.example.knowledgehunt.presentation.screens.article.myArticles
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
@@ -29,6 +30,7 @@ import compose.icons.TablerIcons
 import compose.icons.tablericons.ArrowBack
 import compose.icons.tablericons.CodePlus
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MyArticles(navController: NavHostController) {
 //    var shimmerInstance = rememberShimmer(shimmerBounds = ShimmerBounds.Custom)

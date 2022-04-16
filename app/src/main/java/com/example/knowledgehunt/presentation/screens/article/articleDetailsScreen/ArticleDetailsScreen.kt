@@ -1,5 +1,6 @@
 package com.example.knowledgehunt.presentation.screens.article.articleDetailsScreen
 
+import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.util.Log
 import android.widget.TextView
@@ -33,6 +34,7 @@ import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
 import com.skydoves.landscapist.palette.BitmapPalette
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun ArticleDetailsScreen(
     navController: NavHostController,

@@ -1,5 +1,6 @@
 package com.example.knowledgehunt.presentation.screens.questions.viewQuestionDetails
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.widget.TextView
 import androidx.compose.foundation.background
@@ -64,6 +65,7 @@ import compose.icons.tablericons.Code
 import compose.icons.tablericons.Message
 import java.text.SimpleDateFormat
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @ExperimentalComposeUiApi
 @Composable
 fun ViewQuestionDetailsScreen(navController: NavController) {

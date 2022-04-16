@@ -1,5 +1,6 @@
 package com.example.knowledgehunt.presentation.screens.profile
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.*
@@ -38,6 +39,7 @@ import compose.icons.TablerIcons
 import compose.icons.tablericons.ArrowBack
 
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun EditProfileScreen(navController: NavHostController) {
     val viewModel: EditProfileViewModel = hiltViewModel()
