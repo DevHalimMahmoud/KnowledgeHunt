@@ -40,25 +40,16 @@ fun ArticleCardItem(
     Card(
         shape = RoundedCornerShape(16.dp),
         modifier = modifier
-            .clickable {
-                click()
-            }
             .fillMaxWidth()
             .wrapContentHeight()
             .padding(8.dp),
-
-        elevation = 8.dp
+        elevation = 1.dp
     ) {
         Column(
-//            Modifier.background(
-//                color = Color(
-//                    palette?.lightVibrantSwatch?.rgb ?: rgb(
-//                        255,
-//                        255,
-//                        255
-//                    )
-//                )
-//            )
+            modifier = modifier
+                .clickable {
+                    click()
+                }
         ) {
             GlideImage(
                 imageModel = articleItemData.imageUrl,
