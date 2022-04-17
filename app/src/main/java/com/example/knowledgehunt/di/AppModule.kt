@@ -14,32 +14,33 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import javax.inject.Singleton
 
 @Module
 @ExperimentalCoroutinesApi
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
+    @Singleton
     @Provides
     fun provideFirebaseAuthImpl(
 
     ): IFirebaseAuth = FirebaseAuthImpl()
-
+    @Singleton
     @Provides
     fun provideFirebaseStorageImpl(
 
     ): IFirebaseStorage = FirebaseStorageImpl()
-
+    @Singleton
     @Provides
     fun provideFirebaseFirestoreImpl(
 
     ): IFirebaseFirestore = FirebaseFirestoreImpl()
-
+    @Singleton
     @Provides
     fun provideImageImpl(
 
     ): IImage = ImageImpl()
-
+    @Singleton
     @Provides
     fun provideAuthUseCases(
         firebaseAuthRepository: IFirebaseAuth,
@@ -55,7 +56,7 @@ object AppModule {
         UpdateCurrentUserEmail(firebaseAuthRepository),
         ReAuthenticateCurrentUser(firebaseAuthRepository),
     )
-
+    @Singleton
     @Provides
     fun provideStorageUseCases(
         firebaseStorageRepository: IFirebaseStorage,
@@ -64,7 +65,7 @@ object AppModule {
         GetStorageImageUrl(firebaseStorageRepository),
         DeleteArticleStorageImage(firebaseStorageRepository)
     )
-
+    @Singleton
     @Provides
     fun provideFirestoreUseCases(
         firebaseFirestoreRepository: IFirebaseFirestore,
@@ -88,7 +89,8 @@ object AppModule {
         GetMyQuestions(firebaseFirestoreRepository),
         DeleteQuestionFirestoreDocument(firebaseFirestoreRepository),
         UpdateQuestionData(firebaseFirestoreRepository),
-        GetUserDataById(firebaseFirestoreRepository)
+        GetUserDataById(firebaseFirestoreRepository),
+        GetMCQTests(firebaseFirestoreRepository),
     )
 
     @Provides

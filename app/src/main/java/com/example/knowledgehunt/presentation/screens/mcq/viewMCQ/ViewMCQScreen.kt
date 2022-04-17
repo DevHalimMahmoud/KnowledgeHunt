@@ -1,33 +1,68 @@
 package com.example.knowledgehunt.presentation.screens.mcq.viewMCQ
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Text
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.knowledgehunt.presentation.screens.mainScreen.AppMainScreenViewModel
+import com.example.knowledgehunt.R
+import com.example.knowledgehunt.presentation.components.MCQCardItem
+import com.example.knowledgehunt.presentation.components.NoDataDesign
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun ViewMCQScreen(navController: NavHostController) {
-    val viewModel: AppMainScreenViewModel = hiltViewModel()
-    Column(modifier = Modifier.fillMaxSize()) {
-        Column(
+    val viewModel: ViewMCQScreenViewModel = hiltViewModel()
+    val isRefreshing by viewModel.isRefreshing.collectAsState()
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize()
+
+            .padding(4.dp),
+    ) {
+        SwipeRefresh(
+            state = rememberSwipeRefreshState(isRefreshing),
+            onRefresh = {
+                viewModel.refresh()
+            },
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(4.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            if (viewModel.MCQState.value.isEmpty()) {
+                NoDataDesign(
+                    title = "No MCQ tests available at the moment check your internet connection",
+                    image = painterResource(R.drawable.ic_empty),
+                )
+            } else {
+                LazyColumn(state = rememberLazyListState(), modifier = Modifier.fillMaxSize()) {
 
+                    items(
+                        viewModel.MCQState.value
+                    ) { MCQItem ->
+                        MCQCardItem(
+                            MCQItem,
+                            navController = navController,
+                            click = {
+//                                    ArticleArguments.instance?.author = author.value
+//                                    ArticleArguments.instance?.articleItemData = article
+//                                    navController.navigate(Screens.ArticleDetails.route)
+                            }
+                        )
+                    }
+                }
+            }
         }
     }
 }

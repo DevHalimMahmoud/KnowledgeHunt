@@ -33,7 +33,8 @@ data class FirestoreUseCases(
     val getMyQuestions: GetMyQuestions,
     val deleteQuestionFirestoreDocument: DeleteQuestionFirestoreDocument,
     val updateQuestionData: UpdateQuestionData,
-    val getUserDataById: GetUserDataById
+    val getUserDataById: GetUserDataById,
+    val getMCQTests: GetMCQTests,
 )
 
 data class StorageUseCases(
