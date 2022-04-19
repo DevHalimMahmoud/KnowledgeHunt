@@ -229,3 +229,23 @@ fun ProfileDialog(
         }
     }
 }
+
+
+@Composable
+fun SimpleAlertDialog(showDialog: MutableState<Boolean>, text: String, ok: () -> Unit) {
+    if (showDialog.value) {
+        AlertDialog(
+            onDismissRequest = { showDialog.value = false },
+            confirmButton = {
+                TextButton(onClick = { ok() })
+                { Text(text = "OK") }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDialog.value = false })
+                { Text(text = "Cancel") }
+            },
+            title = { Text(text = "Please confirm") },
+            text = { Text(text = text) }
+        )
+    }
+}

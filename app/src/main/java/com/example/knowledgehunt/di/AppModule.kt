@@ -25,21 +25,25 @@ object AppModule {
     fun provideFirebaseAuthImpl(
 
     ): IFirebaseAuth = FirebaseAuthImpl()
+
     @Singleton
     @Provides
     fun provideFirebaseStorageImpl(
 
     ): IFirebaseStorage = FirebaseStorageImpl()
+
     @Singleton
     @Provides
     fun provideFirebaseFirestoreImpl(
 
     ): IFirebaseFirestore = FirebaseFirestoreImpl()
+
     @Singleton
     @Provides
     fun provideImageImpl(
 
     ): IImage = ImageImpl()
+
     @Singleton
     @Provides
     fun provideAuthUseCases(
@@ -56,6 +60,7 @@ object AppModule {
         UpdateCurrentUserEmail(firebaseAuthRepository),
         ReAuthenticateCurrentUser(firebaseAuthRepository),
     )
+
     @Singleton
     @Provides
     fun provideStorageUseCases(
@@ -65,6 +70,7 @@ object AppModule {
         GetStorageImageUrl(firebaseStorageRepository),
         DeleteArticleStorageImage(firebaseStorageRepository)
     )
+
     @Singleton
     @Provides
     fun provideFirestoreUseCases(

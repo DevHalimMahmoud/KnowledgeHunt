@@ -33,15 +33,15 @@ fun MCQCardItem(item: MCQItemData, navController: NavHostController, click: () -
     Card(
         shape = RoundedCornerShape(0.dp),
         modifier = Modifier
+            .clickable {
+                click()
+            }
             .fillMaxWidth()
             .wrapContentHeight()
             .padding(12.dp),
         elevation = 0.dp
     ) {
-        Column(modifier = Modifier
-            .clickable {
-                click()
-            }) {
+        Column {
             GlideImage(
                 imageModel = item.image_url,
                 contentScale = ContentScale.FillBounds,
@@ -130,5 +130,8 @@ fun MCQCardItem(item: MCQItemData, navController: NavHostController, click: () -
             }
         }
     }
-    Divider(color = MaterialTheme.colors.onSurface.copy(alpha = .2f), modifier = Modifier.padding(bottom = 8.dp))
+    Divider(
+        color = MaterialTheme.colors.onSurface.copy(alpha = .2f),
+        modifier = Modifier.padding(bottom = 8.dp)
+    )
 }

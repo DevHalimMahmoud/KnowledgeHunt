@@ -18,6 +18,7 @@ import androidx.navigation.NavHostController
 import com.example.knowledgehunt.R
 import com.example.knowledgehunt.presentation.components.MCQCardItem
 import com.example.knowledgehunt.presentation.components.NoDataDesign
+import com.example.knowledgehunt.presentation.components.SimpleAlertDialog
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -32,6 +33,7 @@ fun ViewMCQScreen(navController: NavHostController) {
 
             .padding(4.dp),
     ) {
+        SimpleAlertDialog(viewModel.showDialog, "Are you sure you want to start the test?") {}
         SwipeRefresh(
             state = rememberSwipeRefreshState(isRefreshing),
             onRefresh = {
@@ -55,6 +57,7 @@ fun ViewMCQScreen(navController: NavHostController) {
                             MCQItem,
                             navController = navController,
                             click = {
+                                viewModel.showDialog.value = true
 //                                    ArticleArguments.instance?.author = author.value
 //                                    ArticleArguments.instance?.articleItemData = article
 //                                    navController.navigate(Screens.ArticleDetails.route)

@@ -1,11 +1,11 @@
 package com.example.knowledgehunt.presentation.screens.mcq.viewMCQ
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.knowledgehunt.domain.models.MCQItemData
-import com.example.knowledgehunt.domain.use_case.AuthUseCases
 import com.example.knowledgehunt.domain.use_case.FirestoreUseCases
 import com.example.knowledgehunt.domain.use_case.StorageUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,6 +27,7 @@ class ViewMCQScreenViewModel @Inject constructor(
         get() = _isRefreshing.asStateFlow()
     private val _MCQState = mutableStateOf<List<MCQItemData>>(listOf())
     val MCQState: State<List<MCQItemData>> = _MCQState
+    var showDialog: MutableState<Boolean> = mutableStateOf(false)
 
     init {
         getMCQTests()
