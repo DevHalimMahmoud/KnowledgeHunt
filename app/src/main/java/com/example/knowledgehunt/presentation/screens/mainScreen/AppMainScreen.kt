@@ -32,6 +32,7 @@ import com.example.knowledgehunt.presentation.screens.article.viewArticle.Articl
 import com.example.knowledgehunt.presentation.screens.help.Screen
 import com.example.knowledgehunt.presentation.screens.home.HomeScreen
 import com.example.knowledgehunt.presentation.screens.login.LoginScreen
+import com.example.knowledgehunt.presentation.screens.mcq.takeMCQ.MCQTestScreen
 import com.example.knowledgehunt.presentation.screens.mcq.viewMCQ.ViewMCQScreen
 import com.example.knowledgehunt.presentation.screens.profile.EditProfileScreen
 import com.example.knowledgehunt.presentation.screens.questions.addQuestion.AddQuestionScreen
@@ -232,6 +233,9 @@ fun Navigation(
             ViewMCQScreen(
                 navController
             )
+        }
+        composable(Screens.TakeMCQ.route) {
+            MCQTestScreen(navController)
         }
     }
 }

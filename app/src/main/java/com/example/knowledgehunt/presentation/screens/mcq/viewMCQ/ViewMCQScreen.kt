@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.knowledgehunt.R
+import com.example.knowledgehunt.domain.models.Screens
+import com.example.knowledgehunt.domain.utils.MCQTestArguments
 import com.example.knowledgehunt.presentation.components.MCQCardItem
 import com.example.knowledgehunt.presentation.components.NoDataDesign
 import com.example.knowledgehunt.presentation.components.SimpleAlertDialog
@@ -30,10 +32,14 @@ fun ViewMCQScreen(navController: NavHostController) {
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-
             .padding(4.dp),
     ) {
-        SimpleAlertDialog(viewModel.showDialog, "Are you sure you want to start the test?") {}
+        SimpleAlertDialog(viewModel.showDialog, "Are you sure you want to start the test?") {
+            viewModel.showDialog.value = false
+            navController.navigate(
+                Screens.TakeMCQ.route
+            )
+        }
         SwipeRefresh(
             state = rememberSwipeRefreshState(isRefreshing),
             onRefresh = {
@@ -53,14 +59,15 @@ fun ViewMCQScreen(navController: NavHostController) {
                     items(
                         viewModel.MCQState.value
                     ) { MCQItem ->
+                        viewModel.selectedItem = MCQItem
                         MCQCardItem(
                             MCQItem,
                             navController = navController,
                             click = {
                                 viewModel.showDialog.value = true
-//                                    ArticleArguments.instance?.author = author.value
-//                                    ArticleArguments.instance?.articleItemData = article
-//                                    navController.navigate(Screens.ArticleDetails.route)
+
+                                MCQTestArguments.instance?.itemData = MCQItem
+
                             }
                         )
                     }

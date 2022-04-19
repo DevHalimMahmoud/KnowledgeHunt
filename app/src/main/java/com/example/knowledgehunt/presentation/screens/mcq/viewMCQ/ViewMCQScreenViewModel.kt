@@ -22,6 +22,7 @@ class ViewMCQScreenViewModel @Inject constructor(
     private val firestoreUseCases: FirestoreUseCases,
 ) : ViewModel() {
 
+    lateinit var selectedItem: MCQItemData
     private val _isRefreshing = MutableStateFlow(true)
     val isRefreshing: StateFlow<Boolean>
         get() = _isRefreshing.asStateFlow()
