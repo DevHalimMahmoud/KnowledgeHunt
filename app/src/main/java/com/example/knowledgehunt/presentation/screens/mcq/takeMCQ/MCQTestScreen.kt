@@ -1,7 +1,6 @@
 package com.example.knowledgehunt.presentation.screens.mcq.takeMCQ
 
 import android.annotation.SuppressLint
-import android.os.CountDownTimer
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,36 +30,19 @@ fun MCQTestScreen(navController: NavHostController) {
     val viewModel: MCQTestScreenViewModel = hiltViewModel()
     val context = LocalContext.current
 
-    remember {
-        object : CountDownTimer(100000, 1000) {
-
-            override fun onTick(millisUntilFinished: Long) {
-                viewModel.timeLeft.value = (100000 - millisUntilFinished) / 100000.toFloat()
-            }
-
-            override fun onFinish() {
-                if (viewModel.answeredQuestions.value != 10) {
-                    navController.popBackStack()
-                }
-            }
-
-        }.start()
-
-    }
-
     if (viewModel.answeredQuestions.value == 10) {
         Toast.makeText(
             context,
             viewModel.score.value.toString() + " " + viewModel.questions?.size.toString(),
             Toast.LENGTH_LONG
-        )
-            .show()
+        ).show()
         remember {
-
             navController.popBackStack()
-
         }
-
+    } else if (viewModel.timeLeft.value == 0f) {
+        remember {
+            navController.popBackStack()
+        }
     }
 
     Scaffold(topBar = {
