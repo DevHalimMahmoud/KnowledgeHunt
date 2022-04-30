@@ -22,17 +22,19 @@ class MCQTestScreenViewModel @Inject constructor(
         MCQTestArguments.instance?.itemData?.questions?.shuffled()?.toList()?.subList(0, 10)
             ?.toMutableList()
 
+    val timer: CountDownTimer = object : CountDownTimer(100000, 1000) {
+
+        override fun onTick(millisUntilFinished: Long) {
+            timeLeft.value = (100000 - millisUntilFinished) / 100000.toFloat()
+        }
+
+        override fun onFinish() {
+            timeLeft.value = 0f
+        }
+
+    }.start()
+
     init {
-        object : CountDownTimer(100000, 1000) {
 
-            override fun onTick(millisUntilFinished: Long) {
-                timeLeft.value = (100000 - millisUntilFinished) / 100000.toFloat()
-            }
-
-            override fun onFinish() {
-                timeLeft.value = 0f
-            }
-
-        }.start()
     }
 }
