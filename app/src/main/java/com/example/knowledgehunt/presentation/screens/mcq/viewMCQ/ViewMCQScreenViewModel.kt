@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.knowledgehunt.domain.models.MCQItemData
 import com.example.knowledgehunt.domain.use_case.FirestoreUseCases
-import com.example.knowledgehunt.domain.use_case.StorageUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,11 +17,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ViewMCQScreenViewModel @Inject constructor(
-    private val storageUseCases: StorageUseCases,
     private val firestoreUseCases: FirestoreUseCases,
 ) : ViewModel() {
 
-    lateinit var selectedItem: MCQItemData
     private val _isRefreshing = MutableStateFlow(true)
     val isRefreshing: StateFlow<Boolean>
         get() = _isRefreshing.asStateFlow()

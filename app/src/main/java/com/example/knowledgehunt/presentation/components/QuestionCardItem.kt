@@ -47,11 +47,12 @@ fun QuestionCardItem(
     question: QuestionItemData,
     click: () -> Unit,
     navController: NavController,
+    modifier: Modifier = Modifier
 ) {
     val df = SimpleDateFormat("dd MMM yyyy")
     Card(
         shape = RoundedCornerShape(8.dp),
-        modifier = Modifier
+        modifier = modifier
             .clickable {
                 click()
             }

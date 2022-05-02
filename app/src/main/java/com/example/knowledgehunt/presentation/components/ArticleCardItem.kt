@@ -40,7 +40,6 @@ fun ArticleCardItem(
     Card(
         shape = RoundedCornerShape(16.dp),
         modifier = modifier
-            .fillMaxWidth()
             .wrapContentHeight()
             .padding(8.dp),
         elevation = 1.dp
@@ -58,7 +57,7 @@ fun ArticleCardItem(
                     .clip(RoundedCornerShape(16.dp))
                     .heightIn(max = 230.dp)
                     .wrapContentHeight()
-                    .fillMaxWidth(),
+                    .wrapContentWidth(),
                 circularReveal = CircularReveal(800),
                 bitmapPalette = BitmapPalette {
                     palette = it
@@ -82,7 +81,7 @@ fun ArticleCardItem(
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier
                     .padding(bottom = 4.dp, end = 8.dp, start = 8.dp),
-                maxLines = 3,
+                maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
             Text(

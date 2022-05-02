@@ -59,7 +59,6 @@ fun ViewMCQScreen(navController: NavHostController) {
                     items(
                         viewModel.MCQState.value
                     ) { MCQItem ->
-                        viewModel.selectedItem = MCQItem
                         MCQCardItem(
                             MCQItem,
                             navController = navController,

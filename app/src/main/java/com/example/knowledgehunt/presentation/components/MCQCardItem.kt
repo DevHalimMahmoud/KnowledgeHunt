@@ -27,12 +27,17 @@ import com.skydoves.landscapist.glide.GlideImage
 import com.skydoves.landscapist.palette.BitmapPalette
 
 @Composable
-fun MCQCardItem(item: MCQItemData, navController: NavHostController, click: () -> Unit) {
+fun MCQCardItem(
+    item: MCQItemData,
+    navController: NavHostController,
+    click: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     var palette by remember { mutableStateOf<Palette?>(null) }
 
     Card(
         shape = RoundedCornerShape(0.dp),
-        modifier = Modifier
+        modifier = modifier
             .clickable {
                 click()
             }
