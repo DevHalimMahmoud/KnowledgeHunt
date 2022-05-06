@@ -46,14 +46,14 @@ private val screens = listOf(
     Screens.Articles,
     Screens.Questions,
     Screens.MCQ,
-    Screens.About
+//    Screens.About
 )
 private val icon = listOf(
     FontAwesomeIcons.Solid.HouseUser,
     FontAwesomeIcons.Solid.FileCode,
     FontAwesomeIcons.Brands.StackOverflow,
     TablerIcons.Binary,
-    FontAwesomeIcons.Solid.Lightbulb,
+//    FontAwesomeIcons.Solid.Lightbulb,
 )
 
 @Composable
