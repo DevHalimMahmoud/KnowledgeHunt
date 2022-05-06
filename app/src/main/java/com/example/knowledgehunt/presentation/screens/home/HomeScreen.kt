@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
@@ -53,7 +54,9 @@ fun HomeScreen(navController: NavHostController) {
             overflow = TextOverflow.Ellipsis
         )
         if (viewModel.articleState.value.isEmpty()) {
-            Box(modifier = Modifier.size((LocalConfiguration.current.screenWidthDp - 30).dp)) {
+            Box(modifier = Modifier
+                .size(300.dp)
+                .align(CenterHorizontally)) {
                 NoDataDesign(
                     title = "No articles available at the moment check your internet connection",
                     image = painterResource(R.drawable.ic_empty),
@@ -106,7 +109,9 @@ fun HomeScreen(navController: NavHostController) {
             overflow = TextOverflow.Ellipsis
         )
         if (viewModel.questionState.value.isEmpty()) {
-            Box(modifier = Modifier.size((LocalConfiguration.current.screenWidthDp - 30).dp)) {
+            Box(modifier = Modifier
+                .size(300.dp)
+                .align(CenterHorizontally)) {
                 NoDataDesign(
                     title = "No questions available at the moment check your internet connection",
                     image = painterResource(R.drawable.ic_empty),
@@ -162,7 +167,9 @@ fun HomeScreen(navController: NavHostController) {
             )
         }
         if (viewModel.MCQState.value.isEmpty()) {
-            Box(modifier = Modifier.size((LocalConfiguration.current.screenWidthDp - 30).dp)) {
+            Box(modifier = Modifier
+                .size(300.dp)
+                .align(CenterHorizontally)) {
                 NoDataDesign(
                     title = "No MCQ tests available at the moment check your internet connection",
                     image = painterResource(R.drawable.ic_empty),
