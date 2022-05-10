@@ -54,9 +54,11 @@ fun HomeScreen(navController: NavHostController) {
             overflow = TextOverflow.Ellipsis
         )
         if (viewModel.articleState.value.isEmpty()) {
-            Box(modifier = Modifier
-                .size(300.dp)
-                .align(CenterHorizontally)) {
+            Box(
+                modifier = Modifier
+                    .size(300.dp)
+                    .align(CenterHorizontally)
+            ) {
                 NoDataDesign(
                     title = "No articles available at the moment check your internet connection",
                     image = painterResource(R.drawable.ic_empty),
@@ -109,9 +111,11 @@ fun HomeScreen(navController: NavHostController) {
             overflow = TextOverflow.Ellipsis
         )
         if (viewModel.questionState.value.isEmpty()) {
-            Box(modifier = Modifier
-                .size(300.dp)
-                .align(CenterHorizontally)) {
+            Box(
+                modifier = Modifier
+                    .size(300.dp)
+                    .align(CenterHorizontally)
+            ) {
                 NoDataDesign(
                     title = "No questions available at the moment check your internet connection",
                     image = painterResource(R.drawable.ic_empty),
@@ -167,9 +171,11 @@ fun HomeScreen(navController: NavHostController) {
             )
         }
         if (viewModel.MCQState.value.isEmpty()) {
-            Box(modifier = Modifier
-                .size(300.dp)
-                .align(CenterHorizontally)) {
+            Box(
+                modifier = Modifier
+                    .size(300.dp)
+                    .align(CenterHorizontally)
+            ) {
                 NoDataDesign(
                     title = "No MCQ tests available at the moment check your internet connection",
                     image = painterResource(R.drawable.ic_empty),

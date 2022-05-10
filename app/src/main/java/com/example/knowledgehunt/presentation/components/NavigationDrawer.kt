@@ -36,7 +36,6 @@ import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.brands.StackOverflow
 import compose.icons.fontawesomeicons.solid.FileCode
 import compose.icons.fontawesomeicons.solid.HouseUser
-import compose.icons.fontawesomeicons.solid.Lightbulb
 import compose.icons.tablericons.Binary
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
