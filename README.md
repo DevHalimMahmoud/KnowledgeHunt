@@ -3,7 +3,7 @@
 # Knowledge Hunt (Android)
 
 knowledge Hunt is a platform for all developers to share their knowledge by writing technical
-articles or ask questions and get answers from other developers test their knowledge in any field of
+articles and ask questions and get answers from other developers, user also can test their knowledge in any field of
 development in the MCQ section and get a score, the user can join coding contests and solve them,
 and the answer is validated on the server compiler
 
@@ -14,10 +14,6 @@ This Project is Underdevelopment More Awesome Stuff is Gonna be Added
 ## Clean Architecture
 
 ![https://fernandocejas.com/2018/05/07/architecting-android-reloaded/](https://github.com/android10/Sample-Data/blob/master/Android-CleanArchitecture-Kotlin/architecture/clean_architecture_reloaded_main.png)
-
-## Android 3 Layers Architecture
-
-![https://fernandocejas.com/2018/05/07/architecting-android-reloaded/](https://github.com/android10/Sample-Data/blob/master/Android-CleanArchitecture-Kotlin/architecture/clean_architecture_reloaded_layers.png)
 
 ## UI Layer: MVVM
 
