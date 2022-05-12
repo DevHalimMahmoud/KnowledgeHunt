@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.knowledgehunt.R
 import com.example.knowledgehunt.domain.models.Screens
 import com.example.knowledgehunt.presentation.utils.calculateIncrement1
@@ -321,11 +322,9 @@ fun AppDrawer(
                         // Pop up to the start destination of the graph to
                         // avoid building up a large stack of destinations
                         // on the back stack as users select items
-                        navController.graph.startDestinationRoute?.let { route ->
-                            popUpTo(route) {
-                                saveState = true
-                                inclusive = true
-                            }
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            inclusive = true
+                            saveState = true
                         }
                         // Avoid multiple copies of the same destination when
                         // reselecting the same item
@@ -333,7 +332,7 @@ fun AppDrawer(
                         // Restore state when reselecting a previously selected item
                         restoreState = true
                     }
-                    // Close drawer
+//                     Close drawer
                     scope.launch {
                         scaffoldState.drawerState.close()
                     }
