@@ -20,6 +20,6 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keepnames class com.example.knowledgehunt.domain.models.*{ *; }
+-keepnames class com.abdelHalimMahmoud.knowledgehunt.domain.models.*{ *; }
 -optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
--keepclasseswithmembers class com.example.knowledgehunt.domain.models.* { *; }
+-keepclasseswithmembers class com.abdelHalimMahmoud.knowledgehunt.domain.models.* { *; }
