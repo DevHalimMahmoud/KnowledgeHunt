@@ -1,6 +1,6 @@
 ![banner](https://github.com/abdomi7/KnowledgeHunt-Android/blob/main/app/src/main/res/drawable-v24/logo.png?raw=true)
 
-# Knowledge Hunt (Android)
+# Knowledge Hunt
 
 knowledge Hunt is a platform for all developers to share their knowledge by writing technical
 articles and ask questions and get answers from other developers, user also can test their knowledge in any field of
