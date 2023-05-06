@@ -6,6 +6,7 @@ plugins {
     id "dagger.hilt.android.plugin"
     id 'com.google.firebase.crashlytics'
     id 'com.google.firebase.firebase-perf'
+    id("org.sonarqube")
 }
 android {
     signingConfigs {
