@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.abdelHalimMahmoud.knowledgehunt.R
 import com.abdelHalimMahmoud.knowledgehunt.domain.models.Screens
 import com.abdelHalimMahmoud.knowledgehunt.domain.utils.ArticleArguments
 import com.abdelHalimMahmoud.knowledgehunt.presentation.components.ArticleCardItem
@@ -28,7 +29,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import compose.icons.TablerIcons
 import compose.icons.tablericons.ArrowBack
 import compose.icons.tablericons.CodePlus
-import com.abdelHalimMahmoud.knowledgehunt.R
+
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MyArticles(navController: NavHostController) {

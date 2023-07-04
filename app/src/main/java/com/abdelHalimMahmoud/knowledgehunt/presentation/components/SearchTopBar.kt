@@ -1,13 +1,22 @@
 package com.abdelHalimMahmoud.knowledgehunt.presentation.components
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -29,45 +38,50 @@ fun SearchTopBar(
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     Surface(
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colors.onPrimary,
         elevation = 8.dp,
     ) {
-        Column {
-            Row(modifier = Modifier.fillMaxWidth()) {
-                IconButton(onClick = {
-                    back()
-                }, modifier = Modifier.align(CenterVertically)) {
-                    Icon(
-                        TablerIcons.ArrowBack,
-                        "",
-                        tint = MaterialTheme.colors.primary,
-                        modifier = Modifier.align(CenterVertically)
-                    )
-                }
-                TextField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    value = query,
-                    onValueChange = { onQueryChanged(it) },
-                    label = { Text(text = "Search") },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Text,
-                        imeAction = ImeAction.Done,
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            onExecuteSearch()
-                            keyboardController?.hide()
-                        },
-                    ),
-//                    leadingIcon = { Icon(TablerIcons.Search, contentDescription = "Search Icon") },
-                    textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
-                    colors = TextFieldDefaults.textFieldColors(backgroundColor = MaterialTheme.colors.surface),
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = CenterVertically
+        ) {
+            IconButton(
+                onClick = { back() },
+                modifier = Modifier.padding(start = 8.dp, end = 4.dp)
+            ) {
+                Icon(
+                    imageVector = TablerIcons.ArrowBack,
+                    contentDescription = "Back",
+                    tint = MaterialTheme.colors.primary,
                 )
             }
+
+            var searchText: String by remember { mutableStateOf("") }
+
+            TextField(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(4.dp),
+                value = searchText,
+                onValueChange = { newText ->
+                    searchText = newText
+                },
+                label = { Text(text = "Search") },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Done,
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        onQueryChanged(searchText)
+                        onExecuteSearch()
+                        keyboardController?.hide()
+                    }
+                ),
+                textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
+                colors = TextFieldDefaults.textFieldColors(backgroundColor = MaterialTheme.colors.surface),
+            )
         }
     }
 }

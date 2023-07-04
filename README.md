@@ -3,7 +3,8 @@
 # Knowledge Hunt
 
 knowledge Hunt is a platform for all developers to share their knowledge by writing technical
-articles and ask questions and get answers from other developers, user also can test their knowledge in any field of
+articles and ask questions and get answers from other developers, user also can test their knowledge
+in any field of
 development in the MCQ section and get a score, the user can join coding contests and solve them,
 and the answer is validated on the server compiler
 

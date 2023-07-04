@@ -26,11 +26,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.abdelHalimMahmoud.knowledgehunt.R
 import com.abdelHalimMahmoud.knowledgehunt.domain.models.Screens
 import com.abdelHalimMahmoud.knowledgehunt.presentation.components.BackTopBar
 import com.abdelHalimMahmoud.knowledgehunt.presentation.components.OutlinedButtonItem
@@ -130,7 +132,7 @@ fun AddArticleScreen(
                 imeAction = ImeAction.Next,
                 errorState = viewModel.titleErrorState,
                 textState = viewModel.titleState,
-                errorText = "Required!",
+                errorText = stringResource(R.string.required),
                 KeyboardType = KeyboardType.Text
             )
             TextFieldUnit(
@@ -144,7 +146,7 @@ fun AddArticleScreen(
                 imeAction = ImeAction.Next,
                 errorState = viewModel.descriptionErrorState,
                 textState = viewModel.descriptionState,
-                errorText = "Required!",
+                errorText = stringResource(R.string.required),
                 KeyboardType = KeyboardType.Text
             )
             TextFieldUnit(
@@ -160,7 +162,7 @@ fun AddArticleScreen(
                 imeAction = ImeAction.Next,
                 errorState = viewModel.contentErrorState,
                 textState = viewModel.contentState,
-                errorText = "Required!",
+                errorText = stringResource(R.string.required),
                 KeyboardType = KeyboardType.Text,
 
                 )
@@ -247,7 +249,7 @@ fun handelArticleImage(
     coroutineScope: CoroutineScope,
     context: Context,
 ) {
-    coroutineScope.launch(Dispatchers.Default, CoroutineStart.DEFAULT) {
+    coroutineScope.launch {
         viewModel.compressProfileImage(context = context)
 
     }.invokeOnCompletion {

@@ -45,10 +45,10 @@ class SearchScreenViewModel @Inject constructor(
         viewModelScope.launch {
             firestoreUseCases.getArticles("articles")
                 .whereGreaterThanOrEqualTo("title", query.value.trim())
-                .addSnapshotListener { snapshot, e ->
+                .addSnapshotListener { snapshot, _ ->
                     if (snapshot != null) {
                         _articleState.value =
-                            snapshot.toObjects(ArticleItemData::class.java) as List<ArticleItemData>
+                            snapshot.toObjects(ArticleItemData::class.java)
                     }
 
                 }
@@ -60,10 +60,10 @@ class SearchScreenViewModel @Inject constructor(
 
             firestoreUseCases.getQuestions("questions")
                 .whereGreaterThanOrEqualTo("title", query.value.trim())
-                .addSnapshotListener { snapshot, e ->
+                .addSnapshotListener { snapshot, _ ->
                     if (snapshot != null) {
                         _questionState.value =
-                            (snapshot.toObjects(QuestionItemData::class.java) as List<QuestionItemData>)
+                            snapshot.toObjects(QuestionItemData::class.java)
                     }
                 }
         }
@@ -73,10 +73,10 @@ class SearchScreenViewModel @Inject constructor(
         viewModelScope.launch {
             firestoreUseCases.getMCQTests("mcq")
                 .whereGreaterThanOrEqualTo("title", query.value.trim())
-                .addSnapshotListener { snapshot, e ->
+                .addSnapshotListener { snapshot, _ ->
                     if (snapshot != null) {
                         _MCQState.value =
-                            snapshot.toObjects(MCQItemData::class.java) as List<MCQItemData>
+                            snapshot.toObjects(MCQItemData::class.java)
                     }
                 }
         }

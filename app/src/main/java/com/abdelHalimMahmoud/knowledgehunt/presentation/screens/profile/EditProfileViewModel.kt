@@ -184,9 +184,11 @@ class EditProfileViewModel @Inject constructor(
                         it.result.get("gender").toString() == genderItems[0] -> {
                             genderSelectedIndex.value = 0
                         }
+
                         it.result.get("gender").toString() == genderItems[1] -> {
                             genderSelectedIndex.value = 1
                         }
+
                         else -> {
                             genderSelectedIndex.value = 2
                         }

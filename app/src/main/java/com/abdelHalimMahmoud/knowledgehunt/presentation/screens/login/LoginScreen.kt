@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.abdelHalimMahmoud.knowledgehunt.R
 import com.abdelHalimMahmoud.knowledgehunt.domain.models.Screens
 import com.abdelHalimMahmoud.knowledgehunt.presentation.components.ButtonItem
 import com.abdelHalimMahmoud.knowledgehunt.presentation.components.OutlinedButtonItem
@@ -38,7 +39,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import com.abdelHalimMahmoud.knowledgehunt.R
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
